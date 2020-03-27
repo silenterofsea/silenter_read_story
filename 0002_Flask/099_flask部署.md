@@ -1,27 +1,32 @@
 ## Gunicorn 和 Nginx 部署 Flask
 
-### 结构
+## 结构
 一个nginx ====》  若干个 Gunicorn上运行的flask  ===》数据库（mysql、redis，可能是集群）
 
 
-### gunicorn安装以及使用
+## gunicorn安装以及使用
 ```python
 pip install gunicorn
 # 安装
 gunicorn -h
 # 查看帮助文档
-gunicorn -w 4 -b IP:PORT -D --access-logfile ../../log ../../main:app
+gunicorn -w 4 -b IP:PORT -D --access-logfile  main:app
 # -w : worker：表明进程数目
 # -b : bind: 绑定IP和端口号（当然你运行在哪个机器上，就是哪个IP）
 # -D 表明作为守护进程运行在后台
 # --access-logfile ：指定日志文件保存位置（绝对路径）
 # ../../main:app ：指定入口函数位置（绝对路径）
 # 例：
-gunicorn -w 4 -b 222.222.222.222:5000 -D --access-logfile /home/www/YourProgram/log  /home/www/YourProgram/main:app
+gunicorn -w 4 -b 222.222.222.222:5000 -D --access-logfile /home/www/YourProgram/log  main:app
 # 这个下面会用到
 ```
 
-### Nginx
+## celery 安装配置
+```bash
+
+```
+
+## Nginx
 ```python
 ps aux | grep nginx
 # 如果你的服务器中已经存在nginx在运行，
