@@ -1,0 +1,1879 @@
+2020-03-29 18:30:14.311 | ERROR    | proxypool.processors.getter:run:36 - An error has been caught in function 'run', process 'Process-2' (7249), thread 'MainThread' (140344473728832):
+Traceback (most recent call last):
+
+  File "run.py", line 14, in <module>
+    Scheduler().run()
+    └ <class 'proxypool.scheduler.Scheduler'>
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/scheduler.py", line 73, in run
+    getter_process.start()
+    │              └ <function BaseProcess.start at 0x7fa47c92dae8>
+    └ <Process(Process-2, started)>
+
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 105, in start
+    self._popen = self._Popen(self)
+    │    │        │    │      └ <Process(Process-2, started)>
+    │    │        │    └ <staticmethod object at 0x7fa47c926cc0>
+    │    │        └ <Process(Process-2, started)>
+    │    └ None
+    └ <Process(Process-2, started)>
+  File "/usr/lib/python3.6/multiprocessing/context.py", line 223, in _Popen
+    return _default_context.get_context().Process._Popen(process_obj)
+           │                │                            └ <Process(Process-2, started)>
+           │                └ <function DefaultContext.get_context at 0x7fa47c84c730>
+           └ <multiprocessing.context.DefaultContext object at 0x7fa47c8bb1d0>
+  File "/usr/lib/python3.6/multiprocessing/context.py", line 277, in _Popen
+    return Popen(process_obj)
+           │     └ <Process(Process-2, started)>
+           └ <class 'multiprocessing.popen_fork.Popen'>
+  File "/usr/lib/python3.6/multiprocessing/popen_fork.py", line 19, in __init__
+    self._launch(process_obj)
+    │    │       └ <Process(Process-2, started)>
+    │    └ <function Popen._launch at 0x7fa4774df400>
+    └ <multiprocessing.popen_fork.Popen object at 0x7fa4774d6b00>
+  File "/usr/lib/python3.6/multiprocessing/popen_fork.py", line 73, in _launch
+    code = process_obj._bootstrap()
+    │      │           └ <function BaseProcess._bootstrap at 0x7fa47c8b72f0>
+    │      └ <Process(Process-2, started)>
+    └ 1
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 258, in _bootstrap
+    self.run()
+    │    └ <function BaseProcess.run at 0x7fa47c92da60>
+    └ <Process(Process-2, started)>
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 93, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {}
+    │    │        │    │        └ <Process(Process-2, started)>
+    │    │        │    └ ()
+    │    │        └ <Process(Process-2, started)>
+    │    └ <bound method Scheduler.run_getter of <proxypool.scheduler.Scheduler object at 0x7fa47855c390>>
+    └ <Process(Process-2, started)>
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/scheduler.py", line 48, in run_getter
+    getter.run()
+    │      └ <function Getter.run at 0x7fa4797beea0>
+    └ <proxypool.processors.getter.Getter object at 0x7fa47c92c710>
+
+> File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/processors/getter.py", line 36, in run
+    for proxy in crawler.crawl():
+        │        │       └ <function BaseCrawler.crawl at 0x7fa4797be620>
+        │        └ <public.iphai.IPHaiCrawler object at 0x7fa4774d6da0>
+        └ Proxy(host='36.248.129.72', port=9999)
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/crawlers/base.py", line 25, in crawl
+    html = self.fetch(url)
+           │    │     └ 'http://www.iphai.com/'
+           │    └ <function BaseCrawler.fetch at 0x7fa4797be598>
+           └ <public.iphai.IPHaiCrawler object at 0x7fa4774d6da0>
+
+  File "/home/alex/alex/virtualenvs/ProxyPoolLenv/lib/python3.6/site-packages/retrying.py", line 49, in wrapped_f
+    return Retrying(*dargs, **dkw).call(f, *args, **kw)
+           │         │        │         │   │       └ {}
+           │         │        │         │   └ (<public.iphai.IPHaiCrawler object at 0x7fa4774d6da0>, 'http://www.iphai.com/')
+           │         │        │         └ <function BaseCrawler.fetch at 0x7fa4797be510>
+           │         │        └ {'stop_max_attempt_number': 3, 'retry_on_result': <function BaseCrawler.<lambda> at 0x7fa479883ea0>}
+           │         └ ()
+           └ <class 'retrying.Retrying'>
+  File "/home/alex/alex/virtualenvs/ProxyPoolLenv/lib/python3.6/site-packages/retrying.py", line 214, in call
+    raise RetryError(attempt)
+          │          └ Attempts: 3, Value: None
+          └ <class 'retrying.RetryError'>
+
+retrying.RetryError: RetryError[Attempts: 3, Value: None]
+2020-03-29 18:30:14.936 | ERROR    | proxypool.processors.getter:run:36 - An error has been caught in function 'run', process 'Process-2' (7249), thread 'MainThread' (140344473728832):
+Traceback (most recent call last):
+
+  File "run.py", line 14, in <module>
+    Scheduler().run()
+    └ <class 'proxypool.scheduler.Scheduler'>
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/scheduler.py", line 73, in run
+    getter_process.start()
+    │              └ <function BaseProcess.start at 0x7fa47c92dae8>
+    └ <Process(Process-2, started)>
+
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 105, in start
+    self._popen = self._Popen(self)
+    │    │        │    │      └ <Process(Process-2, started)>
+    │    │        │    └ <staticmethod object at 0x7fa47c926cc0>
+    │    │        └ <Process(Process-2, started)>
+    │    └ None
+    └ <Process(Process-2, started)>
+  File "/usr/lib/python3.6/multiprocessing/context.py", line 223, in _Popen
+    return _default_context.get_context().Process._Popen(process_obj)
+           │                │                            └ <Process(Process-2, started)>
+           │                └ <function DefaultContext.get_context at 0x7fa47c84c730>
+           └ <multiprocessing.context.DefaultContext object at 0x7fa47c8bb1d0>
+  File "/usr/lib/python3.6/multiprocessing/context.py", line 277, in _Popen
+    return Popen(process_obj)
+           │     └ <Process(Process-2, started)>
+           └ <class 'multiprocessing.popen_fork.Popen'>
+  File "/usr/lib/python3.6/multiprocessing/popen_fork.py", line 19, in __init__
+    self._launch(process_obj)
+    │    │       └ <Process(Process-2, started)>
+    │    └ <function Popen._launch at 0x7fa4774df400>
+    └ <multiprocessing.popen_fork.Popen object at 0x7fa4774d6b00>
+  File "/usr/lib/python3.6/multiprocessing/popen_fork.py", line 73, in _launch
+    code = process_obj._bootstrap()
+    │      │           └ <function BaseProcess._bootstrap at 0x7fa47c8b72f0>
+    │      └ <Process(Process-2, started)>
+    └ 1
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 258, in _bootstrap
+    self.run()
+    │    └ <function BaseProcess.run at 0x7fa47c92da60>
+    └ <Process(Process-2, started)>
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 93, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {}
+    │    │        │    │        └ <Process(Process-2, started)>
+    │    │        │    └ ()
+    │    │        └ <Process(Process-2, started)>
+    │    └ <bound method Scheduler.run_getter of <proxypool.scheduler.Scheduler object at 0x7fa47855c390>>
+    └ <Process(Process-2, started)>
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/scheduler.py", line 48, in run_getter
+    getter.run()
+    │      └ <function Getter.run at 0x7fa4797beea0>
+    └ <proxypool.processors.getter.Getter object at 0x7fa47c92c710>
+
+> File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/processors/getter.py", line 36, in run
+    for proxy in crawler.crawl():
+        │        │       └ <function BaseCrawler.crawl at 0x7fa4797be620>
+        │        └ <public.kuaidaili.KuaidailiCrawler object at 0x7fa4774d6d68>
+        └ Proxy(host='118.113.246.182', port='9999')
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/crawlers/base.py", line 25, in crawl
+    html = self.fetch(url)
+    │      │    │     └ 'https://www.kuaidaili.com/free/inha/2/'
+    │      │    └ <function BaseCrawler.fetch at 0x7fa4797be598>
+    │      └ <public.kuaidaili.KuaidailiCrawler object at 0x7fa4774d6d68>
+    └ '<!DOCTYPE html>\n<html>\n<head>\n<meta http-equiv="X-UA-Compatible" content="IE=edge" />\n<meta http-equiv="Content-Type" co...
+
+  File "/home/alex/alex/virtualenvs/ProxyPoolLenv/lib/python3.6/site-packages/retrying.py", line 49, in wrapped_f
+    return Retrying(*dargs, **dkw).call(f, *args, **kw)
+           │         │        │         │   │       └ {}
+           │         │        │         │   └ (<public.kuaidaili.KuaidailiCrawler object at 0x7fa4774d6d68>, 'https://www.kuaidaili.com/free/inha/2/')
+           │         │        │         └ <function BaseCrawler.fetch at 0x7fa4797be510>
+           │         │        └ {'stop_max_attempt_number': 3, 'retry_on_result': <function BaseCrawler.<lambda> at 0x7fa479883ea0>}
+           │         └ ()
+           └ <class 'retrying.Retrying'>
+  File "/home/alex/alex/virtualenvs/ProxyPoolLenv/lib/python3.6/site-packages/retrying.py", line 214, in call
+    raise RetryError(attempt)
+          │          └ Attempts: 3, Value: None
+          └ <class 'retrying.RetryError'>
+
+retrying.RetryError: RetryError[Attempts: 3, Value: None]
+2020-03-29 18:31:55.570 | ERROR    | proxypool.processors.getter:run:36 - An error has been caught in function 'run', process 'Process-2' (7408), thread 'MainThread' (140658052323136):
+Traceback (most recent call last):
+
+  File "run.py", line 14, in <module>
+    Scheduler().run()
+    └ <class 'proxypool.scheduler.Scheduler'>
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/scheduler.py", line 73, in run
+    getter_process.start()
+    │              └ <function BaseProcess.start at 0x7fed7f4e6ae8>
+    └ <Process(Process-2, started)>
+
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 105, in start
+    self._popen = self._Popen(self)
+    │    │        │    │      └ <Process(Process-2, started)>
+    │    │        │    └ <staticmethod object at 0x7fed7f4e15f8>
+    │    │        └ <Process(Process-2, started)>
+    │    └ None
+    └ <Process(Process-2, started)>
+  File "/usr/lib/python3.6/multiprocessing/context.py", line 223, in _Popen
+    return _default_context.get_context().Process._Popen(process_obj)
+           │                │                            └ <Process(Process-2, started)>
+           │                └ <function DefaultContext.get_context at 0x7fed7f408730>
+           └ <multiprocessing.context.DefaultContext object at 0x7fed7f4eab70>
+  File "/usr/lib/python3.6/multiprocessing/context.py", line 277, in _Popen
+    return Popen(process_obj)
+           │     └ <Process(Process-2, started)>
+           └ <class 'multiprocessing.popen_fork.Popen'>
+  File "/usr/lib/python3.6/multiprocessing/popen_fork.py", line 19, in __init__
+    self._launch(process_obj)
+    │    │       └ <Process(Process-2, started)>
+    │    └ <function Popen._launch at 0x7fed7a0bb400>
+    └ <multiprocessing.popen_fork.Popen object at 0x7fed7a0b3780>
+  File "/usr/lib/python3.6/multiprocessing/popen_fork.py", line 73, in _launch
+    code = process_obj._bootstrap()
+    │      │           └ <function BaseProcess._bootstrap at 0x7fed7f4f02f0>
+    │      └ <Process(Process-2, started)>
+    └ 1
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 258, in _bootstrap
+    self.run()
+    │    └ <function BaseProcess.run at 0x7fed7f4e6a60>
+    └ <Process(Process-2, started)>
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 93, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {}
+    │    │        │    │        └ <Process(Process-2, started)>
+    │    │        │    └ ()
+    │    │        └ <Process(Process-2, started)>
+    │    └ <bound method Scheduler.run_getter of <proxypool.scheduler.Scheduler object at 0x7fed7a0b37b8>>
+    └ <Process(Process-2, started)>
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/scheduler.py", line 48, in run_getter
+    getter.run()
+    │      └ <function Getter.run at 0x7fed7c397ea0>
+    └ <proxypool.processors.getter.Getter object at 0x7fed7f4ea048>
+
+> File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/processors/getter.py", line 36, in run
+    for proxy in crawler.crawl():
+        │        │       └ <function BaseCrawler.crawl at 0x7fed7c397620>
+        │        └ <public.iphai.IPHaiCrawler object at 0x7fed7a0b3a90>
+        └ Proxy(host='36.248.129.72', port=9999)
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/crawlers/base.py", line 25, in crawl
+    html = self.fetch(url)
+           │    │     └ 'http://www.iphai.com/'
+           │    └ <function BaseCrawler.fetch at 0x7fed7c397598>
+           └ <public.iphai.IPHaiCrawler object at 0x7fed7a0b3a90>
+
+  File "/home/alex/alex/virtualenvs/ProxyPoolLenv/lib/python3.6/site-packages/retrying.py", line 49, in wrapped_f
+    return Retrying(*dargs, **dkw).call(f, *args, **kw)
+           │         │        │         │   │       └ {}
+           │         │        │         │   └ (<public.iphai.IPHaiCrawler object at 0x7fed7a0b3a90>, 'http://www.iphai.com/')
+           │         │        │         └ <function BaseCrawler.fetch at 0x7fed7c397510>
+           │         │        └ {'stop_max_attempt_number': 3, 'retry_on_result': <function BaseCrawler.<lambda> at 0x7fed7c45fea0>}
+           │         └ ()
+           └ <class 'retrying.Retrying'>
+  File "/home/alex/alex/virtualenvs/ProxyPoolLenv/lib/python3.6/site-packages/retrying.py", line 214, in call
+    raise RetryError(attempt)
+          │          └ Attempts: 3, Value: None
+          └ <class 'retrying.RetryError'>
+
+retrying.RetryError: RetryError[Attempts: 3, Value: None]
+2020-03-29 18:31:56.196 | ERROR    | proxypool.processors.getter:run:36 - An error has been caught in function 'run', process 'Process-2' (7408), thread 'MainThread' (140658052323136):
+Traceback (most recent call last):
+
+  File "run.py", line 14, in <module>
+    Scheduler().run()
+    └ <class 'proxypool.scheduler.Scheduler'>
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/scheduler.py", line 73, in run
+    getter_process.start()
+    │              └ <function BaseProcess.start at 0x7fed7f4e6ae8>
+    └ <Process(Process-2, started)>
+
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 105, in start
+    self._popen = self._Popen(self)
+    │    │        │    │      └ <Process(Process-2, started)>
+    │    │        │    └ <staticmethod object at 0x7fed7f4e15f8>
+    │    │        └ <Process(Process-2, started)>
+    │    └ None
+    └ <Process(Process-2, started)>
+  File "/usr/lib/python3.6/multiprocessing/context.py", line 223, in _Popen
+    return _default_context.get_context().Process._Popen(process_obj)
+           │                │                            └ <Process(Process-2, started)>
+           │                └ <function DefaultContext.get_context at 0x7fed7f408730>
+           └ <multiprocessing.context.DefaultContext object at 0x7fed7f4eab70>
+  File "/usr/lib/python3.6/multiprocessing/context.py", line 277, in _Popen
+    return Popen(process_obj)
+           │     └ <Process(Process-2, started)>
+           └ <class 'multiprocessing.popen_fork.Popen'>
+  File "/usr/lib/python3.6/multiprocessing/popen_fork.py", line 19, in __init__
+    self._launch(process_obj)
+    │    │       └ <Process(Process-2, started)>
+    │    └ <function Popen._launch at 0x7fed7a0bb400>
+    └ <multiprocessing.popen_fork.Popen object at 0x7fed7a0b3780>
+  File "/usr/lib/python3.6/multiprocessing/popen_fork.py", line 73, in _launch
+    code = process_obj._bootstrap()
+    │      │           └ <function BaseProcess._bootstrap at 0x7fed7f4f02f0>
+    │      └ <Process(Process-2, started)>
+    └ 1
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 258, in _bootstrap
+    self.run()
+    │    └ <function BaseProcess.run at 0x7fed7f4e6a60>
+    └ <Process(Process-2, started)>
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 93, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {}
+    │    │        │    │        └ <Process(Process-2, started)>
+    │    │        │    └ ()
+    │    │        └ <Process(Process-2, started)>
+    │    └ <bound method Scheduler.run_getter of <proxypool.scheduler.Scheduler object at 0x7fed7a0b37b8>>
+    └ <Process(Process-2, started)>
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/scheduler.py", line 48, in run_getter
+    getter.run()
+    │      └ <function Getter.run at 0x7fed7c397ea0>
+    └ <proxypool.processors.getter.Getter object at 0x7fed7f4ea048>
+
+> File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/processors/getter.py", line 36, in run
+    for proxy in crawler.crawl():
+        │        │       └ <function BaseCrawler.crawl at 0x7fed7c397620>
+        │        └ <public.kuaidaili.KuaidailiCrawler object at 0x7fed7a0b3b70>
+        └ Proxy(host='118.113.246.182', port='9999')
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/crawlers/base.py", line 25, in crawl
+    html = self.fetch(url)
+    │      │    │     └ 'https://www.kuaidaili.com/free/inha/2/'
+    │      │    └ <function BaseCrawler.fetch at 0x7fed7c397598>
+    │      └ <public.kuaidaili.KuaidailiCrawler object at 0x7fed7a0b3b70>
+    └ '<!DOCTYPE html>\n<html>\n<head>\n<meta http-equiv="X-UA-Compatible" content="IE=edge" />\n<meta http-equiv="Content-Type" co...
+
+  File "/home/alex/alex/virtualenvs/ProxyPoolLenv/lib/python3.6/site-packages/retrying.py", line 49, in wrapped_f
+    return Retrying(*dargs, **dkw).call(f, *args, **kw)
+           │         │        │         │   │       └ {}
+           │         │        │         │   └ (<public.kuaidaili.KuaidailiCrawler object at 0x7fed7a0b3b70>, 'https://www.kuaidaili.com/free/inha/2/')
+           │         │        │         └ <function BaseCrawler.fetch at 0x7fed7c397510>
+           │         │        └ {'stop_max_attempt_number': 3, 'retry_on_result': <function BaseCrawler.<lambda> at 0x7fed7c45fea0>}
+           │         └ ()
+           └ <class 'retrying.Retrying'>
+  File "/home/alex/alex/virtualenvs/ProxyPoolLenv/lib/python3.6/site-packages/retrying.py", line 214, in call
+    raise RetryError(attempt)
+          │          └ Attempts: 3, Value: None
+          └ <class 'retrying.RetryError'>
+
+retrying.RetryError: RetryError[Attempts: 3, Value: None]
+2020-03-29 18:33:48.324 | ERROR    | proxypool.processors.getter:run:36 - An error has been caught in function 'run', process 'Process-2' (7408), thread 'MainThread' (140658052323136):
+Traceback (most recent call last):
+
+  File "run.py", line 14, in <module>
+    Scheduler().run()
+    └ <class 'proxypool.scheduler.Scheduler'>
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/scheduler.py", line 73, in run
+    getter_process.start()
+    │              └ <function BaseProcess.start at 0x7fed7f4e6ae8>
+    └ <Process(Process-2, started)>
+
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 105, in start
+    self._popen = self._Popen(self)
+    │    │        │    │      └ <Process(Process-2, started)>
+    │    │        │    └ <staticmethod object at 0x7fed7f4e15f8>
+    │    │        └ <Process(Process-2, started)>
+    │    └ None
+    └ <Process(Process-2, started)>
+  File "/usr/lib/python3.6/multiprocessing/context.py", line 223, in _Popen
+    return _default_context.get_context().Process._Popen(process_obj)
+           │                │                            └ <Process(Process-2, started)>
+           │                └ <function DefaultContext.get_context at 0x7fed7f408730>
+           └ <multiprocessing.context.DefaultContext object at 0x7fed7f4eab70>
+  File "/usr/lib/python3.6/multiprocessing/context.py", line 277, in _Popen
+    return Popen(process_obj)
+           │     └ <Process(Process-2, started)>
+           └ <class 'multiprocessing.popen_fork.Popen'>
+  File "/usr/lib/python3.6/multiprocessing/popen_fork.py", line 19, in __init__
+    self._launch(process_obj)
+    │    │       └ <Process(Process-2, started)>
+    │    └ <function Popen._launch at 0x7fed7a0bb400>
+    └ <multiprocessing.popen_fork.Popen object at 0x7fed7a0b3780>
+  File "/usr/lib/python3.6/multiprocessing/popen_fork.py", line 73, in _launch
+    code = process_obj._bootstrap()
+    │      │           └ <function BaseProcess._bootstrap at 0x7fed7f4f02f0>
+    │      └ <Process(Process-2, started)>
+    └ 1
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 258, in _bootstrap
+    self.run()
+    │    └ <function BaseProcess.run at 0x7fed7f4e6a60>
+    └ <Process(Process-2, started)>
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 93, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {}
+    │    │        │    │        └ <Process(Process-2, started)>
+    │    │        │    └ ()
+    │    │        └ <Process(Process-2, started)>
+    │    └ <bound method Scheduler.run_getter of <proxypool.scheduler.Scheduler object at 0x7fed7a0b37b8>>
+    └ <Process(Process-2, started)>
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/scheduler.py", line 48, in run_getter
+    getter.run()
+    │      └ <function Getter.run at 0x7fed7c397ea0>
+    └ <proxypool.processors.getter.Getter object at 0x7fed7f4ea048>
+
+> File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/processors/getter.py", line 36, in run
+    for proxy in crawler.crawl():
+        │        │       └ <function BaseCrawler.crawl at 0x7fed7c397620>
+        │        └ <public.iphai.IPHaiCrawler object at 0x7fed7a0b3a90>
+        └ Proxy(host='36.248.129.72', port=9999)
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/crawlers/base.py", line 25, in crawl
+    html = self.fetch(url)
+           │    │     └ 'http://www.iphai.com/'
+           │    └ <function BaseCrawler.fetch at 0x7fed7c397598>
+           └ <public.iphai.IPHaiCrawler object at 0x7fed7a0b3a90>
+
+  File "/home/alex/alex/virtualenvs/ProxyPoolLenv/lib/python3.6/site-packages/retrying.py", line 49, in wrapped_f
+    return Retrying(*dargs, **dkw).call(f, *args, **kw)
+           │         │        │         │   │       └ {}
+           │         │        │         │   └ (<public.iphai.IPHaiCrawler object at 0x7fed7a0b3a90>, 'http://www.iphai.com/')
+           │         │        │         └ <function BaseCrawler.fetch at 0x7fed7c397510>
+           │         │        └ {'stop_max_attempt_number': 3, 'retry_on_result': <function BaseCrawler.<lambda> at 0x7fed7c45fea0>}
+           │         └ ()
+           └ <class 'retrying.Retrying'>
+  File "/home/alex/alex/virtualenvs/ProxyPoolLenv/lib/python3.6/site-packages/retrying.py", line 214, in call
+    raise RetryError(attempt)
+          │          └ Attempts: 3, Value: None
+          └ <class 'retrying.RetryError'>
+
+retrying.RetryError: RetryError[Attempts: 3, Value: None]
+2020-03-29 18:33:48.960 | ERROR    | proxypool.processors.getter:run:36 - An error has been caught in function 'run', process 'Process-2' (7408), thread 'MainThread' (140658052323136):
+Traceback (most recent call last):
+
+  File "run.py", line 14, in <module>
+    Scheduler().run()
+    └ <class 'proxypool.scheduler.Scheduler'>
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/scheduler.py", line 73, in run
+    getter_process.start()
+    │              └ <function BaseProcess.start at 0x7fed7f4e6ae8>
+    └ <Process(Process-2, started)>
+
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 105, in start
+    self._popen = self._Popen(self)
+    │    │        │    │      └ <Process(Process-2, started)>
+    │    │        │    └ <staticmethod object at 0x7fed7f4e15f8>
+    │    │        └ <Process(Process-2, started)>
+    │    └ None
+    └ <Process(Process-2, started)>
+  File "/usr/lib/python3.6/multiprocessing/context.py", line 223, in _Popen
+    return _default_context.get_context().Process._Popen(process_obj)
+           │                │                            └ <Process(Process-2, started)>
+           │                └ <function DefaultContext.get_context at 0x7fed7f408730>
+           └ <multiprocessing.context.DefaultContext object at 0x7fed7f4eab70>
+  File "/usr/lib/python3.6/multiprocessing/context.py", line 277, in _Popen
+    return Popen(process_obj)
+           │     └ <Process(Process-2, started)>
+           └ <class 'multiprocessing.popen_fork.Popen'>
+  File "/usr/lib/python3.6/multiprocessing/popen_fork.py", line 19, in __init__
+    self._launch(process_obj)
+    │    │       └ <Process(Process-2, started)>
+    │    └ <function Popen._launch at 0x7fed7a0bb400>
+    └ <multiprocessing.popen_fork.Popen object at 0x7fed7a0b3780>
+  File "/usr/lib/python3.6/multiprocessing/popen_fork.py", line 73, in _launch
+    code = process_obj._bootstrap()
+    │      │           └ <function BaseProcess._bootstrap at 0x7fed7f4f02f0>
+    │      └ <Process(Process-2, started)>
+    └ 1
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 258, in _bootstrap
+    self.run()
+    │    └ <function BaseProcess.run at 0x7fed7f4e6a60>
+    └ <Process(Process-2, started)>
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 93, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {}
+    │    │        │    │        └ <Process(Process-2, started)>
+    │    │        │    └ ()
+    │    │        └ <Process(Process-2, started)>
+    │    └ <bound method Scheduler.run_getter of <proxypool.scheduler.Scheduler object at 0x7fed7a0b37b8>>
+    └ <Process(Process-2, started)>
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/scheduler.py", line 48, in run_getter
+    getter.run()
+    │      └ <function Getter.run at 0x7fed7c397ea0>
+    └ <proxypool.processors.getter.Getter object at 0x7fed7f4ea048>
+
+> File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/processors/getter.py", line 36, in run
+    for proxy in crawler.crawl():
+        │        │       └ <function BaseCrawler.crawl at 0x7fed7c397620>
+        │        └ <public.kuaidaili.KuaidailiCrawler object at 0x7fed7a0b3b70>
+        └ Proxy(host='118.113.246.182', port='9999')
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/crawlers/base.py", line 25, in crawl
+    html = self.fetch(url)
+    │      │    │     └ 'https://www.kuaidaili.com/free/inha/2/'
+    │      │    └ <function BaseCrawler.fetch at 0x7fed7c397598>
+    │      └ <public.kuaidaili.KuaidailiCrawler object at 0x7fed7a0b3b70>
+    └ '<!DOCTYPE html>\n<html>\n<head>\n<meta http-equiv="X-UA-Compatible" content="IE=edge" />\n<meta http-equiv="Content-Type" co...
+
+  File "/home/alex/alex/virtualenvs/ProxyPoolLenv/lib/python3.6/site-packages/retrying.py", line 49, in wrapped_f
+    return Retrying(*dargs, **dkw).call(f, *args, **kw)
+           │         │        │         │   │       └ {}
+           │         │        │         │   └ (<public.kuaidaili.KuaidailiCrawler object at 0x7fed7a0b3b70>, 'https://www.kuaidaili.com/free/inha/2/')
+           │         │        │         └ <function BaseCrawler.fetch at 0x7fed7c397510>
+           │         │        └ {'stop_max_attempt_number': 3, 'retry_on_result': <function BaseCrawler.<lambda> at 0x7fed7c45fea0>}
+           │         └ ()
+           └ <class 'retrying.Retrying'>
+  File "/home/alex/alex/virtualenvs/ProxyPoolLenv/lib/python3.6/site-packages/retrying.py", line 214, in call
+    raise RetryError(attempt)
+          │          └ Attempts: 3, Value: None
+          └ <class 'retrying.RetryError'>
+
+retrying.RetryError: RetryError[Attempts: 3, Value: None]
+2020-03-29 18:37:35.758 | ERROR    | proxypool.processors.getter:run:36 - An error has been caught in function 'run', process 'Process-2' (7408), thread 'MainThread' (140658052323136):
+Traceback (most recent call last):
+
+  File "run.py", line 14, in <module>
+    Scheduler().run()
+    └ <class 'proxypool.scheduler.Scheduler'>
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/scheduler.py", line 73, in run
+    getter_process.start()
+    │              └ <function BaseProcess.start at 0x7fed7f4e6ae8>
+    └ <Process(Process-2, started)>
+
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 105, in start
+    self._popen = self._Popen(self)
+    │    │        │    │      └ <Process(Process-2, started)>
+    │    │        │    └ <staticmethod object at 0x7fed7f4e15f8>
+    │    │        └ <Process(Process-2, started)>
+    │    └ None
+    └ <Process(Process-2, started)>
+  File "/usr/lib/python3.6/multiprocessing/context.py", line 223, in _Popen
+    return _default_context.get_context().Process._Popen(process_obj)
+           │                │                            └ <Process(Process-2, started)>
+           │                └ <function DefaultContext.get_context at 0x7fed7f408730>
+           └ <multiprocessing.context.DefaultContext object at 0x7fed7f4eab70>
+  File "/usr/lib/python3.6/multiprocessing/context.py", line 277, in _Popen
+    return Popen(process_obj)
+           │     └ <Process(Process-2, started)>
+           └ <class 'multiprocessing.popen_fork.Popen'>
+  File "/usr/lib/python3.6/multiprocessing/popen_fork.py", line 19, in __init__
+    self._launch(process_obj)
+    │    │       └ <Process(Process-2, started)>
+    │    └ <function Popen._launch at 0x7fed7a0bb400>
+    └ <multiprocessing.popen_fork.Popen object at 0x7fed7a0b3780>
+  File "/usr/lib/python3.6/multiprocessing/popen_fork.py", line 73, in _launch
+    code = process_obj._bootstrap()
+    │      │           └ <function BaseProcess._bootstrap at 0x7fed7f4f02f0>
+    │      └ <Process(Process-2, started)>
+    └ 1
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 258, in _bootstrap
+    self.run()
+    │    └ <function BaseProcess.run at 0x7fed7f4e6a60>
+    └ <Process(Process-2, started)>
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 93, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {}
+    │    │        │    │        └ <Process(Process-2, started)>
+    │    │        │    └ ()
+    │    │        └ <Process(Process-2, started)>
+    │    └ <bound method Scheduler.run_getter of <proxypool.scheduler.Scheduler object at 0x7fed7a0b37b8>>
+    └ <Process(Process-2, started)>
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/scheduler.py", line 48, in run_getter
+    getter.run()
+    │      └ <function Getter.run at 0x7fed7c397ea0>
+    └ <proxypool.processors.getter.Getter object at 0x7fed7f4ea048>
+
+> File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/processors/getter.py", line 36, in run
+    for proxy in crawler.crawl():
+        │        │       └ <function BaseCrawler.crawl at 0x7fed7c397620>
+        │        └ <public.iphai.IPHaiCrawler object at 0x7fed7a0b3a90>
+        └ Proxy(host='36.248.129.72', port=9999)
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/crawlers/base.py", line 25, in crawl
+    html = self.fetch(url)
+           │    │     └ 'http://www.iphai.com/'
+           │    └ <function BaseCrawler.fetch at 0x7fed7c397598>
+           └ <public.iphai.IPHaiCrawler object at 0x7fed7a0b3a90>
+
+  File "/home/alex/alex/virtualenvs/ProxyPoolLenv/lib/python3.6/site-packages/retrying.py", line 49, in wrapped_f
+    return Retrying(*dargs, **dkw).call(f, *args, **kw)
+           │         │        │         │   │       └ {}
+           │         │        │         │   └ (<public.iphai.IPHaiCrawler object at 0x7fed7a0b3a90>, 'http://www.iphai.com/')
+           │         │        │         └ <function BaseCrawler.fetch at 0x7fed7c397510>
+           │         │        └ {'stop_max_attempt_number': 3, 'retry_on_result': <function BaseCrawler.<lambda> at 0x7fed7c45fea0>}
+           │         └ ()
+           └ <class 'retrying.Retrying'>
+  File "/home/alex/alex/virtualenvs/ProxyPoolLenv/lib/python3.6/site-packages/retrying.py", line 214, in call
+    raise RetryError(attempt)
+          │          └ Attempts: 3, Value: None
+          └ <class 'retrying.RetryError'>
+
+retrying.RetryError: RetryError[Attempts: 3, Value: None]
+2020-03-29 18:37:36.354 | ERROR    | proxypool.processors.getter:run:36 - An error has been caught in function 'run', process 'Process-2' (7408), thread 'MainThread' (140658052323136):
+Traceback (most recent call last):
+
+  File "run.py", line 14, in <module>
+    Scheduler().run()
+    └ <class 'proxypool.scheduler.Scheduler'>
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/scheduler.py", line 73, in run
+    getter_process.start()
+    │              └ <function BaseProcess.start at 0x7fed7f4e6ae8>
+    └ <Process(Process-2, started)>
+
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 105, in start
+    self._popen = self._Popen(self)
+    │    │        │    │      └ <Process(Process-2, started)>
+    │    │        │    └ <staticmethod object at 0x7fed7f4e15f8>
+    │    │        └ <Process(Process-2, started)>
+    │    └ None
+    └ <Process(Process-2, started)>
+  File "/usr/lib/python3.6/multiprocessing/context.py", line 223, in _Popen
+    return _default_context.get_context().Process._Popen(process_obj)
+           │                │                            └ <Process(Process-2, started)>
+           │                └ <function DefaultContext.get_context at 0x7fed7f408730>
+           └ <multiprocessing.context.DefaultContext object at 0x7fed7f4eab70>
+  File "/usr/lib/python3.6/multiprocessing/context.py", line 277, in _Popen
+    return Popen(process_obj)
+           │     └ <Process(Process-2, started)>
+           └ <class 'multiprocessing.popen_fork.Popen'>
+  File "/usr/lib/python3.6/multiprocessing/popen_fork.py", line 19, in __init__
+    self._launch(process_obj)
+    │    │       └ <Process(Process-2, started)>
+    │    └ <function Popen._launch at 0x7fed7a0bb400>
+    └ <multiprocessing.popen_fork.Popen object at 0x7fed7a0b3780>
+  File "/usr/lib/python3.6/multiprocessing/popen_fork.py", line 73, in _launch
+    code = process_obj._bootstrap()
+    │      │           └ <function BaseProcess._bootstrap at 0x7fed7f4f02f0>
+    │      └ <Process(Process-2, started)>
+    └ 1
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 258, in _bootstrap
+    self.run()
+    │    └ <function BaseProcess.run at 0x7fed7f4e6a60>
+    └ <Process(Process-2, started)>
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 93, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {}
+    │    │        │    │        └ <Process(Process-2, started)>
+    │    │        │    └ ()
+    │    │        └ <Process(Process-2, started)>
+    │    └ <bound method Scheduler.run_getter of <proxypool.scheduler.Scheduler object at 0x7fed7a0b37b8>>
+    └ <Process(Process-2, started)>
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/scheduler.py", line 48, in run_getter
+    getter.run()
+    │      └ <function Getter.run at 0x7fed7c397ea0>
+    └ <proxypool.processors.getter.Getter object at 0x7fed7f4ea048>
+
+> File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/processors/getter.py", line 36, in run
+    for proxy in crawler.crawl():
+        │        │       └ <function BaseCrawler.crawl at 0x7fed7c397620>
+        │        └ <public.kuaidaili.KuaidailiCrawler object at 0x7fed7a0b3b70>
+        └ Proxy(host='118.113.246.182', port='9999')
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/crawlers/base.py", line 25, in crawl
+    html = self.fetch(url)
+    │      │    │     └ 'https://www.kuaidaili.com/free/inha/2/'
+    │      │    └ <function BaseCrawler.fetch at 0x7fed7c397598>
+    │      └ <public.kuaidaili.KuaidailiCrawler object at 0x7fed7a0b3b70>
+    └ '<!DOCTYPE html>\n<html>\n<head>\n<meta http-equiv="X-UA-Compatible" content="IE=edge" />\n<meta http-equiv="Content-Type" co...
+
+  File "/home/alex/alex/virtualenvs/ProxyPoolLenv/lib/python3.6/site-packages/retrying.py", line 49, in wrapped_f
+    return Retrying(*dargs, **dkw).call(f, *args, **kw)
+           │         │        │         │   │       └ {}
+           │         │        │         │   └ (<public.kuaidaili.KuaidailiCrawler object at 0x7fed7a0b3b70>, 'https://www.kuaidaili.com/free/inha/2/')
+           │         │        │         └ <function BaseCrawler.fetch at 0x7fed7c397510>
+           │         │        └ {'stop_max_attempt_number': 3, 'retry_on_result': <function BaseCrawler.<lambda> at 0x7fed7c45fea0>}
+           │         └ ()
+           └ <class 'retrying.Retrying'>
+  File "/home/alex/alex/virtualenvs/ProxyPoolLenv/lib/python3.6/site-packages/retrying.py", line 214, in call
+    raise RetryError(attempt)
+          │          └ Attempts: 3, Value: None
+          └ <class 'retrying.RetryError'>
+
+retrying.RetryError: RetryError[Attempts: 3, Value: None]
+2020-03-29 18:39:28.893 | ERROR    | proxypool.processors.getter:run:36 - An error has been caught in function 'run', process 'Process-2' (7408), thread 'MainThread' (140658052323136):
+Traceback (most recent call last):
+
+  File "run.py", line 14, in <module>
+    Scheduler().run()
+    └ <class 'proxypool.scheduler.Scheduler'>
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/scheduler.py", line 73, in run
+    getter_process.start()
+    │              └ <function BaseProcess.start at 0x7fed7f4e6ae8>
+    └ <Process(Process-2, started)>
+
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 105, in start
+    self._popen = self._Popen(self)
+    │    │        │    │      └ <Process(Process-2, started)>
+    │    │        │    └ <staticmethod object at 0x7fed7f4e15f8>
+    │    │        └ <Process(Process-2, started)>
+    │    └ None
+    └ <Process(Process-2, started)>
+  File "/usr/lib/python3.6/multiprocessing/context.py", line 223, in _Popen
+    return _default_context.get_context().Process._Popen(process_obj)
+           │                │                            └ <Process(Process-2, started)>
+           │                └ <function DefaultContext.get_context at 0x7fed7f408730>
+           └ <multiprocessing.context.DefaultContext object at 0x7fed7f4eab70>
+  File "/usr/lib/python3.6/multiprocessing/context.py", line 277, in _Popen
+    return Popen(process_obj)
+           │     └ <Process(Process-2, started)>
+           └ <class 'multiprocessing.popen_fork.Popen'>
+  File "/usr/lib/python3.6/multiprocessing/popen_fork.py", line 19, in __init__
+    self._launch(process_obj)
+    │    │       └ <Process(Process-2, started)>
+    │    └ <function Popen._launch at 0x7fed7a0bb400>
+    └ <multiprocessing.popen_fork.Popen object at 0x7fed7a0b3780>
+  File "/usr/lib/python3.6/multiprocessing/popen_fork.py", line 73, in _launch
+    code = process_obj._bootstrap()
+    │      │           └ <function BaseProcess._bootstrap at 0x7fed7f4f02f0>
+    │      └ <Process(Process-2, started)>
+    └ 1
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 258, in _bootstrap
+    self.run()
+    │    └ <function BaseProcess.run at 0x7fed7f4e6a60>
+    └ <Process(Process-2, started)>
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 93, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {}
+    │    │        │    │        └ <Process(Process-2, started)>
+    │    │        │    └ ()
+    │    │        └ <Process(Process-2, started)>
+    │    └ <bound method Scheduler.run_getter of <proxypool.scheduler.Scheduler object at 0x7fed7a0b37b8>>
+    └ <Process(Process-2, started)>
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/scheduler.py", line 48, in run_getter
+    getter.run()
+    │      └ <function Getter.run at 0x7fed7c397ea0>
+    └ <proxypool.processors.getter.Getter object at 0x7fed7f4ea048>
+
+> File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/processors/getter.py", line 36, in run
+    for proxy in crawler.crawl():
+        │        │       └ <function BaseCrawler.crawl at 0x7fed7c397620>
+        │        └ <public.iphai.IPHaiCrawler object at 0x7fed7a0b3a90>
+        └ Proxy(host='36.248.129.72', port=9999)
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/crawlers/base.py", line 25, in crawl
+    html = self.fetch(url)
+           │    │     └ 'http://www.iphai.com/'
+           │    └ <function BaseCrawler.fetch at 0x7fed7c397598>
+           └ <public.iphai.IPHaiCrawler object at 0x7fed7a0b3a90>
+
+  File "/home/alex/alex/virtualenvs/ProxyPoolLenv/lib/python3.6/site-packages/retrying.py", line 49, in wrapped_f
+    return Retrying(*dargs, **dkw).call(f, *args, **kw)
+           │         │        │         │   │       └ {}
+           │         │        │         │   └ (<public.iphai.IPHaiCrawler object at 0x7fed7a0b3a90>, 'http://www.iphai.com/')
+           │         │        │         └ <function BaseCrawler.fetch at 0x7fed7c397510>
+           │         │        └ {'stop_max_attempt_number': 3, 'retry_on_result': <function BaseCrawler.<lambda> at 0x7fed7c45fea0>}
+           │         └ ()
+           └ <class 'retrying.Retrying'>
+  File "/home/alex/alex/virtualenvs/ProxyPoolLenv/lib/python3.6/site-packages/retrying.py", line 214, in call
+    raise RetryError(attempt)
+          │          └ Attempts: 3, Value: None
+          └ <class 'retrying.RetryError'>
+
+retrying.RetryError: RetryError[Attempts: 3, Value: None]
+2020-03-29 18:39:29.506 | ERROR    | proxypool.processors.getter:run:36 - An error has been caught in function 'run', process 'Process-2' (7408), thread 'MainThread' (140658052323136):
+Traceback (most recent call last):
+
+  File "run.py", line 14, in <module>
+    Scheduler().run()
+    └ <class 'proxypool.scheduler.Scheduler'>
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/scheduler.py", line 73, in run
+    getter_process.start()
+    │              └ <function BaseProcess.start at 0x7fed7f4e6ae8>
+    └ <Process(Process-2, started)>
+
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 105, in start
+    self._popen = self._Popen(self)
+    │    │        │    │      └ <Process(Process-2, started)>
+    │    │        │    └ <staticmethod object at 0x7fed7f4e15f8>
+    │    │        └ <Process(Process-2, started)>
+    │    └ None
+    └ <Process(Process-2, started)>
+  File "/usr/lib/python3.6/multiprocessing/context.py", line 223, in _Popen
+    return _default_context.get_context().Process._Popen(process_obj)
+           │                │                            └ <Process(Process-2, started)>
+           │                └ <function DefaultContext.get_context at 0x7fed7f408730>
+           └ <multiprocessing.context.DefaultContext object at 0x7fed7f4eab70>
+  File "/usr/lib/python3.6/multiprocessing/context.py", line 277, in _Popen
+    return Popen(process_obj)
+           │     └ <Process(Process-2, started)>
+           └ <class 'multiprocessing.popen_fork.Popen'>
+  File "/usr/lib/python3.6/multiprocessing/popen_fork.py", line 19, in __init__
+    self._launch(process_obj)
+    │    │       └ <Process(Process-2, started)>
+    │    └ <function Popen._launch at 0x7fed7a0bb400>
+    └ <multiprocessing.popen_fork.Popen object at 0x7fed7a0b3780>
+  File "/usr/lib/python3.6/multiprocessing/popen_fork.py", line 73, in _launch
+    code = process_obj._bootstrap()
+    │      │           └ <function BaseProcess._bootstrap at 0x7fed7f4f02f0>
+    │      └ <Process(Process-2, started)>
+    └ 1
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 258, in _bootstrap
+    self.run()
+    │    └ <function BaseProcess.run at 0x7fed7f4e6a60>
+    └ <Process(Process-2, started)>
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 93, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {}
+    │    │        │    │        └ <Process(Process-2, started)>
+    │    │        │    └ ()
+    │    │        └ <Process(Process-2, started)>
+    │    └ <bound method Scheduler.run_getter of <proxypool.scheduler.Scheduler object at 0x7fed7a0b37b8>>
+    └ <Process(Process-2, started)>
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/scheduler.py", line 48, in run_getter
+    getter.run()
+    │      └ <function Getter.run at 0x7fed7c397ea0>
+    └ <proxypool.processors.getter.Getter object at 0x7fed7f4ea048>
+
+> File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/processors/getter.py", line 36, in run
+    for proxy in crawler.crawl():
+        │        │       └ <function BaseCrawler.crawl at 0x7fed7c397620>
+        │        └ <public.kuaidaili.KuaidailiCrawler object at 0x7fed7a0b3b70>
+        └ Proxy(host='118.113.246.182', port='9999')
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/crawlers/base.py", line 25, in crawl
+    html = self.fetch(url)
+    │      │    │     └ 'https://www.kuaidaili.com/free/inha/2/'
+    │      │    └ <function BaseCrawler.fetch at 0x7fed7c397598>
+    │      └ <public.kuaidaili.KuaidailiCrawler object at 0x7fed7a0b3b70>
+    └ '<!DOCTYPE html>\n<html>\n<head>\n<meta http-equiv="X-UA-Compatible" content="IE=edge" />\n<meta http-equiv="Content-Type" co...
+
+  File "/home/alex/alex/virtualenvs/ProxyPoolLenv/lib/python3.6/site-packages/retrying.py", line 49, in wrapped_f
+    return Retrying(*dargs, **dkw).call(f, *args, **kw)
+           │         │        │         │   │       └ {}
+           │         │        │         │   └ (<public.kuaidaili.KuaidailiCrawler object at 0x7fed7a0b3b70>, 'https://www.kuaidaili.com/free/inha/2/')
+           │         │        │         └ <function BaseCrawler.fetch at 0x7fed7c397510>
+           │         │        └ {'stop_max_attempt_number': 3, 'retry_on_result': <function BaseCrawler.<lambda> at 0x7fed7c45fea0>}
+           │         └ ()
+           └ <class 'retrying.Retrying'>
+  File "/home/alex/alex/virtualenvs/ProxyPoolLenv/lib/python3.6/site-packages/retrying.py", line 214, in call
+    raise RetryError(attempt)
+          │          └ Attempts: 3, Value: None
+          └ <class 'retrying.RetryError'>
+
+retrying.RetryError: RetryError[Attempts: 3, Value: None]
+2020-03-29 18:41:22.982 | ERROR    | proxypool.processors.getter:run:36 - An error has been caught in function 'run', process 'Process-2' (7408), thread 'MainThread' (140658052323136):
+Traceback (most recent call last):
+
+  File "run.py", line 14, in <module>
+    Scheduler().run()
+    └ <class 'proxypool.scheduler.Scheduler'>
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/scheduler.py", line 73, in run
+    getter_process.start()
+    │              └ <function BaseProcess.start at 0x7fed7f4e6ae8>
+    └ <Process(Process-2, started)>
+
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 105, in start
+    self._popen = self._Popen(self)
+    │    │        │    │      └ <Process(Process-2, started)>
+    │    │        │    └ <staticmethod object at 0x7fed7f4e15f8>
+    │    │        └ <Process(Process-2, started)>
+    │    └ None
+    └ <Process(Process-2, started)>
+  File "/usr/lib/python3.6/multiprocessing/context.py", line 223, in _Popen
+    return _default_context.get_context().Process._Popen(process_obj)
+           │                │                            └ <Process(Process-2, started)>
+           │                └ <function DefaultContext.get_context at 0x7fed7f408730>
+           └ <multiprocessing.context.DefaultContext object at 0x7fed7f4eab70>
+  File "/usr/lib/python3.6/multiprocessing/context.py", line 277, in _Popen
+    return Popen(process_obj)
+           │     └ <Process(Process-2, started)>
+           └ <class 'multiprocessing.popen_fork.Popen'>
+  File "/usr/lib/python3.6/multiprocessing/popen_fork.py", line 19, in __init__
+    self._launch(process_obj)
+    │    │       └ <Process(Process-2, started)>
+    │    └ <function Popen._launch at 0x7fed7a0bb400>
+    └ <multiprocessing.popen_fork.Popen object at 0x7fed7a0b3780>
+  File "/usr/lib/python3.6/multiprocessing/popen_fork.py", line 73, in _launch
+    code = process_obj._bootstrap()
+    │      │           └ <function BaseProcess._bootstrap at 0x7fed7f4f02f0>
+    │      └ <Process(Process-2, started)>
+    └ 1
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 258, in _bootstrap
+    self.run()
+    │    └ <function BaseProcess.run at 0x7fed7f4e6a60>
+    └ <Process(Process-2, started)>
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 93, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {}
+    │    │        │    │        └ <Process(Process-2, started)>
+    │    │        │    └ ()
+    │    │        └ <Process(Process-2, started)>
+    │    └ <bound method Scheduler.run_getter of <proxypool.scheduler.Scheduler object at 0x7fed7a0b37b8>>
+    └ <Process(Process-2, started)>
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/scheduler.py", line 48, in run_getter
+    getter.run()
+    │      └ <function Getter.run at 0x7fed7c397ea0>
+    └ <proxypool.processors.getter.Getter object at 0x7fed7f4ea048>
+
+> File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/processors/getter.py", line 36, in run
+    for proxy in crawler.crawl():
+        │        │       └ <function BaseCrawler.crawl at 0x7fed7c397620>
+        │        └ <public.iphai.IPHaiCrawler object at 0x7fed7a0b3a90>
+        └ Proxy(host='36.248.129.72', port=9999)
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/crawlers/base.py", line 25, in crawl
+    html = self.fetch(url)
+           │    │     └ 'http://www.iphai.com/'
+           │    └ <function BaseCrawler.fetch at 0x7fed7c397598>
+           └ <public.iphai.IPHaiCrawler object at 0x7fed7a0b3a90>
+
+  File "/home/alex/alex/virtualenvs/ProxyPoolLenv/lib/python3.6/site-packages/retrying.py", line 49, in wrapped_f
+    return Retrying(*dargs, **dkw).call(f, *args, **kw)
+           │         │        │         │   │       └ {}
+           │         │        │         │   └ (<public.iphai.IPHaiCrawler object at 0x7fed7a0b3a90>, 'http://www.iphai.com/')
+           │         │        │         └ <function BaseCrawler.fetch at 0x7fed7c397510>
+           │         │        └ {'stop_max_attempt_number': 3, 'retry_on_result': <function BaseCrawler.<lambda> at 0x7fed7c45fea0>}
+           │         └ ()
+           └ <class 'retrying.Retrying'>
+  File "/home/alex/alex/virtualenvs/ProxyPoolLenv/lib/python3.6/site-packages/retrying.py", line 214, in call
+    raise RetryError(attempt)
+          │          └ Attempts: 3, Value: None
+          └ <class 'retrying.RetryError'>
+
+retrying.RetryError: RetryError[Attempts: 3, Value: None]
+2020-03-29 18:41:23.597 | ERROR    | proxypool.processors.getter:run:36 - An error has been caught in function 'run', process 'Process-2' (7408), thread 'MainThread' (140658052323136):
+Traceback (most recent call last):
+
+  File "run.py", line 14, in <module>
+    Scheduler().run()
+    └ <class 'proxypool.scheduler.Scheduler'>
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/scheduler.py", line 73, in run
+    getter_process.start()
+    │              └ <function BaseProcess.start at 0x7fed7f4e6ae8>
+    └ <Process(Process-2, started)>
+
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 105, in start
+    self._popen = self._Popen(self)
+    │    │        │    │      └ <Process(Process-2, started)>
+    │    │        │    └ <staticmethod object at 0x7fed7f4e15f8>
+    │    │        └ <Process(Process-2, started)>
+    │    └ None
+    └ <Process(Process-2, started)>
+  File "/usr/lib/python3.6/multiprocessing/context.py", line 223, in _Popen
+    return _default_context.get_context().Process._Popen(process_obj)
+           │                │                            └ <Process(Process-2, started)>
+           │                └ <function DefaultContext.get_context at 0x7fed7f408730>
+           └ <multiprocessing.context.DefaultContext object at 0x7fed7f4eab70>
+  File "/usr/lib/python3.6/multiprocessing/context.py", line 277, in _Popen
+    return Popen(process_obj)
+           │     └ <Process(Process-2, started)>
+           └ <class 'multiprocessing.popen_fork.Popen'>
+  File "/usr/lib/python3.6/multiprocessing/popen_fork.py", line 19, in __init__
+    self._launch(process_obj)
+    │    │       └ <Process(Process-2, started)>
+    │    └ <function Popen._launch at 0x7fed7a0bb400>
+    └ <multiprocessing.popen_fork.Popen object at 0x7fed7a0b3780>
+  File "/usr/lib/python3.6/multiprocessing/popen_fork.py", line 73, in _launch
+    code = process_obj._bootstrap()
+    │      │           └ <function BaseProcess._bootstrap at 0x7fed7f4f02f0>
+    │      └ <Process(Process-2, started)>
+    └ 1
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 258, in _bootstrap
+    self.run()
+    │    └ <function BaseProcess.run at 0x7fed7f4e6a60>
+    └ <Process(Process-2, started)>
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 93, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {}
+    │    │        │    │        └ <Process(Process-2, started)>
+    │    │        │    └ ()
+    │    │        └ <Process(Process-2, started)>
+    │    └ <bound method Scheduler.run_getter of <proxypool.scheduler.Scheduler object at 0x7fed7a0b37b8>>
+    └ <Process(Process-2, started)>
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/scheduler.py", line 48, in run_getter
+    getter.run()
+    │      └ <function Getter.run at 0x7fed7c397ea0>
+    └ <proxypool.processors.getter.Getter object at 0x7fed7f4ea048>
+
+> File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/processors/getter.py", line 36, in run
+    for proxy in crawler.crawl():
+        │        │       └ <function BaseCrawler.crawl at 0x7fed7c397620>
+        │        └ <public.kuaidaili.KuaidailiCrawler object at 0x7fed7a0b3b70>
+        └ Proxy(host='118.113.246.182', port='9999')
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/crawlers/base.py", line 25, in crawl
+    html = self.fetch(url)
+    │      │    │     └ 'https://www.kuaidaili.com/free/inha/2/'
+    │      │    └ <function BaseCrawler.fetch at 0x7fed7c397598>
+    │      └ <public.kuaidaili.KuaidailiCrawler object at 0x7fed7a0b3b70>
+    └ '<!DOCTYPE html>\n<html>\n<head>\n<meta http-equiv="X-UA-Compatible" content="IE=edge" />\n<meta http-equiv="Content-Type" co...
+
+  File "/home/alex/alex/virtualenvs/ProxyPoolLenv/lib/python3.6/site-packages/retrying.py", line 49, in wrapped_f
+    return Retrying(*dargs, **dkw).call(f, *args, **kw)
+           │         │        │         │   │       └ {}
+           │         │        │         │   └ (<public.kuaidaili.KuaidailiCrawler object at 0x7fed7a0b3b70>, 'https://www.kuaidaili.com/free/inha/2/')
+           │         │        │         └ <function BaseCrawler.fetch at 0x7fed7c397510>
+           │         │        └ {'stop_max_attempt_number': 3, 'retry_on_result': <function BaseCrawler.<lambda> at 0x7fed7c45fea0>}
+           │         └ ()
+           └ <class 'retrying.Retrying'>
+  File "/home/alex/alex/virtualenvs/ProxyPoolLenv/lib/python3.6/site-packages/retrying.py", line 214, in call
+    raise RetryError(attempt)
+          │          └ Attempts: 3, Value: None
+          └ <class 'retrying.RetryError'>
+
+retrying.RetryError: RetryError[Attempts: 3, Value: None]
+2020-03-29 18:44:00.475 | ERROR    | proxypool.processors.getter:run:36 - An error has been caught in function 'run', process 'Process-2' (7408), thread 'MainThread' (140658052323136):
+Traceback (most recent call last):
+
+  File "run.py", line 14, in <module>
+    Scheduler().run()
+    └ <class 'proxypool.scheduler.Scheduler'>
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/scheduler.py", line 73, in run
+    getter_process.start()
+    │              └ <function BaseProcess.start at 0x7fed7f4e6ae8>
+    └ <Process(Process-2, started)>
+
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 105, in start
+    self._popen = self._Popen(self)
+    │    │        │    │      └ <Process(Process-2, started)>
+    │    │        │    └ <staticmethod object at 0x7fed7f4e15f8>
+    │    │        └ <Process(Process-2, started)>
+    │    └ None
+    └ <Process(Process-2, started)>
+  File "/usr/lib/python3.6/multiprocessing/context.py", line 223, in _Popen
+    return _default_context.get_context().Process._Popen(process_obj)
+           │                │                            └ <Process(Process-2, started)>
+           │                └ <function DefaultContext.get_context at 0x7fed7f408730>
+           └ <multiprocessing.context.DefaultContext object at 0x7fed7f4eab70>
+  File "/usr/lib/python3.6/multiprocessing/context.py", line 277, in _Popen
+    return Popen(process_obj)
+           │     └ <Process(Process-2, started)>
+           └ <class 'multiprocessing.popen_fork.Popen'>
+  File "/usr/lib/python3.6/multiprocessing/popen_fork.py", line 19, in __init__
+    self._launch(process_obj)
+    │    │       └ <Process(Process-2, started)>
+    │    └ <function Popen._launch at 0x7fed7a0bb400>
+    └ <multiprocessing.popen_fork.Popen object at 0x7fed7a0b3780>
+  File "/usr/lib/python3.6/multiprocessing/popen_fork.py", line 73, in _launch
+    code = process_obj._bootstrap()
+    │      │           └ <function BaseProcess._bootstrap at 0x7fed7f4f02f0>
+    │      └ <Process(Process-2, started)>
+    └ 1
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 258, in _bootstrap
+    self.run()
+    │    └ <function BaseProcess.run at 0x7fed7f4e6a60>
+    └ <Process(Process-2, started)>
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 93, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {}
+    │    │        │    │        └ <Process(Process-2, started)>
+    │    │        │    └ ()
+    │    │        └ <Process(Process-2, started)>
+    │    └ <bound method Scheduler.run_getter of <proxypool.scheduler.Scheduler object at 0x7fed7a0b37b8>>
+    └ <Process(Process-2, started)>
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/scheduler.py", line 48, in run_getter
+    getter.run()
+    │      └ <function Getter.run at 0x7fed7c397ea0>
+    └ <proxypool.processors.getter.Getter object at 0x7fed7f4ea048>
+
+> File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/processors/getter.py", line 36, in run
+    for proxy in crawler.crawl():
+        │        │       └ <function BaseCrawler.crawl at 0x7fed7c397620>
+        │        └ <public.iphai.IPHaiCrawler object at 0x7fed7a0b3a90>
+        └ Proxy(host='36.248.129.72', port=9999)
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/crawlers/base.py", line 25, in crawl
+    html = self.fetch(url)
+           │    │     └ 'http://www.iphai.com/'
+           │    └ <function BaseCrawler.fetch at 0x7fed7c397598>
+           └ <public.iphai.IPHaiCrawler object at 0x7fed7a0b3a90>
+
+  File "/home/alex/alex/virtualenvs/ProxyPoolLenv/lib/python3.6/site-packages/retrying.py", line 49, in wrapped_f
+    return Retrying(*dargs, **dkw).call(f, *args, **kw)
+           │         │        │         │   │       └ {}
+           │         │        │         │   └ (<public.iphai.IPHaiCrawler object at 0x7fed7a0b3a90>, 'http://www.iphai.com/')
+           │         │        │         └ <function BaseCrawler.fetch at 0x7fed7c397510>
+           │         │        └ {'stop_max_attempt_number': 3, 'retry_on_result': <function BaseCrawler.<lambda> at 0x7fed7c45fea0>}
+           │         └ ()
+           └ <class 'retrying.Retrying'>
+  File "/home/alex/alex/virtualenvs/ProxyPoolLenv/lib/python3.6/site-packages/retrying.py", line 214, in call
+    raise RetryError(attempt)
+          │          └ Attempts: 3, Value: None
+          └ <class 'retrying.RetryError'>
+
+retrying.RetryError: RetryError[Attempts: 3, Value: None]
+2020-03-29 18:44:01.096 | ERROR    | proxypool.processors.getter:run:36 - An error has been caught in function 'run', process 'Process-2' (7408), thread 'MainThread' (140658052323136):
+Traceback (most recent call last):
+
+  File "run.py", line 14, in <module>
+    Scheduler().run()
+    └ <class 'proxypool.scheduler.Scheduler'>
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/scheduler.py", line 73, in run
+    getter_process.start()
+    │              └ <function BaseProcess.start at 0x7fed7f4e6ae8>
+    └ <Process(Process-2, started)>
+
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 105, in start
+    self._popen = self._Popen(self)
+    │    │        │    │      └ <Process(Process-2, started)>
+    │    │        │    └ <staticmethod object at 0x7fed7f4e15f8>
+    │    │        └ <Process(Process-2, started)>
+    │    └ None
+    └ <Process(Process-2, started)>
+  File "/usr/lib/python3.6/multiprocessing/context.py", line 223, in _Popen
+    return _default_context.get_context().Process._Popen(process_obj)
+           │                │                            └ <Process(Process-2, started)>
+           │                └ <function DefaultContext.get_context at 0x7fed7f408730>
+           └ <multiprocessing.context.DefaultContext object at 0x7fed7f4eab70>
+  File "/usr/lib/python3.6/multiprocessing/context.py", line 277, in _Popen
+    return Popen(process_obj)
+           │     └ <Process(Process-2, started)>
+           └ <class 'multiprocessing.popen_fork.Popen'>
+  File "/usr/lib/python3.6/multiprocessing/popen_fork.py", line 19, in __init__
+    self._launch(process_obj)
+    │    │       └ <Process(Process-2, started)>
+    │    └ <function Popen._launch at 0x7fed7a0bb400>
+    └ <multiprocessing.popen_fork.Popen object at 0x7fed7a0b3780>
+  File "/usr/lib/python3.6/multiprocessing/popen_fork.py", line 73, in _launch
+    code = process_obj._bootstrap()
+    │      │           └ <function BaseProcess._bootstrap at 0x7fed7f4f02f0>
+    │      └ <Process(Process-2, started)>
+    └ 1
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 258, in _bootstrap
+    self.run()
+    │    └ <function BaseProcess.run at 0x7fed7f4e6a60>
+    └ <Process(Process-2, started)>
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 93, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {}
+    │    │        │    │        └ <Process(Process-2, started)>
+    │    │        │    └ ()
+    │    │        └ <Process(Process-2, started)>
+    │    └ <bound method Scheduler.run_getter of <proxypool.scheduler.Scheduler object at 0x7fed7a0b37b8>>
+    └ <Process(Process-2, started)>
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/scheduler.py", line 48, in run_getter
+    getter.run()
+    │      └ <function Getter.run at 0x7fed7c397ea0>
+    └ <proxypool.processors.getter.Getter object at 0x7fed7f4ea048>
+
+> File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/processors/getter.py", line 36, in run
+    for proxy in crawler.crawl():
+        │        │       └ <function BaseCrawler.crawl at 0x7fed7c397620>
+        │        └ <public.kuaidaili.KuaidailiCrawler object at 0x7fed7a0b3b70>
+        └ Proxy(host='118.113.246.182', port='9999')
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/crawlers/base.py", line 25, in crawl
+    html = self.fetch(url)
+    │      │    │     └ 'https://www.kuaidaili.com/free/inha/2/'
+    │      │    └ <function BaseCrawler.fetch at 0x7fed7c397598>
+    │      └ <public.kuaidaili.KuaidailiCrawler object at 0x7fed7a0b3b70>
+    └ '<!DOCTYPE html>\n<html>\n<head>\n<meta http-equiv="X-UA-Compatible" content="IE=edge" />\n<meta http-equiv="Content-Type" co...
+
+  File "/home/alex/alex/virtualenvs/ProxyPoolLenv/lib/python3.6/site-packages/retrying.py", line 49, in wrapped_f
+    return Retrying(*dargs, **dkw).call(f, *args, **kw)
+           │         │        │         │   │       └ {}
+           │         │        │         │   └ (<public.kuaidaili.KuaidailiCrawler object at 0x7fed7a0b3b70>, 'https://www.kuaidaili.com/free/inha/2/')
+           │         │        │         └ <function BaseCrawler.fetch at 0x7fed7c397510>
+           │         │        └ {'stop_max_attempt_number': 3, 'retry_on_result': <function BaseCrawler.<lambda> at 0x7fed7c45fea0>}
+           │         └ ()
+           └ <class 'retrying.Retrying'>
+  File "/home/alex/alex/virtualenvs/ProxyPoolLenv/lib/python3.6/site-packages/retrying.py", line 214, in call
+    raise RetryError(attempt)
+          │          └ Attempts: 3, Value: None
+          └ <class 'retrying.RetryError'>
+
+retrying.RetryError: RetryError[Attempts: 3, Value: None]
+2020-03-29 18:46:34.796 | ERROR    | proxypool.processors.getter:run:36 - An error has been caught in function 'run', process 'Process-2' (7408), thread 'MainThread' (140658052323136):
+Traceback (most recent call last):
+
+  File "run.py", line 14, in <module>
+    Scheduler().run()
+    └ <class 'proxypool.scheduler.Scheduler'>
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/scheduler.py", line 73, in run
+    getter_process.start()
+    │              └ <function BaseProcess.start at 0x7fed7f4e6ae8>
+    └ <Process(Process-2, started)>
+
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 105, in start
+    self._popen = self._Popen(self)
+    │    │        │    │      └ <Process(Process-2, started)>
+    │    │        │    └ <staticmethod object at 0x7fed7f4e15f8>
+    │    │        └ <Process(Process-2, started)>
+    │    └ None
+    └ <Process(Process-2, started)>
+  File "/usr/lib/python3.6/multiprocessing/context.py", line 223, in _Popen
+    return _default_context.get_context().Process._Popen(process_obj)
+           │                │                            └ <Process(Process-2, started)>
+           │                └ <function DefaultContext.get_context at 0x7fed7f408730>
+           └ <multiprocessing.context.DefaultContext object at 0x7fed7f4eab70>
+  File "/usr/lib/python3.6/multiprocessing/context.py", line 277, in _Popen
+    return Popen(process_obj)
+           │     └ <Process(Process-2, started)>
+           └ <class 'multiprocessing.popen_fork.Popen'>
+  File "/usr/lib/python3.6/multiprocessing/popen_fork.py", line 19, in __init__
+    self._launch(process_obj)
+    │    │       └ <Process(Process-2, started)>
+    │    └ <function Popen._launch at 0x7fed7a0bb400>
+    └ <multiprocessing.popen_fork.Popen object at 0x7fed7a0b3780>
+  File "/usr/lib/python3.6/multiprocessing/popen_fork.py", line 73, in _launch
+    code = process_obj._bootstrap()
+    │      │           └ <function BaseProcess._bootstrap at 0x7fed7f4f02f0>
+    │      └ <Process(Process-2, started)>
+    └ 1
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 258, in _bootstrap
+    self.run()
+    │    └ <function BaseProcess.run at 0x7fed7f4e6a60>
+    └ <Process(Process-2, started)>
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 93, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {}
+    │    │        │    │        └ <Process(Process-2, started)>
+    │    │        │    └ ()
+    │    │        └ <Process(Process-2, started)>
+    │    └ <bound method Scheduler.run_getter of <proxypool.scheduler.Scheduler object at 0x7fed7a0b37b8>>
+    └ <Process(Process-2, started)>
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/scheduler.py", line 48, in run_getter
+    getter.run()
+    │      └ <function Getter.run at 0x7fed7c397ea0>
+    └ <proxypool.processors.getter.Getter object at 0x7fed7f4ea048>
+
+> File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/processors/getter.py", line 36, in run
+    for proxy in crawler.crawl():
+        │        │       └ <function BaseCrawler.crawl at 0x7fed7c397620>
+        │        └ <public.iphai.IPHaiCrawler object at 0x7fed7a0b3a90>
+        └ Proxy(host='36.248.129.72', port=9999)
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/crawlers/base.py", line 25, in crawl
+    html = self.fetch(url)
+           │    │     └ 'http://www.iphai.com/'
+           │    └ <function BaseCrawler.fetch at 0x7fed7c397598>
+           └ <public.iphai.IPHaiCrawler object at 0x7fed7a0b3a90>
+
+  File "/home/alex/alex/virtualenvs/ProxyPoolLenv/lib/python3.6/site-packages/retrying.py", line 49, in wrapped_f
+    return Retrying(*dargs, **dkw).call(f, *args, **kw)
+           │         │        │         │   │       └ {}
+           │         │        │         │   └ (<public.iphai.IPHaiCrawler object at 0x7fed7a0b3a90>, 'http://www.iphai.com/')
+           │         │        │         └ <function BaseCrawler.fetch at 0x7fed7c397510>
+           │         │        └ {'stop_max_attempt_number': 3, 'retry_on_result': <function BaseCrawler.<lambda> at 0x7fed7c45fea0>}
+           │         └ ()
+           └ <class 'retrying.Retrying'>
+  File "/home/alex/alex/virtualenvs/ProxyPoolLenv/lib/python3.6/site-packages/retrying.py", line 214, in call
+    raise RetryError(attempt)
+          │          └ Attempts: 3, Value: None
+          └ <class 'retrying.RetryError'>
+
+retrying.RetryError: RetryError[Attempts: 3, Value: None]
+2020-03-29 18:46:35.390 | ERROR    | proxypool.processors.getter:run:36 - An error has been caught in function 'run', process 'Process-2' (7408), thread 'MainThread' (140658052323136):
+Traceback (most recent call last):
+
+  File "run.py", line 14, in <module>
+    Scheduler().run()
+    └ <class 'proxypool.scheduler.Scheduler'>
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/scheduler.py", line 73, in run
+    getter_process.start()
+    │              └ <function BaseProcess.start at 0x7fed7f4e6ae8>
+    └ <Process(Process-2, started)>
+
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 105, in start
+    self._popen = self._Popen(self)
+    │    │        │    │      └ <Process(Process-2, started)>
+    │    │        │    └ <staticmethod object at 0x7fed7f4e15f8>
+    │    │        └ <Process(Process-2, started)>
+    │    └ None
+    └ <Process(Process-2, started)>
+  File "/usr/lib/python3.6/multiprocessing/context.py", line 223, in _Popen
+    return _default_context.get_context().Process._Popen(process_obj)
+           │                │                            └ <Process(Process-2, started)>
+           │                └ <function DefaultContext.get_context at 0x7fed7f408730>
+           └ <multiprocessing.context.DefaultContext object at 0x7fed7f4eab70>
+  File "/usr/lib/python3.6/multiprocessing/context.py", line 277, in _Popen
+    return Popen(process_obj)
+           │     └ <Process(Process-2, started)>
+           └ <class 'multiprocessing.popen_fork.Popen'>
+  File "/usr/lib/python3.6/multiprocessing/popen_fork.py", line 19, in __init__
+    self._launch(process_obj)
+    │    │       └ <Process(Process-2, started)>
+    │    └ <function Popen._launch at 0x7fed7a0bb400>
+    └ <multiprocessing.popen_fork.Popen object at 0x7fed7a0b3780>
+  File "/usr/lib/python3.6/multiprocessing/popen_fork.py", line 73, in _launch
+    code = process_obj._bootstrap()
+    │      │           └ <function BaseProcess._bootstrap at 0x7fed7f4f02f0>
+    │      └ <Process(Process-2, started)>
+    └ 1
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 258, in _bootstrap
+    self.run()
+    │    └ <function BaseProcess.run at 0x7fed7f4e6a60>
+    └ <Process(Process-2, started)>
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 93, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {}
+    │    │        │    │        └ <Process(Process-2, started)>
+    │    │        │    └ ()
+    │    │        └ <Process(Process-2, started)>
+    │    └ <bound method Scheduler.run_getter of <proxypool.scheduler.Scheduler object at 0x7fed7a0b37b8>>
+    └ <Process(Process-2, started)>
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/scheduler.py", line 48, in run_getter
+    getter.run()
+    │      └ <function Getter.run at 0x7fed7c397ea0>
+    └ <proxypool.processors.getter.Getter object at 0x7fed7f4ea048>
+
+> File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/processors/getter.py", line 36, in run
+    for proxy in crawler.crawl():
+        │        │       └ <function BaseCrawler.crawl at 0x7fed7c397620>
+        │        └ <public.kuaidaili.KuaidailiCrawler object at 0x7fed7a0b3b70>
+        └ Proxy(host='118.113.246.182', port='9999')
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/crawlers/base.py", line 25, in crawl
+    html = self.fetch(url)
+    │      │    │     └ 'https://www.kuaidaili.com/free/inha/2/'
+    │      │    └ <function BaseCrawler.fetch at 0x7fed7c397598>
+    │      └ <public.kuaidaili.KuaidailiCrawler object at 0x7fed7a0b3b70>
+    └ '<!DOCTYPE html>\n<html>\n<head>\n<meta http-equiv="X-UA-Compatible" content="IE=edge" />\n<meta http-equiv="Content-Type" co...
+
+  File "/home/alex/alex/virtualenvs/ProxyPoolLenv/lib/python3.6/site-packages/retrying.py", line 49, in wrapped_f
+    return Retrying(*dargs, **dkw).call(f, *args, **kw)
+           │         │        │         │   │       └ {}
+           │         │        │         │   └ (<public.kuaidaili.KuaidailiCrawler object at 0x7fed7a0b3b70>, 'https://www.kuaidaili.com/free/inha/2/')
+           │         │        │         └ <function BaseCrawler.fetch at 0x7fed7c397510>
+           │         │        └ {'stop_max_attempt_number': 3, 'retry_on_result': <function BaseCrawler.<lambda> at 0x7fed7c45fea0>}
+           │         └ ()
+           └ <class 'retrying.Retrying'>
+  File "/home/alex/alex/virtualenvs/ProxyPoolLenv/lib/python3.6/site-packages/retrying.py", line 214, in call
+    raise RetryError(attempt)
+          │          └ Attempts: 3, Value: None
+          └ <class 'retrying.RetryError'>
+
+retrying.RetryError: RetryError[Attempts: 3, Value: None]
+2020-03-29 18:48:27.529 | ERROR    | proxypool.processors.getter:run:36 - An error has been caught in function 'run', process 'Process-2' (7408), thread 'MainThread' (140658052323136):
+Traceback (most recent call last):
+
+  File "run.py", line 14, in <module>
+    Scheduler().run()
+    └ <class 'proxypool.scheduler.Scheduler'>
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/scheduler.py", line 73, in run
+    getter_process.start()
+    │              └ <function BaseProcess.start at 0x7fed7f4e6ae8>
+    └ <Process(Process-2, started)>
+
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 105, in start
+    self._popen = self._Popen(self)
+    │    │        │    │      └ <Process(Process-2, started)>
+    │    │        │    └ <staticmethod object at 0x7fed7f4e15f8>
+    │    │        └ <Process(Process-2, started)>
+    │    └ None
+    └ <Process(Process-2, started)>
+  File "/usr/lib/python3.6/multiprocessing/context.py", line 223, in _Popen
+    return _default_context.get_context().Process._Popen(process_obj)
+           │                │                            └ <Process(Process-2, started)>
+           │                └ <function DefaultContext.get_context at 0x7fed7f408730>
+           └ <multiprocessing.context.DefaultContext object at 0x7fed7f4eab70>
+  File "/usr/lib/python3.6/multiprocessing/context.py", line 277, in _Popen
+    return Popen(process_obj)
+           │     └ <Process(Process-2, started)>
+           └ <class 'multiprocessing.popen_fork.Popen'>
+  File "/usr/lib/python3.6/multiprocessing/popen_fork.py", line 19, in __init__
+    self._launch(process_obj)
+    │    │       └ <Process(Process-2, started)>
+    │    └ <function Popen._launch at 0x7fed7a0bb400>
+    └ <multiprocessing.popen_fork.Popen object at 0x7fed7a0b3780>
+  File "/usr/lib/python3.6/multiprocessing/popen_fork.py", line 73, in _launch
+    code = process_obj._bootstrap()
+    │      │           └ <function BaseProcess._bootstrap at 0x7fed7f4f02f0>
+    │      └ <Process(Process-2, started)>
+    └ 1
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 258, in _bootstrap
+    self.run()
+    │    └ <function BaseProcess.run at 0x7fed7f4e6a60>
+    └ <Process(Process-2, started)>
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 93, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {}
+    │    │        │    │        └ <Process(Process-2, started)>
+    │    │        │    └ ()
+    │    │        └ <Process(Process-2, started)>
+    │    └ <bound method Scheduler.run_getter of <proxypool.scheduler.Scheduler object at 0x7fed7a0b37b8>>
+    └ <Process(Process-2, started)>
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/scheduler.py", line 48, in run_getter
+    getter.run()
+    │      └ <function Getter.run at 0x7fed7c397ea0>
+    └ <proxypool.processors.getter.Getter object at 0x7fed7f4ea048>
+
+> File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/processors/getter.py", line 36, in run
+    for proxy in crawler.crawl():
+        │        │       └ <function BaseCrawler.crawl at 0x7fed7c397620>
+        │        └ <public.iphai.IPHaiCrawler object at 0x7fed7a0b3a90>
+        └ Proxy(host='36.248.129.72', port=9999)
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/crawlers/base.py", line 25, in crawl
+    html = self.fetch(url)
+           │    │     └ 'http://www.iphai.com/'
+           │    └ <function BaseCrawler.fetch at 0x7fed7c397598>
+           └ <public.iphai.IPHaiCrawler object at 0x7fed7a0b3a90>
+
+  File "/home/alex/alex/virtualenvs/ProxyPoolLenv/lib/python3.6/site-packages/retrying.py", line 49, in wrapped_f
+    return Retrying(*dargs, **dkw).call(f, *args, **kw)
+           │         │        │         │   │       └ {}
+           │         │        │         │   └ (<public.iphai.IPHaiCrawler object at 0x7fed7a0b3a90>, 'http://www.iphai.com/')
+           │         │        │         └ <function BaseCrawler.fetch at 0x7fed7c397510>
+           │         │        └ {'stop_max_attempt_number': 3, 'retry_on_result': <function BaseCrawler.<lambda> at 0x7fed7c45fea0>}
+           │         └ ()
+           └ <class 'retrying.Retrying'>
+  File "/home/alex/alex/virtualenvs/ProxyPoolLenv/lib/python3.6/site-packages/retrying.py", line 214, in call
+    raise RetryError(attempt)
+          │          └ Attempts: 3, Value: None
+          └ <class 'retrying.RetryError'>
+
+retrying.RetryError: RetryError[Attempts: 3, Value: None]
+2020-03-29 18:48:28.122 | ERROR    | proxypool.processors.getter:run:36 - An error has been caught in function 'run', process 'Process-2' (7408), thread 'MainThread' (140658052323136):
+Traceback (most recent call last):
+
+  File "run.py", line 14, in <module>
+    Scheduler().run()
+    └ <class 'proxypool.scheduler.Scheduler'>
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/scheduler.py", line 73, in run
+    getter_process.start()
+    │              └ <function BaseProcess.start at 0x7fed7f4e6ae8>
+    └ <Process(Process-2, started)>
+
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 105, in start
+    self._popen = self._Popen(self)
+    │    │        │    │      └ <Process(Process-2, started)>
+    │    │        │    └ <staticmethod object at 0x7fed7f4e15f8>
+    │    │        └ <Process(Process-2, started)>
+    │    └ None
+    └ <Process(Process-2, started)>
+  File "/usr/lib/python3.6/multiprocessing/context.py", line 223, in _Popen
+    return _default_context.get_context().Process._Popen(process_obj)
+           │                │                            └ <Process(Process-2, started)>
+           │                └ <function DefaultContext.get_context at 0x7fed7f408730>
+           └ <multiprocessing.context.DefaultContext object at 0x7fed7f4eab70>
+  File "/usr/lib/python3.6/multiprocessing/context.py", line 277, in _Popen
+    return Popen(process_obj)
+           │     └ <Process(Process-2, started)>
+           └ <class 'multiprocessing.popen_fork.Popen'>
+  File "/usr/lib/python3.6/multiprocessing/popen_fork.py", line 19, in __init__
+    self._launch(process_obj)
+    │    │       └ <Process(Process-2, started)>
+    │    └ <function Popen._launch at 0x7fed7a0bb400>
+    └ <multiprocessing.popen_fork.Popen object at 0x7fed7a0b3780>
+  File "/usr/lib/python3.6/multiprocessing/popen_fork.py", line 73, in _launch
+    code = process_obj._bootstrap()
+    │      │           └ <function BaseProcess._bootstrap at 0x7fed7f4f02f0>
+    │      └ <Process(Process-2, started)>
+    └ 1
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 258, in _bootstrap
+    self.run()
+    │    └ <function BaseProcess.run at 0x7fed7f4e6a60>
+    └ <Process(Process-2, started)>
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 93, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {}
+    │    │        │    │        └ <Process(Process-2, started)>
+    │    │        │    └ ()
+    │    │        └ <Process(Process-2, started)>
+    │    └ <bound method Scheduler.run_getter of <proxypool.scheduler.Scheduler object at 0x7fed7a0b37b8>>
+    └ <Process(Process-2, started)>
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/scheduler.py", line 48, in run_getter
+    getter.run()
+    │      └ <function Getter.run at 0x7fed7c397ea0>
+    └ <proxypool.processors.getter.Getter object at 0x7fed7f4ea048>
+
+> File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/processors/getter.py", line 36, in run
+    for proxy in crawler.crawl():
+        │        │       └ <function BaseCrawler.crawl at 0x7fed7c397620>
+        │        └ <public.kuaidaili.KuaidailiCrawler object at 0x7fed7a0b3b70>
+        └ Proxy(host='118.113.246.182', port='9999')
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/crawlers/base.py", line 25, in crawl
+    html = self.fetch(url)
+    │      │    │     └ 'https://www.kuaidaili.com/free/inha/2/'
+    │      │    └ <function BaseCrawler.fetch at 0x7fed7c397598>
+    │      └ <public.kuaidaili.KuaidailiCrawler object at 0x7fed7a0b3b70>
+    └ '<!DOCTYPE html>\n<html>\n<head>\n<meta http-equiv="X-UA-Compatible" content="IE=edge" />\n<meta http-equiv="Content-Type" co...
+
+  File "/home/alex/alex/virtualenvs/ProxyPoolLenv/lib/python3.6/site-packages/retrying.py", line 49, in wrapped_f
+    return Retrying(*dargs, **dkw).call(f, *args, **kw)
+           │         │        │         │   │       └ {}
+           │         │        │         │   └ (<public.kuaidaili.KuaidailiCrawler object at 0x7fed7a0b3b70>, 'https://www.kuaidaili.com/free/inha/2/')
+           │         │        │         └ <function BaseCrawler.fetch at 0x7fed7c397510>
+           │         │        └ {'stop_max_attempt_number': 3, 'retry_on_result': <function BaseCrawler.<lambda> at 0x7fed7c45fea0>}
+           │         └ ()
+           └ <class 'retrying.Retrying'>
+  File "/home/alex/alex/virtualenvs/ProxyPoolLenv/lib/python3.6/site-packages/retrying.py", line 214, in call
+    raise RetryError(attempt)
+          │          └ Attempts: 3, Value: None
+          └ <class 'retrying.RetryError'>
+
+retrying.RetryError: RetryError[Attempts: 3, Value: None]
+2020-03-29 18:51:38.395 | ERROR    | proxypool.processors.getter:run:36 - An error has been caught in function 'run', process 'Process-2' (7408), thread 'MainThread' (140658052323136):
+Traceback (most recent call last):
+
+  File "run.py", line 14, in <module>
+    Scheduler().run()
+    └ <class 'proxypool.scheduler.Scheduler'>
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/scheduler.py", line 73, in run
+    getter_process.start()
+    │              └ <function BaseProcess.start at 0x7fed7f4e6ae8>
+    └ <Process(Process-2, started)>
+
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 105, in start
+    self._popen = self._Popen(self)
+    │    │        │    │      └ <Process(Process-2, started)>
+    │    │        │    └ <staticmethod object at 0x7fed7f4e15f8>
+    │    │        └ <Process(Process-2, started)>
+    │    └ None
+    └ <Process(Process-2, started)>
+  File "/usr/lib/python3.6/multiprocessing/context.py", line 223, in _Popen
+    return _default_context.get_context().Process._Popen(process_obj)
+           │                │                            └ <Process(Process-2, started)>
+           │                └ <function DefaultContext.get_context at 0x7fed7f408730>
+           └ <multiprocessing.context.DefaultContext object at 0x7fed7f4eab70>
+  File "/usr/lib/python3.6/multiprocessing/context.py", line 277, in _Popen
+    return Popen(process_obj)
+           │     └ <Process(Process-2, started)>
+           └ <class 'multiprocessing.popen_fork.Popen'>
+  File "/usr/lib/python3.6/multiprocessing/popen_fork.py", line 19, in __init__
+    self._launch(process_obj)
+    │    │       └ <Process(Process-2, started)>
+    │    └ <function Popen._launch at 0x7fed7a0bb400>
+    └ <multiprocessing.popen_fork.Popen object at 0x7fed7a0b3780>
+  File "/usr/lib/python3.6/multiprocessing/popen_fork.py", line 73, in _launch
+    code = process_obj._bootstrap()
+    │      │           └ <function BaseProcess._bootstrap at 0x7fed7f4f02f0>
+    │      └ <Process(Process-2, started)>
+    └ 1
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 258, in _bootstrap
+    self.run()
+    │    └ <function BaseProcess.run at 0x7fed7f4e6a60>
+    └ <Process(Process-2, started)>
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 93, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {}
+    │    │        │    │        └ <Process(Process-2, started)>
+    │    │        │    └ ()
+    │    │        └ <Process(Process-2, started)>
+    │    └ <bound method Scheduler.run_getter of <proxypool.scheduler.Scheduler object at 0x7fed7a0b37b8>>
+    └ <Process(Process-2, started)>
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/scheduler.py", line 48, in run_getter
+    getter.run()
+    │      └ <function Getter.run at 0x7fed7c397ea0>
+    └ <proxypool.processors.getter.Getter object at 0x7fed7f4ea048>
+
+> File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/processors/getter.py", line 36, in run
+    for proxy in crawler.crawl():
+        │        │       └ <function BaseCrawler.crawl at 0x7fed7c397620>
+        │        └ <public.iphai.IPHaiCrawler object at 0x7fed7a0b3a90>
+        └ Proxy(host='36.248.129.72', port=9999)
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/crawlers/base.py", line 25, in crawl
+    html = self.fetch(url)
+           │    │     └ 'http://www.iphai.com/'
+           │    └ <function BaseCrawler.fetch at 0x7fed7c397598>
+           └ <public.iphai.IPHaiCrawler object at 0x7fed7a0b3a90>
+
+  File "/home/alex/alex/virtualenvs/ProxyPoolLenv/lib/python3.6/site-packages/retrying.py", line 49, in wrapped_f
+    return Retrying(*dargs, **dkw).call(f, *args, **kw)
+           │         │        │         │   │       └ {}
+           │         │        │         │   └ (<public.iphai.IPHaiCrawler object at 0x7fed7a0b3a90>, 'http://www.iphai.com/')
+           │         │        │         └ <function BaseCrawler.fetch at 0x7fed7c397510>
+           │         │        └ {'stop_max_attempt_number': 3, 'retry_on_result': <function BaseCrawler.<lambda> at 0x7fed7c45fea0>}
+           │         └ ()
+           └ <class 'retrying.Retrying'>
+  File "/home/alex/alex/virtualenvs/ProxyPoolLenv/lib/python3.6/site-packages/retrying.py", line 214, in call
+    raise RetryError(attempt)
+          │          └ Attempts: 3, Value: None
+          └ <class 'retrying.RetryError'>
+
+retrying.RetryError: RetryError[Attempts: 3, Value: None]
+2020-03-29 18:51:39.026 | ERROR    | proxypool.processors.getter:run:36 - An error has been caught in function 'run', process 'Process-2' (7408), thread 'MainThread' (140658052323136):
+Traceback (most recent call last):
+
+  File "run.py", line 14, in <module>
+    Scheduler().run()
+    └ <class 'proxypool.scheduler.Scheduler'>
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/scheduler.py", line 73, in run
+    getter_process.start()
+    │              └ <function BaseProcess.start at 0x7fed7f4e6ae8>
+    └ <Process(Process-2, started)>
+
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 105, in start
+    self._popen = self._Popen(self)
+    │    │        │    │      └ <Process(Process-2, started)>
+    │    │        │    └ <staticmethod object at 0x7fed7f4e15f8>
+    │    │        └ <Process(Process-2, started)>
+    │    └ None
+    └ <Process(Process-2, started)>
+  File "/usr/lib/python3.6/multiprocessing/context.py", line 223, in _Popen
+    return _default_context.get_context().Process._Popen(process_obj)
+           │                │                            └ <Process(Process-2, started)>
+           │                └ <function DefaultContext.get_context at 0x7fed7f408730>
+           └ <multiprocessing.context.DefaultContext object at 0x7fed7f4eab70>
+  File "/usr/lib/python3.6/multiprocessing/context.py", line 277, in _Popen
+    return Popen(process_obj)
+           │     └ <Process(Process-2, started)>
+           └ <class 'multiprocessing.popen_fork.Popen'>
+  File "/usr/lib/python3.6/multiprocessing/popen_fork.py", line 19, in __init__
+    self._launch(process_obj)
+    │    │       └ <Process(Process-2, started)>
+    │    └ <function Popen._launch at 0x7fed7a0bb400>
+    └ <multiprocessing.popen_fork.Popen object at 0x7fed7a0b3780>
+  File "/usr/lib/python3.6/multiprocessing/popen_fork.py", line 73, in _launch
+    code = process_obj._bootstrap()
+    │      │           └ <function BaseProcess._bootstrap at 0x7fed7f4f02f0>
+    │      └ <Process(Process-2, started)>
+    └ 1
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 258, in _bootstrap
+    self.run()
+    │    └ <function BaseProcess.run at 0x7fed7f4e6a60>
+    └ <Process(Process-2, started)>
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 93, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {}
+    │    │        │    │        └ <Process(Process-2, started)>
+    │    │        │    └ ()
+    │    │        └ <Process(Process-2, started)>
+    │    └ <bound method Scheduler.run_getter of <proxypool.scheduler.Scheduler object at 0x7fed7a0b37b8>>
+    └ <Process(Process-2, started)>
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/scheduler.py", line 48, in run_getter
+    getter.run()
+    │      └ <function Getter.run at 0x7fed7c397ea0>
+    └ <proxypool.processors.getter.Getter object at 0x7fed7f4ea048>
+
+> File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/processors/getter.py", line 36, in run
+    for proxy in crawler.crawl():
+        │        │       └ <function BaseCrawler.crawl at 0x7fed7c397620>
+        │        └ <public.kuaidaili.KuaidailiCrawler object at 0x7fed7a0b3b70>
+        └ Proxy(host='118.113.246.182', port='9999')
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/crawlers/base.py", line 25, in crawl
+    html = self.fetch(url)
+    │      │    │     └ 'https://www.kuaidaili.com/free/inha/2/'
+    │      │    └ <function BaseCrawler.fetch at 0x7fed7c397598>
+    │      └ <public.kuaidaili.KuaidailiCrawler object at 0x7fed7a0b3b70>
+    └ '<!DOCTYPE html>\n<html>\n<head>\n<meta http-equiv="X-UA-Compatible" content="IE=edge" />\n<meta http-equiv="Content-Type" co...
+
+  File "/home/alex/alex/virtualenvs/ProxyPoolLenv/lib/python3.6/site-packages/retrying.py", line 49, in wrapped_f
+    return Retrying(*dargs, **dkw).call(f, *args, **kw)
+           │         │        │         │   │       └ {}
+           │         │        │         │   └ (<public.kuaidaili.KuaidailiCrawler object at 0x7fed7a0b3b70>, 'https://www.kuaidaili.com/free/inha/2/')
+           │         │        │         └ <function BaseCrawler.fetch at 0x7fed7c397510>
+           │         │        └ {'stop_max_attempt_number': 3, 'retry_on_result': <function BaseCrawler.<lambda> at 0x7fed7c45fea0>}
+           │         └ ()
+           └ <class 'retrying.Retrying'>
+  File "/home/alex/alex/virtualenvs/ProxyPoolLenv/lib/python3.6/site-packages/retrying.py", line 214, in call
+    raise RetryError(attempt)
+          │          └ Attempts: 3, Value: None
+          └ <class 'retrying.RetryError'>
+
+retrying.RetryError: RetryError[Attempts: 3, Value: None]
+2020-03-29 18:52:24.916 | ERROR    | proxypool.scheduler:run_tester:33 - An error has been caught in function 'run_tester', process 'Process-1' (7407), thread 'MainThread' (140658052323136):
+Traceback (most recent call last):
+
+  File "run.py", line 14, in <module>
+    Scheduler().run()
+    └ <class 'proxypool.scheduler.Scheduler'>
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/scheduler.py", line 68, in run
+    tester_process.start()
+    │              └ <function BaseProcess.start at 0x7fed7f4e6ae8>
+    └ <Process(Process-1, started)>
+
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 105, in start
+    self._popen = self._Popen(self)
+    │    │        │    │      └ <Process(Process-1, started)>
+    │    │        │    └ <staticmethod object at 0x7fed7f4e15f8>
+    │    │        └ <Process(Process-1, started)>
+    │    └ None
+    └ <Process(Process-1, started)>
+  File "/usr/lib/python3.6/multiprocessing/context.py", line 223, in _Popen
+    return _default_context.get_context().Process._Popen(process_obj)
+           │                │                            └ <Process(Process-1, started)>
+           │                └ <function DefaultContext.get_context at 0x7fed7f408730>
+           └ <multiprocessing.context.DefaultContext object at 0x7fed7f4eab70>
+  File "/usr/lib/python3.6/multiprocessing/context.py", line 277, in _Popen
+    return Popen(process_obj)
+           │     └ <Process(Process-1, started)>
+           └ <class 'multiprocessing.popen_fork.Popen'>
+  File "/usr/lib/python3.6/multiprocessing/popen_fork.py", line 19, in __init__
+    self._launch(process_obj)
+    │    │       └ <Process(Process-1, started)>
+    │    └ <function Popen._launch at 0x7fed7a0bb400>
+    └ <multiprocessing.popen_fork.Popen object at 0x7fed7b137470>
+  File "/usr/lib/python3.6/multiprocessing/popen_fork.py", line 73, in _launch
+    code = process_obj._bootstrap()
+    │      │           └ <function BaseProcess._bootstrap at 0x7fed7f4f02f0>
+    │      └ <Process(Process-1, started)>
+    └ 1
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 258, in _bootstrap
+    self.run()
+    │    └ <function BaseProcess.run at 0x7fed7f4e6a60>
+    └ <Process(Process-1, started)>
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 93, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {}
+    │    │        │    │        └ <Process(Process-1, started)>
+    │    │        │    └ ()
+    │    │        └ <Process(Process-1, started)>
+    │    └ <bound method Scheduler.run_tester of <proxypool.scheduler.Scheduler object at 0x7fed7a0b37b8>>
+    └ <Process(Process-1, started)>
+
+> File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/scheduler.py", line 33, in run_tester
+    tester.run()
+    │      └ <function Tester.run at 0x7fed7a0b4bf8>
+    └ <proxypool.processors.tester.Tester object at 0x7fed7f4ea048>
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/processors/tester.py", line 69, in run
+    tasks = [self.test(proxy) for proxy in proxies]
+    │        │    │                        └ None
+    │        │    └ <function Tester.test at 0x7fed7a0b4b70>
+    │        └ <proxypool.processors.tester.Tester object at 0x7fed7f4ea048>
+    └ [<coroutine object Tester.test at 0x7fed7a003d58>, <coroutine object Tester.test at 0x7fed7a003990>, <coroutine object Tester...
+
+TypeError: 'NoneType' object is not iterable
+2020-03-29 18:54:11.172 | ERROR    | proxypool.processors.getter:run:36 - An error has been caught in function 'run', process 'Process-2' (7408), thread 'MainThread' (140658052323136):
+Traceback (most recent call last):
+
+  File "run.py", line 14, in <module>
+    Scheduler().run()
+    └ <class 'proxypool.scheduler.Scheduler'>
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/scheduler.py", line 73, in run
+    getter_process.start()
+    │              └ <function BaseProcess.start at 0x7fed7f4e6ae8>
+    └ <Process(Process-2, started)>
+
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 105, in start
+    self._popen = self._Popen(self)
+    │    │        │    │      └ <Process(Process-2, started)>
+    │    │        │    └ <staticmethod object at 0x7fed7f4e15f8>
+    │    │        └ <Process(Process-2, started)>
+    │    └ None
+    └ <Process(Process-2, started)>
+  File "/usr/lib/python3.6/multiprocessing/context.py", line 223, in _Popen
+    return _default_context.get_context().Process._Popen(process_obj)
+           │                │                            └ <Process(Process-2, started)>
+           │                └ <function DefaultContext.get_context at 0x7fed7f408730>
+           └ <multiprocessing.context.DefaultContext object at 0x7fed7f4eab70>
+  File "/usr/lib/python3.6/multiprocessing/context.py", line 277, in _Popen
+    return Popen(process_obj)
+           │     └ <Process(Process-2, started)>
+           └ <class 'multiprocessing.popen_fork.Popen'>
+  File "/usr/lib/python3.6/multiprocessing/popen_fork.py", line 19, in __init__
+    self._launch(process_obj)
+    │    │       └ <Process(Process-2, started)>
+    │    └ <function Popen._launch at 0x7fed7a0bb400>
+    └ <multiprocessing.popen_fork.Popen object at 0x7fed7a0b3780>
+  File "/usr/lib/python3.6/multiprocessing/popen_fork.py", line 73, in _launch
+    code = process_obj._bootstrap()
+    │      │           └ <function BaseProcess._bootstrap at 0x7fed7f4f02f0>
+    │      └ <Process(Process-2, started)>
+    └ 1
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 258, in _bootstrap
+    self.run()
+    │    └ <function BaseProcess.run at 0x7fed7f4e6a60>
+    └ <Process(Process-2, started)>
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 93, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {}
+    │    │        │    │        └ <Process(Process-2, started)>
+    │    │        │    └ ()
+    │    │        └ <Process(Process-2, started)>
+    │    └ <bound method Scheduler.run_getter of <proxypool.scheduler.Scheduler object at 0x7fed7a0b37b8>>
+    └ <Process(Process-2, started)>
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/scheduler.py", line 48, in run_getter
+    getter.run()
+    │      └ <function Getter.run at 0x7fed7c397ea0>
+    └ <proxypool.processors.getter.Getter object at 0x7fed7f4ea048>
+
+> File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/processors/getter.py", line 36, in run
+    for proxy in crawler.crawl():
+        │        │       └ <function BaseCrawler.crawl at 0x7fed7c397620>
+        │        └ <public.iphai.IPHaiCrawler object at 0x7fed7a0b3a90>
+        └ Proxy(host='36.248.129.72', port=9999)
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/crawlers/base.py", line 25, in crawl
+    html = self.fetch(url)
+           │    │     └ 'http://www.iphai.com/'
+           │    └ <function BaseCrawler.fetch at 0x7fed7c397598>
+           └ <public.iphai.IPHaiCrawler object at 0x7fed7a0b3a90>
+
+  File "/home/alex/alex/virtualenvs/ProxyPoolLenv/lib/python3.6/site-packages/retrying.py", line 49, in wrapped_f
+    return Retrying(*dargs, **dkw).call(f, *args, **kw)
+           │         │        │         │   │       └ {}
+           │         │        │         │   └ (<public.iphai.IPHaiCrawler object at 0x7fed7a0b3a90>, 'http://www.iphai.com/')
+           │         │        │         └ <function BaseCrawler.fetch at 0x7fed7c397510>
+           │         │        └ {'stop_max_attempt_number': 3, 'retry_on_result': <function BaseCrawler.<lambda> at 0x7fed7c45fea0>}
+           │         └ ()
+           └ <class 'retrying.Retrying'>
+  File "/home/alex/alex/virtualenvs/ProxyPoolLenv/lib/python3.6/site-packages/retrying.py", line 214, in call
+    raise RetryError(attempt)
+          │          └ Attempts: 3, Value: None
+          └ <class 'retrying.RetryError'>
+
+retrying.RetryError: RetryError[Attempts: 3, Value: None]
+2020-03-29 18:54:11.775 | ERROR    | proxypool.processors.getter:run:36 - An error has been caught in function 'run', process 'Process-2' (7408), thread 'MainThread' (140658052323136):
+Traceback (most recent call last):
+
+  File "run.py", line 14, in <module>
+    Scheduler().run()
+    └ <class 'proxypool.scheduler.Scheduler'>
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/scheduler.py", line 73, in run
+    getter_process.start()
+    │              └ <function BaseProcess.start at 0x7fed7f4e6ae8>
+    └ <Process(Process-2, started)>
+
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 105, in start
+    self._popen = self._Popen(self)
+    │    │        │    │      └ <Process(Process-2, started)>
+    │    │        │    └ <staticmethod object at 0x7fed7f4e15f8>
+    │    │        └ <Process(Process-2, started)>
+    │    └ None
+    └ <Process(Process-2, started)>
+  File "/usr/lib/python3.6/multiprocessing/context.py", line 223, in _Popen
+    return _default_context.get_context().Process._Popen(process_obj)
+           │                │                            └ <Process(Process-2, started)>
+           │                └ <function DefaultContext.get_context at 0x7fed7f408730>
+           └ <multiprocessing.context.DefaultContext object at 0x7fed7f4eab70>
+  File "/usr/lib/python3.6/multiprocessing/context.py", line 277, in _Popen
+    return Popen(process_obj)
+           │     └ <Process(Process-2, started)>
+           └ <class 'multiprocessing.popen_fork.Popen'>
+  File "/usr/lib/python3.6/multiprocessing/popen_fork.py", line 19, in __init__
+    self._launch(process_obj)
+    │    │       └ <Process(Process-2, started)>
+    │    └ <function Popen._launch at 0x7fed7a0bb400>
+    └ <multiprocessing.popen_fork.Popen object at 0x7fed7a0b3780>
+  File "/usr/lib/python3.6/multiprocessing/popen_fork.py", line 73, in _launch
+    code = process_obj._bootstrap()
+    │      │           └ <function BaseProcess._bootstrap at 0x7fed7f4f02f0>
+    │      └ <Process(Process-2, started)>
+    └ 1
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 258, in _bootstrap
+    self.run()
+    │    └ <function BaseProcess.run at 0x7fed7f4e6a60>
+    └ <Process(Process-2, started)>
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 93, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {}
+    │    │        │    │        └ <Process(Process-2, started)>
+    │    │        │    └ ()
+    │    │        └ <Process(Process-2, started)>
+    │    └ <bound method Scheduler.run_getter of <proxypool.scheduler.Scheduler object at 0x7fed7a0b37b8>>
+    └ <Process(Process-2, started)>
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/scheduler.py", line 48, in run_getter
+    getter.run()
+    │      └ <function Getter.run at 0x7fed7c397ea0>
+    └ <proxypool.processors.getter.Getter object at 0x7fed7f4ea048>
+
+> File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/processors/getter.py", line 36, in run
+    for proxy in crawler.crawl():
+        │        │       └ <function BaseCrawler.crawl at 0x7fed7c397620>
+        │        └ <public.kuaidaili.KuaidailiCrawler object at 0x7fed7a0b3b70>
+        └ Proxy(host='118.113.246.182', port='9999')
+
+  File "/home/alex/alex/silenter_read_story/9999_some_tiny_program/ProxyPool/proxypool/crawlers/base.py", line 25, in crawl
+    html = self.fetch(url)
+    │      │    │     └ 'https://www.kuaidaili.com/free/inha/2/'
+    │      │    └ <function BaseCrawler.fetch at 0x7fed7c397598>
+    │      └ <public.kuaidaili.KuaidailiCrawler object at 0x7fed7a0b3b70>
+    └ '<!DOCTYPE html>\n<html>\n<head>\n<meta http-equiv="X-UA-Compatible" content="IE=edge" />\n<meta http-equiv="Content-Type" co...
+
+  File "/home/alex/alex/virtualenvs/ProxyPoolLenv/lib/python3.6/site-packages/retrying.py", line 49, in wrapped_f
+    return Retrying(*dargs, **dkw).call(f, *args, **kw)
+           │         │        │         │   │       └ {}
+           │         │        │         │   └ (<public.kuaidaili.KuaidailiCrawler object at 0x7fed7a0b3b70>, 'https://www.kuaidaili.com/free/inha/2/')
+           │         │        │         └ <function BaseCrawler.fetch at 0x7fed7c397510>
+           │         │        └ {'stop_max_attempt_number': 3, 'retry_on_result': <function BaseCrawler.<lambda> at 0x7fed7c45fea0>}
+           │         └ ()
+           └ <class 'retrying.Retrying'>
+  File "/home/alex/alex/virtualenvs/ProxyPoolLenv/lib/python3.6/site-packages/retrying.py", line 214, in call
+    raise RetryError(attempt)
+          │          └ Attempts: 3, Value: None
+          └ <class 'retrying.RetryError'>
+
+retrying.RetryError: RetryError[Attempts: 3, Value: None]

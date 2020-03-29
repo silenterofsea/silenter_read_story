@@ -8,8 +8,8 @@ pip3 --version
 # 确定pip的版本
 # 两者都要为3的版本
 pip3 install https://github.com/shadowsocks/shadowsocks/archive/master.zip
-sserver --help
-# 有正确输出，带有参数提示，则正确
+sserver --version
+# 输出带有3.0.0，则正确
 cd /home
 vim sssconfig.json
 # 输入以下内容
@@ -26,7 +26,24 @@ vim sssconfig.json
     "workers":1
 }
 ’‘’
+多端口配置
 
+‘’‘
+{
+ 	"server":"my_server_ip",  #填入你的IP地址
+	"local_address": "127.0.0.1",
+	"local_port":1080,
+	"port_password": {
+  	    "8381": "foobar1",    #端口号，密码
+  	    "8382": "foobar2",
+   		"8383": "foobar3",
+    	"8384": "foobar4"
+	},
+ 	"timeout":300,
+	"method":"aes-256-cfb",
+ 	"fast_open": false
+}
+’‘’
 ssserver -c /home/sssconfig.json
 # 测试一下是否能正常启动
 ssserver -c /home/sssconfig.json -d start
@@ -49,6 +66,15 @@ https://www.shadowsocks.org/en/index.html
 
 在电脑中找到shadowsocks，双击打开
 输入你服务器的IP，你设置的端口号，密码，加密方式，即可。
+
+
+最后一步！！！
+
+在电脑设置中开启全局代理
+
+setting ---> Network ---> Manual
+
+2020.3.28 以上内容均可使用
 
 
 下面是开机自动运行（可选）： 未测试

@@ -7,6 +7,8 @@ import re
 from book_spider_pymongo import SpiderMongo
 import socket
 import time
+# import ssl
+# ssl._create_default_https_context = ssl._create_unverified_context
 
 
 class BookInitSpider(object):
@@ -14,7 +16,7 @@ class BookInitSpider(object):
         self.url = 'https://www.biquge.com.cn'
         self.target_url = MAIN_TAGET_URL
         self.headers = USER_HEADERS
-        self.timeout = 2
+        self.timeout = 7
         # print("在初始化的时候的headers = ", self.headers)
 
     def get_new_cookies(self, url):
@@ -80,6 +82,7 @@ class BookInitSpider(object):
         }
         # headers获取完毕
         # print("headers = ", headers)
+
         try:
             req = urllib.request.Request(url=use_url, headers=headers)
             response = urllib.request.urlopen(req)
@@ -123,7 +126,7 @@ class BookInitSpider(object):
         # book_class = book_class
         # book_id = book_id
         data_for_book_infos = {
-            BOOK_ID: book_id,
+            BOOK_ID: int(book_id),
             INFOS_CLASS: book_class,
             INFOS_NAME: book_name,
             INFOS_AUTHER: book_auhter,
@@ -137,7 +140,7 @@ class BookInitSpider(object):
         }
         # print("-----------------------------下载图片开始---------------------")
         # todo 写入集合即表：book_infos中
-        filepath = BOOK_IMG_DIR + '/' + data_for_book_infos[BOOK_ID] + '.jpg'
+        filepath = BOOK_IMG_DIR + '/' + book_id + '.jpg'
         # print(filepath)
         # print(data_for_book_infos[INFOS_IMG_URL])
         try:
@@ -170,7 +173,7 @@ class BookInitSpider(object):
         # print(next_url)
 
         data_for_book_details = {
-            BOOK_ID: book_id,
+            BOOK_ID: int(book_id),
             DETAILS_NEXT_URL: next_url,
             DETAILS_CAPTER_NUMB: book_capter_numb,
             DETAILS_CAPTER_NAME: book_capter_name,
@@ -229,7 +232,7 @@ class BookInitSpider(object):
         for book_info_url in list1:
             print(book_info_url["href"])
             self.start_get_info(book_info_url["href"], book_class)
-        # 
+        #
         # list2 = soup.select('#main #newscontent .r ul li .s2 a')
         # for book_info_url in list2:
         #     print(book_info_url["href"])
