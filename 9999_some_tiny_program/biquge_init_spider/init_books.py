@@ -53,7 +53,7 @@ class BookInitSpider(object):
             res = requests.get(PROXY_POOL_URL)
             if res.status_code == 200:
                 return res.text
-        except ConnectionError:
+        except Exception:
             return None
 
     def get_html_while(self, url):
