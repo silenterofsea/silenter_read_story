@@ -122,4 +122,71 @@ select user, host, authentication_string from user;
 
 # 添加一个用户
 grant 权限列表 on 数据库 to '用户名'@'访问主机' identified by '密码';
+# 实际操作一下 权限赋值需要登录 root 用户操作
+# 创建一个jindongonly的用户让他对jing_dong数据库所有表格有查询的权限，允许它远程登录
+grant select on jing_dong.* to 'jindongonly'@'%' identified by 'qwe123';
+# 创建一个用户jingdong对jing_dong数据库拥有全部权限
+grant all privileges on jing_dong.* to 'jingdong'@'%' identified by 'qwe123';
+# 添加权限
+grant update on jing_dong.* to 'jindongonly'@'%' with grant option;
+flush privileges;
+# 修改密码
+update user set authentication_string = password('123456') where User = 'jingdongonly';
+# 如果远程链接还是，链接不上
+# 去查看mysql.conf的配置文件，看看有没有绑定本地IP
+```
+
+## 主从服务器 master-slave
+- 解决服务器出现的意外情况（备份）
+- 对不同的用户，分配不同的数据库（负载均衡）
+- 主服务器可以修改内容，从服务器无法修改内容，只能查询
+
+```python
+# 在主服务器上： 先备份原来数据库上的数据 在终端中执行
+mysqldump -u root -p 数据库名字 > python.sql
+# 恢复数据, 先创建好数据库，然后在终端中执行
+mysql -u root -p 新数据库名称 < python.sql
+# 主从正式开始：
+# 先在主服务器上，把数据保存出来
+mysqldump -u root -p qwe123 --all-databases --lock-all-tables > ~/master_db.sql
+# 在主服务器上： 修改
+sudo vim /etc/mysql/mysql.conf.d/mysql.cnf
+# 在主服务器上： 保证下面两行没有注释
+# server-id =1
+# log_bin = /var/log/mysql/mysql-bin.log
+grant replication slave on *.* to 'slave'@'%' identified by 'slave';
+flush privileges;
+# 在主服务器上，重启mysql服务
+sudo service mysql restart
+
+# 在从服务器
+mysql -u root -p < master_db.sql
+# 在从服务器上配置
+sudo vim /etc/mysql/mysql.conf.d/mysql.cnf
+
+# server-id =2
+# # log_bin = /var/log/mysql/mysql-bin.log
+# 注意： server-id 要和主服务器上不一样
+# 注意： log_bin这行在从服务器上要注释掉
+
+change master to master_host='主服务器IP', master_user='slave', master_password='slave',master_log_file='AAAA',master_log_pos=BBBB;
+# 关于AAAA和BBBB：
+# 在主服务器上输入：
+# show master status;
+# 其中File：为AAAA中的内容
+# Position：为BBBB中的内容
+
+
+# 在从服务器上重启mysql
+sudo service mysql restart
+# 查看是否配置成功
+show slave status \G;
+
+# Slave_IO_Runing=Yes
+# Slave_SQL_Runing=Yes
+# 则主从创建成功;
+# 如果创建不成功，请反复确认用户名，密码是否正确;
+# 确认AAAA、BBBB是否在正确（AAAA、BBBB必须在主服务器上查找信息）
+
+
 ```
