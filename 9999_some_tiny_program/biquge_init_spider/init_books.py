@@ -160,7 +160,7 @@ class BookInitSpider(object):
         # print('--------------------------------结束插入----------------------------------')
         # 返回第一页地址
         first_url = soup.select('#wrapper .box_con #list dl dd a')[0].attrs['href']
-        return first_url
+        return first_url, book_last_updata_url
 
     def get_book_details(self, url, book_id, book_capter_numb):
         html = self.get_html(url)
@@ -190,7 +190,7 @@ class BookInitSpider(object):
         # print(url_str)
         book_id = re.findall(r"\d+\.?\d*", url_str)[0]
         # 获得要去爬取的图书的ID
-        first_url = self.get_book_infos(url=url_str, book_class=book_class, book_id=book_id)
+        first_url, last_url = self.get_book_infos(url=url_str, book_class=book_class, book_id=book_id)
         # 返回的是第一页地址
         print("I am OK")
         # 查询并记录该小说的ID、书名、作者、状态、最后更新时间、最后一章URL、描述、分类
@@ -198,9 +198,10 @@ class BookInitSpider(object):
         book_capter_numb = 0
         # 定义章节数
         while True:
-            next_url = self.get_book_details(first_url, book_id, book_capter_numb)
-            book_capter_numb = book_capter_numb + 1
-            if url_str == next_url:
+            if last_url.strip() == first_url.strip() or first_url.strip() == url_str.strip():
+                print(url_str,'========================',next_url)
+                print(url_str,'========================',next_url)
+                print(url_str,'========================',next_url)
                 print(url_str,'========================',next_url)
                 print("因为最后的地址指向图书首页，所以这本数爬取完毕")
                 print("因为最后的地址指向图书首页，所以这本数爬取完毕")
@@ -208,6 +209,14 @@ class BookInitSpider(object):
                 print("因为最后的地址指向图书首页，所以这本数爬取完毕")
                 return
             else:
+                try:
+                     next_url = self.get_book_details(first_url, book_id, book_capter_numb)
+                     book_capter_numb = book_capter_numb + 1
+                 except:
+                     print("出现了首页记录的最后一章，和真实的最后一张不对应的情况")
+                     print("爬取完毕")
+                     return
+
                 print(first_url,'<<<<<<<<<<<<<<<<<<<<<<<<',next_url)
                 first_url = next_url
             # 查询并记录该小说的ID、第几章、该章内容
