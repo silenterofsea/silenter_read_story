@@ -15,6 +15,10 @@ SPIDER_MODULES = ['biquge.spiders']
 NEWSPIDER_MODULE = 'biquge.spiders'
 LOG_LEVEL = 'WARNING'
 
+
+MONGO_URI = 'localhost'
+MONGO_DB = 'biquge'
+
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 USER_AGENT = 'Opera/9.80 (Macintosh; Intel Mac OS X 10.6.8; U; en) Presto/2.9.168 Version/11.52'
 
@@ -64,9 +68,9 @@ ROBOTSTXT_OBEY = False
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'biquge.pipelines.BiqugePipeline': 300,
-#}
+ITEM_PIPELINES = {
+   'biquge.pipelines.BiqugePipeline': 300,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html

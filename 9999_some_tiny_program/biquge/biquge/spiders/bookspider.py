@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import scrapy
 import re
+from copy import deepcopy
+from biquge.items import BiqugeIndexItem, BiqugeDetailsItem
 
 class BookspiderSpider(scrapy.Spider):
     name = 'bookspider'
@@ -19,45 +21,66 @@ class BookspiderSpider(scrapy.Spider):
 
     def parse_book_details(self, response):
         '''爬取图书每一页信息'''
+        detailitem = BiqugeDetailsItem()
+        book_id = response.meta["book_id"]
+        sort_id = response.meta["sort_id"]
+        detailitem['book_id'] = int(book_id)
+        detailitem['sort_id'] = int(sort_id)
         detail_title = response.xpath("//div[@class='bookname']/h1/text()").extract_first()
         print("detail_title = ", detail_title)
+        detailitem['detail_title'] = detail_title
         detail_content = response.xpath("//div[@id='content']/text()").extract()
         detail = ''
         for i in detail_content:
             detail = detail + i
-
+        detailitem["detail_content"] = detail
         print("detail = ", detail)
+        yield detailitem
 
     def parse_book_info(self, response):
         '''爬取图书基本信息'''
         # print("开始爬取图书首页的信息")
         # print(response.body.decode())
+        indexitem = BiqugeIndexItem()
+        book_id = response.meta["book_id"]
+        indexitem["book_id"] = int(book_id)
         book_infos = response.xpath("//div[@id='maininfo']")
         # book_id = book_infos.xpaht("./")
         book_name = book_infos.xpath("./div[@id='info']/h1/text()").extract_first()
         print(book_name)
+        indexitem["book_name"] = book_name
         book_author = book_infos.xpath("./div[@id='info']/p[1]/text()").extract_first()
         print(book_author)
+        indexitem["book_author"] = book_author
         book_status = book_infos.xpath("./div[@id='info']/p[2]/text()").extract_first()
         print(book_status)
+        indexitem["book_status"] = book_status
         book_last_update_time = book_infos.xpath("./div[@id='info']/p[3]/text()").extract_first()
         print(book_last_update_time)
+        indexitem["book_last_update_time"] = book_last_update_time
         book_newest_name = book_infos.xpath("./div[@id='info']/p[4]/a/text()").extract_first()
         print(book_newest_name)
+        indexitem["book_newest_name"] = book_newest_name
         book_newest_url = book_infos.xpath("./div[@id='info']/p[4]/a/@href").extract_first()
         print(book_newest_url)
+        indexitem["book_newest_url"] = book_newest_url
         book_desc = book_infos.xpath("./div[@id='intro']/text()").extract_first()
         print(book_desc)
+        indexitem["book_desc"] = book_desc
         book_detail_urls = response.xpath("//div[@class='box_con']/div/dl/dd/a")
         print(book_detail_urls)
+        yield indexitem
         # print("我在详情页中了。。。")
         for dd in book_detail_urls:
             # print("我在详情页的for循环中了。。。")
             detail_url = 'http://www.biquge.com.cn' +  dd.xpath("./@href").extract_first()
+            sort_id = re.findall(r"(\d+)\.html", dd.xpath("./@href").extract_first())[0]
+            print(sort_id)
             print(detail_url)
             yield scrapy.Request(
                 detail_url,
-                callback = self.parse_book_details
+                callback = self.parse_book_details,
+                meta={"book_id": deepcopy(book_id), "sort_id": deepcopy(sort_id)}
             )
 
     def parse(self, response):
@@ -71,7 +94,8 @@ class BookspiderSpider(scrapy.Spider):
             print(book_index_url)
             yield scrapy.Request(
                 book_index_url,
-                callback = self.parse_book_info
+                callback = self.parse_book_info,
+                meta={"book_id": deepcopy(book_id)}
             )
 
         li_list2 = response.xpath("//div[@class='r']/ul/li/span[@class='s2']/a")
@@ -84,7 +108,8 @@ class BookspiderSpider(scrapy.Spider):
             print(book_index_url)
             yield scrapy.Request(
                 book_index_url,
-                callback=self.parse_book_info
+                callback=self.parse_book_info,
+                meta={"book_id": deepcopy(book_id)}
             )
 
     def is_book_exist(self):
