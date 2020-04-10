@@ -11,6 +11,7 @@
 # API-Demo of Python
 #------------------------------
 import time,hashlib,sys,os,json
+import random
 class bt_api:
     __BT_KEY = 'NYnZO1cZIUxviueNZbNSwqVp7vGky6f0'
     __BT_PANEL = 'http://79.143.62.21:8888'
