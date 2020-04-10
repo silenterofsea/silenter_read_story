@@ -1,4 +1,4 @@
-#coding: utf-8
+
 # +-------------------------------------------------------------------
 # | 宝塔Linux面板
 # +-------------------------------------------------------------------
@@ -13,11 +13,11 @@
 import time,hashlib,sys,os,json
 class bt_api:
     __BT_KEY = 'NYnZO1cZIUxviueNZbNSwqVp7vGky6f0'
-    __BT_PANEL = 'http://79.143.62.21/:8888'
+    __BT_PANEL = 'http://79.143.62.21:8888'
 
     #如果希望多台面板，可以在实例化对象时，将面板地址与密钥传入
     def __init__(self,bt_panel = None,bt_key = None):
-        if bt_panel: 
+        if bt_panel:
             self.__BT_PANEL = bt_panel
             self.__BT_KEY = bt_key
 
@@ -38,6 +38,51 @@ class bt_api:
 
         #解析JSON数据
         return json.loads(result)
+
+    def generate_random_str(self, randomlength):
+      """
+      生成一个指定长度的随机字符串
+      """
+      random_str = ''
+      base_str = 'abcdefghigklmnopqrstuvwxyz0123456789'
+      length = len(base_str) - 1
+      for i in range(randomlength):
+        random_str += base_str[random.randint(0, length)]
+      return random_str
+
+    # 创建一个邮箱
+    def set_mail(self):
+        # 拼接url
+        url = self.__BT_PANEL + '/plugin?action=a&name=mail_sys&s=add_mailbox'
+
+        # 准备POST数据
+        p_data = self.__get_key_data()  #取签名
+        p_data['quota'] = 5
+        p_data['username'] =  self.generate_random_str(16) + '@infiniticloud.net'
+        p_data['password'] = 'QWEqwe123！@#'
+        p_data['full_name'] = 'alex'
+        p_data['is_admin'] = 0
+
+        #请求面板接口
+        result = self.__http_post_cookie(url,p_data)
+
+        return json.loads(result)
+
+    def get_amazone_code(self, username):
+        url = self.__BT_PANEL + '/plugin?action=a&name=mail_sys&s=get_mails'
+
+        p_data = self.__get_key_data()  #取签名
+        p_data['username'] = username
+        p_data['p'] =  1
+
+        #请求面板接口
+        result = self.__http_post_cookie(url,p_data)
+        result_json = json.loads(result)
+        if len(result_json['data']) != 0:
+            return result_json['data'][0]['html']
+        else:
+            # 长度为0,说明没有接受到邮件
+            return False
 
 
     #计算MD5
@@ -104,7 +149,7 @@ if __name__ == '__main__':
     my_api = bt_api()
 
     #调用get_logs方法
-    r_data = my_api.get_logs()
+    r_data = my_api.set_mail()
 
     #打印响应数据
     print(r_data)
