@@ -132,7 +132,7 @@ class bt_api:
             #Python3
             import urllib.request,ssl,http.cookiejar
             cookie_obj = http.cookiejar.MozillaCookieJar(cookie_file)
-            cookie_obj.load(cookie_file,ignore_discard=True,ignore_expires=True)
+            if os.path.exists(cookie_file):cookie_obj.load(cookie_file,ignore_discard=True,ignore_expires=True)
             handler = urllib.request.HTTPCookieProcessor(cookie_obj)
             data = urllib.parse.urlencode(p_data).encode('utf-8')
             req = urllib.request.Request(url, data)
