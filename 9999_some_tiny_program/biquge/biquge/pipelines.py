@@ -84,17 +84,17 @@ class BiqugePipeline(object):
 #             print("发生未知错误")
 #             return item
 
-class ImagePipeline(ImagesPipeline):
-    def get_media_requests(self, item, info):
-        for image_url in item['image_urls']:
-            yield scrapy.Request(image_url)
-
-    def item_completed(self, results, item, info):
-        image_paths = [x['path'] for ok, x in results if ok]
-        if not image_paths:
-            raise DropItem("Item contains no images")
-        item['image_paths'] = image_paths
-        return item
+# class ImagePipeline(ImagesPipeline):
+#     def get_media_requests(self, item, info):
+#         for image_url in item['image_urls']:
+#             yield scrapy.Request(image_url)
+#
+#     def item_completed(self, results, item, info):
+#         image_paths = [x['path'] for ok, x in results if ok]
+#         if not image_paths:
+#             raise DropItem("Item contains no images")
+#         item['image_paths'] = image_paths
+#         return item
 
 class BiqugeImagesPipeline(ImagesPipeline):
 
@@ -103,14 +103,16 @@ class BiqugeImagesPipeline(ImagesPipeline):
             if item['image_urls'] is not None:
                 yield Request(item['image_urls'])
         else:
-            # 执行到这里说明出错，应该写入日志
-            return item
+            pass
 
 
     def item_completed(self, results, item, info):
+        if isinstance(item, BiqugeDetailsItem):
+            print("详情页直接返回")
+            return item
         image_paths = [x['path'] for ok, x in results if ok]
         if not image_paths:
-            raise DropItem("Item contains no images")
-
-        item['image_paths'] = image_paths
+            print("没有图片")
+        if len(image_paths) > 0:
+            item['image_paths'] = image_paths[0]
         return item
