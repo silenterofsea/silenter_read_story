@@ -6,6 +6,10 @@
 # See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 from biquge.items import BiqugeIndexItem, BiqugeDetailsItem
 import pymongo
+from scrapy.pipelines.images import ImagesPipeline
+import os
+from scrapy import Request
+from scrapy.exceptions import DropItem
 
 
 
@@ -56,3 +60,57 @@ class BiqugePipeline(object):
 
     def close_spider(self, spider):
         self.client.close()
+
+# class ImagePipeline(ImagesPipeline):
+#     def file_path(self, request, response=None, info=None):
+#         # 返回文件名，以地址的最后部分作为文件名
+#         url = request.url
+#         file_name = url.splist('/')[-1]
+#         return file_name
+#
+#     def item_completed(self, results, item, info):
+#         image_paths = [x['path'] for ok, x in results if ok]
+#         if not image_paths:
+#             print('Image Downloader Failed' * 20)
+#         return item
+#
+#     def get_media_requests(self, item, info):
+#         if isinstance(item, BiqugeIndexItem):
+#             yield Request(item['book_img'])
+#         elif isinstance(item, BiqugeDetailsItem):
+#             return item
+#         else:
+#             # 执行到这里说明出错，应该写入日志
+#             print("发生未知错误")
+#             return item
+
+class ImagePipeline(ImagesPipeline):
+    def get_media_requests(self, item, info):
+        for image_url in item['image_urls']:
+            yield scrapy.Request(image_url)
+
+    def item_completed(self, results, item, info):
+        image_paths = [x['path'] for ok, x in results if ok]
+        if not image_paths:
+            raise DropItem("Item contains no images")
+        item['image_paths'] = image_paths
+        return item
+
+class BiqugeImagesPipeline(ImagesPipeline):
+
+    def get_media_requests(self, item, info):
+        if isinstance(item, BiqugeIndexItem):
+            if item['image_urls'] is not None:
+                yield Request(item['image_urls'])
+        else:
+            # 执行到这里说明出错，应该写入日志
+            return item
+
+
+    def item_completed(self, results, item, info):
+        image_paths = [x['path'] for ok, x in results if ok]
+        if not image_paths:
+            raise DropItem("Item contains no images")
+
+        item['image_paths'] = image_paths
+        return item

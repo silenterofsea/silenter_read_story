@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 import json
 from flask_pymongo import PyMongo
 # pip install Flask-PyMongo 记得安装
@@ -21,7 +21,10 @@ def index():
 # 分类页接口
 @app.route("/book/<str:book_class>")
 def book_class(book_class):
-    pass
+    if book_class:
+        pass
+    else:
+        return 404
 
 # 图书首页接口
 @app.route("/book/<int:book_id>")
