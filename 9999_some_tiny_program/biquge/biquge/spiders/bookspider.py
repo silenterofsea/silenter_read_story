@@ -8,15 +8,15 @@ class BookspiderSpider(scrapy.Spider):
     name = 'bookspider'
     allowed_domains = ['biquge.com.cn']
     start_urls = [
-        'http://www.biquge.com.cn/xuanhuan/'
-        # 'http://www.biquge.com.cn/xiuzhen/',
-        # 'http://www.biquge.com.cn/dushi/',
-        # 'http://www.biquge.com.cn/lishi/',
-        # 'http://www.biquge.com.cn/wangyou/',
-        # 'http://www.biquge.com.cn/kehuan/',
-        # 'http://www.biquge.com.cn/yanqing/',
-        # 'http://www.biquge.com.cn/qita/',
-        # 'http://www.biquge.com.cn/quanben/'
+        'http://www.biquge.com.cn/xuanhuan/',
+        'http://www.biquge.com.cn/xiuzhen/',
+        'http://www.biquge.com.cn/dushi/',
+        'http://www.biquge.com.cn/lishi/',
+        'http://www.biquge.com.cn/wangyou/',
+        'http://www.biquge.com.cn/kehuan/',
+        'http://www.biquge.com.cn/yanqing/',
+        'http://www.biquge.com.cn/qita/',
+        'http://www.biquge.com.cn/quanben/'
     ]
 
     def parse_book_details(self, response):
@@ -47,29 +47,36 @@ class BookspiderSpider(scrapy.Spider):
         book_cate = response.meta["book_cate"]
         item["book_cate"] = book_cate
 
-
         book_infos = response.xpath("//div[@id='maininfo']")
         # book_id = book_infos.xpaht("./")
         book_name = book_infos.xpath("./div[@id='info']/h1/text()").extract_first()
-        # print(book_name)
         item["book_name"] = book_name
         url = response.xpath("//div[@id='fmimg']/img/@src").extract_first()
         item["image_urls"] = url
         book_author = book_infos.xpath("./div[@id='info']/p[1]/text()").extract_first()
+        print("清洗之前的book_author = ", book_author)
+        book_author = re.findall('作    者：(.*?)$', book_author)[0]
+        print("清洗之后的book_author = ", book_author)
         # print(book_author)
         item["book_author"] = book_author
         book_status = book_infos.xpath("./div[@id='info']/p[2]/text()").extract_first()
-        # print(book_status)
+        print("清洗之前的book_status = ", book_status)
+        book_status = re.findall('状    态：(.*?),', book_status)[0]
+        print("清洗之后的book_status = ", book_status)
         item["book_status"] = book_status
         book_last_update_time = book_infos.xpath("./div[@id='info']/p[3]/text()").extract_first()
-        # print(book_last_update_time)
+        print("清洗之前的book_last_update_time = ", book_last_update_time)
+        book_last_update_time = re.findall("最后更新：(.*?)$", book_last_update_time)[0]
+        print("清洗之后的book_last_update_time = ", book_last_update_time)
         item["book_last_update_time"] = book_last_update_time
         book_newest_name = book_infos.xpath("./div[@id='info']/p[4]/a/text()").extract_first()
         # print(book_newest_name)
         item["book_newest_name"] = book_newest_name
         book_newest_url = book_infos.xpath("./div[@id='info']/p[4]/a/@href").extract_first()
+        # /book/39837/1035785.html
+        book_newest_url = re.findall("^/book/.*/(.*?).html", book_newest_url)[0]
         # print(book_newest_url)
-        item["book_newest_url"] = book_newest_url
+        item["book_newest_url"] = int(book_newest_url)
         book_desc = book_infos.xpath("./div[@id='intro']/text()").extract_first()
         # print(book_desc)
         item["book_desc"] = book_desc
@@ -91,34 +98,49 @@ class BookspiderSpider(scrapy.Spider):
 
     def parse(self, response):
         '''从起始页面爬取需要读取的图书信息'''
-        li_list1 = response.xpath("//div[@class='l']/ul/li/span[@class='s2']/a")
-        book_cate = re.findall("biquge.com.cn/(.*?)/", response.url)[0]
-        for li in li_list1:
-            # # print(li.xpath("./@href").extract_first())
-            book_index_url = 'http://www.biquge.com.cn' + li.xpath("./@href").extract_first()
+        if response.url == 'http://www.biquge.com.cn/quanben/':
+            li_list = response.xpath("//div[#id='main']/div[@class='novelslist2']/ul/li/span['s2']/a")
+            book_cate = re.findall("biquge.com.cn/(.*?)/", response.url)[0]
+            for li in li_list:
+                book_index_url = 'http://www.biquge.com.cn' + li.xpath("./@href").extract_first()
 
-            book_id = re.findall(r"\d+\.?\d*", li.xpath("./@href").extract_first())[0]
-            # print(book_id)
-            # print(book_index_url)
-            yield scrapy.Request(
-                book_index_url,
-                callback = self.parse_book_info,
-                meta={"book_id": deepcopy(book_id), "book_cate": book_cate}
-            )
+                book_id = re.findall(r"\d+\.?\d*", li.xpath("./@href").extract_first())[0]
+                # print(book_id)
+                # print(book_index_url)
+                yield scrapy.Request(
+                    book_index_url,
+                    callback = self.parse_book_info,
+                    meta={"book_id": deepcopy(book_id), "book_cate": book_cate}
+                )
+        else:
+            li_list1 = response.xpath("//div[@class='l']/ul/li/span[@class='s2']/a")
+            book_cate = re.findall("biquge.com.cn/(.*?)/", response.url)[0]
+            for li in li_list1:
+                # # print(li.xpath("./@href").extract_first())
+                book_index_url = 'http://www.biquge.com.cn' + li.xpath("./@href").extract_first()
 
-        li_list2 = response.xpath("//div[@class='r']/ul/li/span[@class='s2']/a")
-        # # print("li_list2 = ", li_list2)
-        for li in li_list2:
-            # # print(li.xpath("./@href").extract_first())
-            book_index_url = 'http://www.biquge.com.cn' + li.xpath("./@href").extract_first()
-            book_id = re.findall(r"\d+\.?\d*", li.xpath("./@href").extract_first())[0]
-            # print(book_id)
-            # print(book_index_url)
-            yield scrapy.Request(
-                book_index_url,
-                callback=self.parse_book_info,
-                meta={"book_id": deepcopy(book_id), "book_cate": book_cate}
-            )
+                book_id = re.findall(r"\d+\.?\d*", li.xpath("./@href").extract_first())[0]
+                # print(book_id)
+                # print(book_index_url)
+                yield scrapy.Request(
+                    book_index_url,
+                    callback = self.parse_book_info,
+                    meta={"book_id": deepcopy(book_id), "book_cate": book_cate}
+                )
+
+            li_list2 = response.xpath("//div[@class='r']/ul/li/span[@class='s2']/a")
+            # # print("li_list2 = ", li_list2)
+            for li in li_list2:
+                # # print(li.xpath("./@href").extract_first())
+                book_index_url = 'http://www.biquge.com.cn' + li.xpath("./@href").extract_first()
+                book_id = re.findall(r"\d+\.?\d*", li.xpath("./@href").extract_first())[0]
+                # print(book_id)
+                # print(book_index_url)
+                yield scrapy.Request(
+                    book_index_url,
+                    callback=self.parse_book_info,
+                    meta={"book_id": deepcopy(book_id), "book_cate": book_cate}
+                )
 
     def is_book_exist(self):
         pass

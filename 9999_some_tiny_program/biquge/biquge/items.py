@@ -12,6 +12,7 @@ class BiqugeIndexItem(Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
     """图书的基本信息类"""
+    table = 'book_infos'
     # 图书id
     book_id = Field()
     # 图书分类
@@ -38,6 +39,7 @@ class BiqugeIndexItem(Item):
 
 class BiqugeDetailsItem(Item):
     """记录图书每一章的内容"""
+    table = 'book_details'
     # 图书id
     book_id = Field()
     # 排序标记

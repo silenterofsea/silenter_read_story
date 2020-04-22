@@ -58,6 +58,9 @@ show databases;
 use mysql;
 # 先大致看一下信息
 select * from user \G;
+
+
+
 # 然后来看一下关键信息
 select User, authentication_string, plugin from user;
 # 修改密码和登录方式
@@ -67,6 +70,9 @@ flush privileges;
 # 退出mysql
 quit
 # 重新使用你刚刚创建的密码登录测试一下
+
+
+
 mysql -u root -p
 # 最后补一句，其实这种方式直接修改了root的密码，但是因为root的权限太大了
 # 所以真实的使用环境中不会这么操作的
@@ -77,7 +83,26 @@ mysql -u root -p
 # 但是这个页面没有了～～
 # 祝你好运
 
+mysql 正确的使用方式（永远，永远不要让root可以远程登录）
+# 这个命令会让你创建一个能在本地登录的alex1943的帐号，密码为qwe123，并且允许远程登录
+CREATE USER 'alex1943'@'%' IDENTIFIED BY 'qwe123';
+# 这条命令会让alex1943这个账户会有和root一样的权限
+GRANT ALL PRIVILEGES ON *.* TO 'alex1943'@'%';
+#刷新权限
+FLUSH PRIVILEGES;
+# 让数据库允许远程登录
+vim /etc/mysql/mysql.conf.d/mysqld.cnf
+'''
+注释这一行：bind-address:127.0.0.1
+'''
+慎重使用！！！！！！！！！！！！
+# 重启mysql服务
+sudo service mysql restart
+
+# 在本地电脑，输入
+mysql -h 服务器IP -P 端口 -u alex1943 -p
 ```
+
 ## 图形化工具 ---> navicat
 
 - 挺好用的，但是不建议你“过于”依赖这样的工具

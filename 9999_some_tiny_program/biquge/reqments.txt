@@ -9,6 +9,8 @@ idna==2.9
 incremental==17.5.0
 lxml==4.5.0
 parsel==1.5.2
+Pillow==7.1.1
+pkg-resources==0.0.0
 Protego==0.1.16
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
@@ -16,6 +18,7 @@ pycparser==2.20
 PyDispatcher==2.0.5
 PyHamcrest==2.0.2
 pymongo==3.10.1
+PyMySQL==0.9.3
 pyOpenSSL==19.1.0
 queuelib==1.5.0
 Scrapy==2.0.1

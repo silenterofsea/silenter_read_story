@@ -1,10 +1,10 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template,redirect, url_for
 import json
-from flask_pymongo import PyMongo
+from settings import BOOKS_LIST
+from mysqlclass import Books
 # pip install Flask-PyMongo 记得安装
 
-app = flask(__name__)
-mongo = PyMongo(app, uri="mongodb://localhost:27017/books")
+app = Flask(__name__)
 
 
 @app.errorhandler(404)
@@ -15,20 +15,59 @@ def handler_404_error(err):  # 必须接受一个参数，名称随意
 
 # 首页接口
 @app.route("/index")
+@app.route("/")
+@app.route("/book")
 def index():
-    pass
+    return '<h2>欢迎来到Alex的图书世界</h2>'
+# {
+# 	"_id" : ObjectId("5e9ebe30ce1379a9e64e33d3"),
+# 	"book_id" : 44745,
+# 	"book_cate" : "xuanhuan",
+# 	"book_name" : "我的系统能具现",
+# 	"image_urls" : "https://www.biquge.com.cn/files/article/image/44/44745/44745s.jpg",
+# 	"book_author" : "作    者：我要签约",
+# 	"book_status" : "状    态：连载中,",
+# 	"book_last_update_time" : "最后更新：2020-04-21 14:32:47",
+# 	"book_newest_name" : "第一百零二章 极道灭魔，涅槃再生（求订阅月票）",
+# 	"book_newest_url" : "/book/44745/446031.html",
+# 	"book_desc" : "\n                “我要叶天帝的荒古圣体，肉身无双，金色苦海，仙王异象，苦海种金莲，徒手接帝兵……”“叮咚！”“检测到宿主强烈愿望，大皇天系统激活。”“荒古圣体体质搜索中……”“荒古圣体搜索失败！此方世界并不存在此种体质！”“根据宿主对荒古圣体的理解，荒古圣体创造中……”“荒古圣体奋斗努力目标生成，当前具现进度百分之一。”“有志者事竟成，皇天定不负！”“付出就有回报！”“望宿主多多努力，早日实现奋斗努力目标。”于是……江川飘了，前世幻想当中的各种至强体质神功秘法被他一一具现出来。甚至有时他还加上了自己的独特想法。本书又名《\n\t\t\t",
+# 	"image_paths" : "full/e96fb73f82c03827d1f33e05ebe3d0288b39c09b.jpg"
+# }
 
 # 分类页接口
-@app.route("/book/<str:book_class>")
-def book_class(book_class):
-    if book_class:
-        pass
-    else:
-        return 404
+@app.route("/<string:book_cate>")
+def book_class(book_cate):
+    print(book_cate)
+    for i in range(len(BOOKS_LIST)):
+        if book_cate == BOOKS_LIST[i]:
+            print(BOOKS_LIST[i])
+            book = Books()
+            print(book.show_cate_newest_30(book_cate))
+            print(type(book.show_cate_newest_30(book_cate)))
+            data = book.show_cate_newest_30(book_cate)
+            # return json.dumps(book.show_cate_newest_30(book_cate)).encode('utf-8').decode('unicode_escape')
+            cate_list = BOOKS_LIST
+            return render_template(
+                # 渲染模板语言
+                "cate.html",
+                title='hello world',
+                data = data,
+                cate_list=cate_list
+            )
+    # if book_cate in BOOKS_LIST:
+    #     return "OK"
+    return book_cate
+    # if book_class:
+    #     book_cate_info = mongo.db.book_infos.find({'book_cate': book_cate})
+    #     if book_cate_info:
+    #         return jsonify(book_index_info)
+    # else:
+    #     return 404
 
 # 图书首页接口
 @app.route("/book/<int:book_id>")
 def book_index(book_id):
+    print("")
     if book_id:
         book_index_info = mongo.db.book_infos.find({'book_id': book_id})
         print(type(book_index_info))

@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block body %}
+{{ data }}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>名字</th>
+                <th>最新章节</th>
+                <th>更新时间</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              {% for li in data.books %}
+                <tr>
+                    <td><a href="{{ li.book_id }}">{{ li.book_name }}</a></td>
+                    <td><a href="{{ li.book_id / li.book_newest_url }}">{{ li.book_newest_name }}：</a></td>
+                    <td>{{ li.book_last_update_time }}</td>
+                 </tr>
+                {% endfor  %}
+            </tbody>
+          </table>
+        </div>
+        <div class="col-md-6">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>名字</th>
+                <th>最新章节</th>
+                <th>更新时间</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              {% for li in data.books %}
+                <tr>
+                    <td><a href="{{ li.book_id }}">{{ li.book_name }}</a></td>
+                    <td><a href="{{ li.book_id }} / {{ book_newest_url }}">{{ li.book_newest_name }}</a></td>
+                    <td>{{ li.book_last_update_time }}</td>
+                 </tr>
+                {% endfor  %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+</div>
+
+
+
+
+{% endblock %}

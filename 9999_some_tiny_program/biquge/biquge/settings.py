@@ -20,6 +20,12 @@ MONGO_URI = 'localhost'
 MONGO_DB = 'biquge'
 IMAGES_STORE = './BookImages/'
 
+MYSQL_HOST = '43.248.8.11'
+MYSQL_DATABASE = 'books'
+MYSQL_PORT = 3306
+MYSQL_USER = 'alex1943'
+MYSQL_PASSWORD = 'qwe123'
+
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 USER_AGENT = 'Opera/9.80 (Macintosh; Intel Mac OS X 10.6.8; U; en) Presto/2.9.168 Version/11.52'
 
@@ -71,7 +77,8 @@ ROBOTSTXT_OBEY = False
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
    'biquge.pipelines.BiqugeImagesPipeline': 300,
-   'biquge.pipelines.BiqugePipeline': 301,
+   'biquge.pipelines.BiqugeMongoPipeline': 301,
+   'biquge.pipelines.BiqugeMysqlPipeline': 302,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
