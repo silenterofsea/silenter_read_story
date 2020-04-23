@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh-CN">
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -13,7 +13,7 @@
   <body>
 
 <!-- 导航栏 -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -74,16 +74,38 @@
         </form>
       </div>
     </nav>
-<!-- 导航栏 -->
+
+  <!-- 导航栏 -->
     <!-- 主体部分 -->
+<div class="container">
     {% block body %}
     {% endblock %}
+  </div>
     <!-- 主体部分 -->
 
     <!-- 底部 -->
-    <footer>
-            <p>&copy; Company 2012</p>
-        </footer>
+  <footer class="panel-footer" style="width: 100%; overflow: hidden;">
+      <div class="container">
+    <div class="row footer-top" style="text-align: center;">
+     <h4>风华绝代</h4>
+    </div>
+    <hr style="border: 1px  solid #000000; width: 100%">
+    <div class="row" style="text-align: center;">
+     <div class="col-sm-3 col-md-3 col-lg-3">
+     <a href="#" style=" color: gray;">关于我们</a>
+      </div>
+      <div class="col-sm-3 col-md-3 col-lg-3">
+     <a href="#" style=" color: gray;">联系方式</a></li>
+      </div>
+      <div class="col-sm-3 col-md-3 col-lg-3">
+     <a href="#" style=" color: gray;">旗下网站</a></li>
+      </div>
+      <div class="col-sm-3 col-md-3 col-lg-3">
+     <a href="#" style=" color: gray;">特别致谢</a></li>
+      </div>
+    </div>
+      </div>
+    </footer>
     <!-- 底部 -->
 
 

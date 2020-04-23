@@ -48,10 +48,10 @@ import pymysql
                 book_status varchar(10), -- 图书状态（其实可以用枚举类型）
                 book_last_update_time datetime, -- 最后更新时间，（需要经过数据清洗）
                 book_newest_name varchar(50), -- 最新章节名称
-                book_newest_url varchar(100), -- 最新章节的地址
+                book_newest_url int unsigned, -- 最新章节的地址
                 book_desc varchar(350), -- 图书描述
                 image_paths varchar(50) -- 图片保存路径
-            ); 
+            );
     2.2 : create table book_details(
                 id bigint unsigned not null auto_increment primary key,  -- 想一下这里为什么用bigint
                 -- 初始化过程中图书大概有450本，假设每本书有3000章：450X3000，但是这仅仅是初始化的过程。
@@ -59,7 +59,7 @@ import pymysql
                 book_id int unsigned not null,
                 sort_id int unsigned not null,  -- 排序标记
                 detail_title varchar(50),  -- 该章标题
-                detail_content mediumtext  -- 保存内容 
+                detail_content mediumtext  -- 保存内容
             );
 3. 去写代码吧，因为mysql更加严苛，所以先用正则把需要清洗的数据，修改一下
 4. 开始写 BiqugeMysqlPipeline 这个类，并在settings中启用它

@@ -65,27 +65,49 @@ def book_class(book_cate):
     #     return 404
 
 # 图书首页接口
-@app.route("/book/<int:book_id>")
+@app.route("/<int:book_id>")
 def book_index(book_id):
-    print("")
-    if book_id:
-        book_index_info = mongo.db.book_infos.find({'book_id': book_id})
-        print(type(book_index_info))
-        print(book_index_info)
-        if book_index_info:
-            return jsonify(book_index_info)
-        else:
-            return 404
+    if isinstance(book_id, int):
+        book = Books()
+        data_index = book.show_book_index(book_id)
+        data_details = book.show_book_index_details(book_id)
+        return render_template(
+            "book_index.html",
+            data_index=data_index,
+            data_details=data_details
+        )
+    else:
+        return 404
+
 
 # 图书每一章接口
-@app.route("/book/<int:book_id>/<int:book_detail_id>")
+@app.route("/<int:book_id>/<int:book_detail_id>")
 def book_detail(book_id, book_detail_id):
-    if book_id and book_detail_id:
-        book_detail_infos = mongo.db.book_details.find({'book_id': book_id, 'book_detail_id': book_detail_id})
-        if book_detail_infos:
-            return jsonify(book_detail_infos)
+    if isinstance(book_id, int) and isinstance(book_detail_id, int):
+        book = Books()
+        data_detail = book.show_book_detail(book_id, book_detail_id)
+        next_detail_id = book.find_next_id(book_id, book_detail_id)
+        before_detail_id = book.find_before_id(book_id, book_detail_id)
+        next_id = book_id
+        before_id = book_id
+        if before_detail_id == None:
+            pass
         else:
-            return 404
+            before_id = before_detail_id
+
+        if next_detail_id == None:
+            pass
+        else:
+            next_id = next_detail_id
+        print(data_detail)
+        return render_template(
+            "book_detail.html",
+            data_detail=data_detail,
+            next_id = next_id,
+            before_id=before_id
+        )
+    else:
+        return 404
 
 
 

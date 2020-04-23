@@ -18,7 +18,7 @@ LOG_LEVEL = 'WARNING'
 
 MONGO_URI = 'localhost'
 MONGO_DB = 'biquge'
-IMAGES_STORE = './BookImages/'
+IMAGES_STORE = '/home/www/BookImages/'
 
 MYSQL_HOST = '43.248.8.11'
 MYSQL_DATABASE = 'books'

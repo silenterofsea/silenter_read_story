@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<!-- {{ data_index }}-->
+<!--{{ data_details }}-->
+
+<div class="container">
+    <div class="row">
+        <div class="card col-md-2" style="width: 12rem;">
+          <img src="{{ data_index.books[0].image_urls }}" class="card-img-top " alt="...">
+        </div>
+        <div class="col-md-10">
+            <div class="card-body">
+            <h5 class="card-title">{{ data_index.books[0].book_name }}</h5>
+            <p class="card-text">{{ data_index.books[0].book_desc | safe }}</p>
+            <a href="/{{ data_index.books[0].book_id }}/{{ data_details.details[0].sort_id }}" class="btn btn-primary">开始阅读</a>
+          </div>
+        </div>
+    </div>
+    <div class="row">
+        {% for detail in data_details.details %}
+        <div class="col-md-4">
+            <a href="/{{ data_index.books[0].book_id }}/{{ detail.sort_id }}">{{ detail.detail_title }}</a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

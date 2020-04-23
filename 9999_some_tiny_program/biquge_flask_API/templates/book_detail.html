@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block body %}
+<!--{{ data_detail }}-->
+<!--{{ next_id }}-->
+<div class="container">
+    <div class="row">
+          <h3 class="m-auto">{{ data_detail.details[0].detail_title }}</h3>
+    </div>
+    <div class="row h-50">
+        <div class="row m-auto">
+            <div class=" col-4"><a href="{{ before_id }}">上一页</a></div>
+            <div class="col-4"><a href="/{{ data_detail.details[0].book_id }}">章节表</a></div>
+            <div class=" col-4"><a href="{{ next_id }}">下一页 </a></div>
+          </div>
+    </div>
+    <div class="row">
+        <p class="text-justify text-monospace" >{{ data_detail.details[0].detail_content | safe }}</p>
+    </div>
+
+    <div class="row h-50">
+        <div class="row m-auto">
+            <div class=" col-4"><a href="#">上一页</a></div>
+            <div class="col-4"><a href="#">章节表</a></div>
+            <div class=" col-4"><a href="#">下一页 </a></div>
+          </div>
+    </div>
+
+</div>
+{% endblock %}

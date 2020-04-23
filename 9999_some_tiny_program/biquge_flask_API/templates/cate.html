@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 {% block body %}
-{{ data }}
-<div class="container">
+<!--
+ {{ data }}
+ -->
+<div class="container-fluid theme-showcase" role="main">
     <div class="row">
         <div class="col-md-6">
           <table class="table">
@@ -17,7 +19,7 @@
               {% for li in data.books %}
                 <tr>
                     <td><a href="{{ li.book_id }}">{{ li.book_name }}</a></td>
-                    <td><a href="{{ li.book_id / li.book_newest_url }}">{{ li.book_newest_name }}：</a></td>
+                    <td><a href="{{ li.book_id }}/{{ li.book_newest_url }}">{{ li.book_newest_name }}</a></td>
                     <td>{{ li.book_last_update_time }}</td>
                  </tr>
                 {% endfor  %}
