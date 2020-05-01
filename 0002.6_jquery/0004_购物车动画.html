@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <!-- 引入js -->
+        <script type="text/javascript" src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+        <script type="text/javascript">
+        !window.jQuery && document.write('<script src="/lib/jquery/2.0.0/jquery.min.js"><\/script>');
+        </script>
+        <!-- 引入js 以后引入js尽量用这种方式来引入，他的意思是，如果cdn引入不成功，那么读取本地的js -->
+        <style media="screen">
+            .chart{
+                width: 150px;
+                height: 50px;
+                border:2px solid #000;
+                text-align:center;
+                line-height:50px;
+                float:right;
+                margin-right:100px;
+                margin-top: 50px;
+            }
+            .chart em{
+                color:red;
+                margin-left:10px;
+            }
+            .add{
+                width: 100px;
+                height:50px;
+                background-color: green;
+                border:0;  // 不写这个 button在有width和height的情况下会有边框
+                color: #fff;
+                float: left;
+                margin-top:300px;
+                margin-left:300px;
+
+            }
+
+            .point{
+                width:10px;
+                height:10px;
+                background-color:red;
+                position: fixed; // 固定定位，根据页面的绝对位置来定位这个元素
+                left:0;
+                top:0;
+                display:none;
+                z-index:999999;   // z-index，数值高意味着这个元素可以覆盖在所有元素之上
+                border-raduis:50%;  // 方点 化 圆点
+            }
+        </style>
+        <script type="text/javascript">
+
+            $(function(){  // $() == $(document).ready(), 意思就是在元素加载完成之后就加载，渲染之前
+                var $chart = $('.chart');   // 获取chart节点
+                var $count = $('.chart em');  // 获取em节点
+                var $btn = $('.add');     // 获取add节点
+                var $point = $('.point');  // 获取point节点
+
+                var $w01 = $btn.outerWidth();   // 获取btn的宽度
+                var $h01 = $btn.outerHeight();  // 获取btn的高度
+
+                var $w02 = $chart.outerWidth();  // 获取购物车的宽度
+                var $h02 = $chart.outerHeight();  // 获取购物车的高度
+
+                $btn.click(function(){   // 绑定btn的点击时间
+                    var oPos01 = $btn.offset();   // 获取btn的绝对位置
+                    var oPos02 = $chart.offset();  // 获取购物车的绝对位置
+
+                    $point.css({   // 设定红点的位置，让它出现的btn的中间
+                        "left": oPos01.left + parseInt($w01/2)-8,  // 这个地方唯一要注意的是这个数字8,其实他是圆点宽度的一半
+                        "top": oPos01.top + parseInt($w01/2)-8   // 这个地方唯一要注意的是这个数字8,其实他是圆点高度的一半
+                    })   /// parseInt() 转化为数字类型
+
+                    $point.show()  // 让圆点显示出来
+
+                    $point.stop().animate({   // 开始移动 .stop(): 防止客户点击，出现意外的次数
+                        "left": oPos02.left + parseInt($w02/2)-8,  //移动到的高度位置，根据购物车的绝对位置来确定
+                        "top": oPos02.top + parseInt($w02/2)-8
+                    }, 1000, function(){  // 这里一定要注意，这里一定要采用回调函数的方式，想一下为什么！！！异步！！！
+                        $point.hide()   // 隐藏圆点
+
+                        var iNum = $count.html();  // 获取原本购物车的数量
+
+                        $count.html(parseInt(iNum)+1);  // + 1 之后再写入，原生js中的innerHTML，在jquery中直接改成了html()
+                    })
+
+
+
+                })
+            })
+        </script>
+    </head>
+    <body>
+
+        <div class="chart">
+            购物车<em>0</em>
+        </div>
+        <input class="add" type="button" name="" value="加入购物车">
+        <div class="point">
+
+        </div>
+    </body>
+</html>

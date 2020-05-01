@@ -1,0 +1,80 @@
+{% extends 'back/base.html' %}
+{% block body %}
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <div class="content-header">
+      <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1 class="m-0 text-dark">账户的简单说明</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+            <a href="https://www.baidu.com/">如果需要了解更多信息，请点击联系</a>
+            </div><!-- /.col -->
+          </div><!-- /.row -->
+        </div>
+  </div>
+  <!-- /.content-header -->
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <!-- Small boxes (Stat box) -->
+      <div class="row">
+        <div class="col-lg-3 col-6">
+          <!-- small box -->
+          <div class="small-box bg-info">
+            <div class="inner">
+              <h3>A<sup style="font-size: 20px">类账户</sup></h3>
+
+              <p>免费用户：根据服务器资源，进行任务处理</p>
+              <p>收费： 0/月</p>
+            </div>
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-6">
+          <!-- small box -->
+          <div class="small-box bg-success">
+            <div class="inner">
+              <h3>B<sup style="font-size: 20px">类账户</sup></h3>
+
+              <p>付费用户：根据服务器资源，优先进行任务处理。</p>
+              <p>收费： 100/月</p>
+            </div>
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-6">
+          <!-- small box -->
+          <div class="small-box bg-warning">
+            <div class="inner">
+              <h3>C<sup style="font-size: 20px">类账户</sup></h3>
+
+              <p>VIP用户：服务器优先处理，该类用户任务</p>
+              <p>收费： 1000/月</p>
+            </div>
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-6">
+          <!-- small box -->
+          <div class="small-box bg-danger">
+            <div class="inner">
+              <h3>D<sup style="font-size: 20px">类账户</sup></h3>
+
+              <p>超级VIP：专用服务器，专人负责</p>
+              <p>收费： 10000/月</p>
+            </div>
+          </div>
+        </div>
+        <!-- ./col -->
+      </div>
+      <!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </section>
+  <!-- /.content -->
+</div>
+
+
+{% endblock %}

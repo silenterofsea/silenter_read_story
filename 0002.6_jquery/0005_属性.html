@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+
+        <script type="text/javascript">
+            $(function(){
+                var $li = $('#accordion ul li');
+                $li.click(function(){
+                    // alert($(this).html())
+                    $(this).stop().animate({'left': 21 * $(this).index()})
+                    $(this).prevAll().each(function(){
+                        $(this).stop().animate({'left': 21 * $(this).index()})
+                    })
+
+                    $(this).netxAll().each(function(){
+                        $(this)stop().animate({'left': 727 - 21 * (5 - $(this).index())})
+                    })
+                })
+            })
+        </script>
+    </head>
+    <body>
+    <div class="accordion">
+        <ul>
+            <li class="bar01"><span></span><img src="" alt=""></li>
+            <li class="bar01"><span></span><img src="" alt=""></li>
+            <li class="bar01"><span></span><img src="" alt=""></li>
+            <li class="bar01"><span></span><img src="" alt=""></li>
+            <li class="bar01"><span></span><img src="" alt=""></li>
+        </ul>
+    </div>
+    </body>
+</html>

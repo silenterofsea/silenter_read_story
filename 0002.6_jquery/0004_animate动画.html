@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <script type="text/javascript" src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+        <script type="text/javascript">
+        !window.jQuery && document.write('<script src="/lib/jquery/2.0.0/jquery.min.js"><\/script>');
+        </script>
+        <style media="screen">
+            .btns{
+
+            }
+            .btns input{
+                width: 100px;
+                height:50px;
+                border:0;
+            }
+            .btns .current {
+                background-color: gold;
+            }
+            .cons{
+                height:500px;
+                width: 500px;
+                overflow: hidden;
+                position:  relative;
+            }
+
+            .cons .slides div{
+                height:500px;
+                width:500px;
+                line-height:500px;
+                text-align: center;
+                font-size: 30px;
+                background-color: green;
+                float:left;
+            }
+            .slides{
+                height:500px;
+                width: 1500px;
+                position: absolute;
+                left:0;
+                top:0;
+            }
+            .cons .slides .active{
+                display: block;
+            }
+
+        </style>
+        <script>
+            $(function(){
+                var $btn = $('.btns input');
+                var $div = $('.cons .slides div');
+                $btn.click(function(){
+                    $(this).addClass('current').siblings().removeClass('current');
+                    // 如果直接写 this， 那么这个是原声的this， jQUERY的this 必须要写成 $(this)
+                    // siblings() 指的是除了当前元素之外的，同级所有元素
+                    // alert($(this).index());
+                    // $div.eq($(this).index()).addClass('active').siblings().removeClass('active');
+
+
+                    // $('.cons .slides').css({'left': - 500 * $(this).index()})
+                    // $('.cons .slides').animate({'left': - 500 * $(this).index()})
+                    $('.cons .slides').stop().animate({'left': - 500 * $(this).index()})
+                })
+            })
+        </script>
+    </head>
+    <body>
+        <div class="btns">
+            <input type="button" name="" value="01" class="current">
+            <input type="button" name="" value="02">
+            <input type="button" name="" value="03">
+        </div>
+
+        <div class="cons">
+            <div class="slides">
+                <div>11111111111111</div>
+                <div>22222222222222</div>
+                <div>33333333333333</div>
+            </div>
+        </div>
+    </body>
+</html>

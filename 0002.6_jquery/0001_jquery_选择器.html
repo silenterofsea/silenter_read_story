@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <title></title>
+    <script type="text/javascript" src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script type="text/javascript">
+    !window.jQuery && document.write('<script src="/lib/jquery/2.0.0/jquery.min.js"><\/script>');
+    </script>
+
+    <script>
+    // ready 比 window.onload 要快
+    // 原因：
+    // window.onload： 标签加载完，并且渲染完之后，才运行
+    // ready： 标签加载完成之后，就运行
+    window.onload = function(){
+        var oDiv = document.getElementById('div1');
+        alert('原生js弹出的' + oDiv.innerHTML)
+    }
+
+    // ready的完整写法
+    $(document).ready(function(){
+        var oDiv = document.getElementById('div1');
+        alert('ready的完整写法弹出的' + oDiv.innerHTML)
+    })
+
+    // ready简写
+    // $()  === $(document).ready()
+    $(function(){
+        var oDiv = document.getElementById('div1');
+        alert('ready简写弹出的' + oDiv.innerHTML)
+    })
+    </script>
+</head>
+<body>
+
+    <div id="div1">Hello jQuery</div>
+    
+</body>
+</html>

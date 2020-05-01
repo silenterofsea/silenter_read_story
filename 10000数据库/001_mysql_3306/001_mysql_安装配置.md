@@ -86,6 +86,10 @@ mysql -u root -p
 mysql 正确的使用方式（永远，永远不要让root可以远程登录）
 # 这个命令会让你创建一个能在本地登录的alex1943的帐号，密码为qwe123，并且允许远程登录
 CREATE USER 'alex1943'@'%' IDENTIFIED BY 'qwe123';
+# 创建一个数据库
+create database genmai charset=utf8;
+# 把这个数据库的所有权限赋予给这个alex1943这个账户
+GRANT ALL PRIVILEGES ON genmai.* TO 'alex1943'@'%';
 # 这条命令会让alex1943这个账户会有和root一样的权限
 GRANT ALL PRIVILEGES ON *.* TO 'alex1943'@'%';
 #刷新权限

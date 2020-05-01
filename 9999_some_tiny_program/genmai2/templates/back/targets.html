@@ -1,0 +1,317 @@
+{% extends 'back/base.html' %}
+{% block title %}跟卖任务{% endblock %}
+
+{% block header_css %}
+<style media="screen">
+    .container-for-form{
+        display:none;
+    }
+    .control-form-size-position{
+        width: 500px;
+        height: 600px;
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        border: 0;
+        background-color: #fff;
+        margin-top: -300px;
+        margin-left: -250px;
+        z-index: 99999;
+    }
+    .control-form-background{
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        background-color: #000;
+        opacity: 0.3;
+        left: 0;
+        top: 0;
+        z-index: 99990;
+    }
+    #warning-fro-form{
+        display:none;
+        color:red
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <div class="content-header">
+      <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1 class="m-0 text-dark">账户的简单说明</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+            <a href="https://www.baidu.com/">如果需要了解更多信息，请点击联系</a>
+            </div><!-- /.col -->
+          </div><!-- /.row -->
+        </div>
+  </div>
+  <!-- /.content-header -->
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <!-- Small boxes (Stat box) -->
+      <div class="row">
+        <div class="col-lg-3 col-6">
+          <!-- small box -->
+          <div class="small-box bg-info">
+            <div class="inner">
+              <h3>A<sup style="font-size: 20px">类账户</sup></h3>
+
+              <p>免费用户：根据服务器资源，进行任务处理</p>
+              <p>收费： 0/月</p>
+            </div>
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-6">
+          <!-- small box -->
+          <div class="small-box bg-success">
+            <div class="inner">
+              <h3>B<sup style="font-size: 20px">类账户</sup></h3>
+
+              <p>付费用户：根据服务器资源，优先进行任务处理。</p>
+              <p>收费： 100/月</p>
+            </div>
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-6">
+          <!-- small box -->
+          <div class="small-box bg-warning">
+            <div class="inner">
+              <h3>C<sup style="font-size: 20px">类账户</sup></h3>
+
+              <p>VIP用户：服务器优先处理，该类用户任务</p>
+              <p>收费： 1000/月</p>
+            </div>
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-6">
+          <!-- small box -->
+          <div class="small-box bg-danger">
+            <div class="inner">
+              <h3>D<sup style="font-size: 20px">类账户</sup></h3>
+
+              <p>超级VIP：专用服务器，专人负责</p>
+              <p>收费： 10000/月</p>
+            </div>
+          </div>
+        </div>
+        <!-- ./col -->
+      </div>
+      <!-- /.row -->
+
+
+      <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">任务详情</h3>
+
+                  <div class="card-tools">
+                    <div class="input-group input-group-sm" style="width: 150px;">
+
+                      <div class="input-group-append">
+                        <button type="submit" class="btn btn-primary" id="btn">添加任务</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body table-responsive p-0">
+                  <table class="table table-hover text-nowrap">
+                    <thead>
+                      <tr>
+                        <th>任务ID</th>
+                        <th>asin</th>
+                        <th>国家</th>
+                        <th>卖家名</th>
+                        <th>优先级</th>
+                        <th>添加时间</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for task in tasks %}
+                      <tr>
+                        <td>{{ task.id }}</td>
+                        <td>{{ task.asin }}</td>
+                        <td>{{ task.country }}</td>
+                        <td>{{ task.seller }}</td>
+                        <td><!-- <span class="tag tag-success">Approved</span> -->{{ task.youxian }}</td>
+                        <td>{{ task.create_time }}</td>
+                        <td>{% if task.is_done %}
+                                <span class="tag tag-success" style="color:green">已完成</span>
+                            {% else %}
+                                <span class="tag tag-success" style="color:red">进行中</span>
+                            {% endif %}
+
+                        </td>
+                        <td><a href="delete?q={{ task.id }}">删除</a></td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+            </div>
+          </div>
+
+
+    </div><!-- /.container-fluid -->
+  </section>
+  <!-- /.content -->
+</div>
+
+
+<div class="container-for-form">
+        <div class="card card-info control-form-size-position">
+                      <div class="card-header">
+                        <h3 class="card-title">添加新的任务</h3>
+                      </div>
+                      <!-- /.card-header -->
+                      <!-- form start -->
+                      <form class="form-horizontal" action="/add_task" method="post">
+                        <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
+                        <div class="card-body">
+                          <div class="form-group row">
+                            <label for="asin" class="col-sm-2 col-form-label">asin</label>
+                            <div class="col-sm-10">
+                              <!-- <input type="text" class="form-control" id="asin" placeholder="asin"> -->
+                                {{ form.asin(type="text",class="form-control",id="asin",placeholder="asin") }}
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">国家</label>
+                            <div class="col-sm-10">
+                            {{ form.country(class="form-control") }}
+                                <!-- <select class="form-control" id="country">
+                                  <option>US</option>
+                                  <option>JP</option>
+                                  <option>UK</option>
+                                  <option>DE</option>
+                                  <option>FR</option>
+                                  <option>IT</option>
+                                  <option>ES</option>
+                                  <option>CA</option>
+                                  <option>AU</option>
+                                  <option>MX</option>
+                                </select> -->
+                            </div>
+                          </div>
+
+                          <div class="form-group row">
+                            <label for="seller" class="col-sm-2 col-form-label">卖家</label>
+                            <div class="col-sm-10">
+                              <!-- <input type="text" class="form-control" id="seller" placeholder="卖家"> -->
+                                {{ form.seller(type="text", class="form-control", id="seller", placeholder="卖家") }}
+                            </div>
+                          </div>
+
+                          <div class="form-group row">
+                            <label for="youxian" class="col-sm-2 col-form-label">优先级</label>
+                            <div class="col-sm-10">
+                            {{ form.youxian(class="form-control") }}
+                                <!-- <select class="form-control" id="youxian">
+                                  <option>A</option>
+                                  <option>AA</option>
+                                  <option>AAA</option>
+                                </select> -->
+                            </div>
+                          </div>
+
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer">
+                          <!-- <button type="submit" class="btn btn-warning" id="task-submit">提交</button> -->
+                          {{ form.submit(class="btn btn-warning", id="task-submit") }}
+                          <button type="submit" class="btn btn-default float-right" id="btn_cancel">取消</button>
+                        </div>
+                        <!-- /.card-footer -->
+                        <div class="card-footer">
+                            <div id="warning-fro-form">
+                                请勿输入非法字符！
+                            </div>
+                        </div>
+                      </form>
+
+
+
+                    </div>
+        <div class="control-form-background">
+
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block footer_js %}
+<script type="text/javascript">
+            $(function(){
+
+                // 绑定原有页面上的点击事件，弹出表单
+                $('#btn').click(function(){
+                    console.log('clicked');
+                    $('.container-for-form').css({display: 'block'});
+                    // $('.pop_con').show();
+                    // $('.pop_con').fadeIn();
+                    return false; // 如果不写这句，由于时间冒泡的原理，这边会返回到下面的
+                                  // document绑定的事件，因此，他会把fadeIn()和fadeOut()一起执行，导致表单无法正常显示
+                })
+                // 绑定弹出表单中的取消按钮，让弹出页面消失
+                $('#btn_cancel').click(function(){
+                    console.log('clicked');
+                    $('.container-for-form').css({display: 'none'});
+                    // $('.pop_con').show();
+                    // $('.pop_con').fadeIn();
+                    return false; // 如果不写这句，由于时间冒泡的原理，这边会返回到下面的
+                                  // document绑定的事件，因此，他会把fadeIn()和fadeOut()一起执行，导致表单无法正常显示
+                })
+
+                // 在表单弹出的情况下，任意表单之外的页面，点击，表单消失
+                $(document).click(function(){
+                    $('.container-for-form').fadeOut();
+                })
+
+
+                let is_task_submit_clicked = false;
+                // 阻止事件冒泡，在表单弹出的情况下，点击表单，表单不消失
+                $('.control-form-size-position').click(function(){
+                    // return false;  // 如果没有这样，如果点击表单，由于事件冒泡的原理，整个表单会消失
+
+                    console.log('is_task_submit_clicked = ' + is_task_submit_clicked);
+
+                    if(is_task_submit_clicked == true){
+                        return true;
+                    }else{
+                        return false;
+                    }
+
+                })
+
+
+                $('#task-submit').click(function(){
+                    console.log('task-submit clicked')
+                    is_task_submit_clicked = true;
+                    return true
+
+                })
+
+
+
+
+
+            })
+        </script>
+{% endblock %}
