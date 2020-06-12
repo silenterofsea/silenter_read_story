@@ -54,7 +54,6 @@ module.exports = {
   // 生产环境是否生成 sourceMap 文件
   productionSourceMap: true,
   css: {
-
     // 是否使用css分离插件 ExtractTextPlugin
     extract: true,
     // 开启 CSS source maps?是否在构建样式地图，false将提高构建速度
@@ -80,7 +79,7 @@ module.exports = {
   // webpack-dev-server 相关配置
   devServer: {
     open: process.platform === "darwin",
-    host: 'localhost',
+    host: "localhost",
     port: 8081,
     https: false,
     hotOnly: false,
@@ -89,14 +88,16 @@ module.exports = {
       errors: false
     },
     proxy: {
-      '/api': {
+      "/api": {
         // 目标 API 地址
         target: process.env.VUE_APP_URL,
+        // target:'http://127.0.0.1:5000/',
         // 如果要代理 websockets
         // ws: false,
         changeOrigin: true, // 允许websockets跨域
-        pathRewrite: { // 正则匹配，把到/devapi之前的所有替换成空
-          '^/api': ''
+        pathRewrite: {
+          // 正则匹配，把到/devapi之前的所有替换成空
+          "^/api": ""
         }
       }
     },

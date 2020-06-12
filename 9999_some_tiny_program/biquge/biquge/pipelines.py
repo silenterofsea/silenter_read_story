@@ -91,12 +91,57 @@ class BiqugeMysqlPipeline(object):
         self.db.close()
 
     def process_item(self, item, spider):
+        # todo 在这里做判断是否存在于数据库中
+        # todo 先判断item的格式，看看是属于book_infos, 还是book_details，
         data = dict(item)
-        keys = ', '.join(data.keys())
-        values = ', '.join(['%s'] * len(data))
-        sql = 'insert into %s (%s) values (%s)' % (item.table, keys, values)
-        self.cursor.execute(sql, tuple(data.values()))
-        self.db.commit()
+        if isinstance(item, BiqugeIndexItem):
+            print("这是图书首页信息")
+            print(data["book_id"])
+            sql_is_book_exist = "select * from book_infos where book_id = '{}'".format(data["book_id"])
+            result = self.cursor.execute(sql_is_book_exist)
+            print("这是图书首页信息 查询结果 = ", result)
+            if result == 0:
+                # 如果返回结果为0,说明数据库中并没有这个图书的信息， 需要用insert去插入
+                print("返回结果为0,说明数据库中并没有这个图书的信息")
+                keys = ', '.join(data.keys())
+                values = ', '.join(['%s'] * len(data))
+                sql = 'insert into %s (%s) values (%s)' % (item.table, keys, values)
+                print("需要执行的sql语句： ", sql)
+                self.cursor.execute(sql, tuple(data.values()))
+                self.db.commit()
+            else:
+                # 如果返回结果不是0, 说明数据库中已经有这个图书的信息了， 需要用update去更新
+                print("返回结果不是0, 说明数据库中已经有这个图书的信息了", data["book_id"])
+                sql = "update book_infos set book_last_update_time='{}',book_newest_name='{}',book_newest_url='{}' where book_id={}"\
+                    .format(data["book_last_update_time"],data["book_newest_name"],data["book_newest_url"],data["book_id"])
+                print("： ", sql)
+                self.cursor.execute(sql)
+                self.db.commit()
+        elif isinstance(item, BiqugeDetailsItem):
+            print("这是图书详情页信息")
+            print(data["book_id"],data["sort_id"])
+            sql_is_book_detail_exist = "select * from book_details where book_id = '{}' and sort_id = '{}'".format(data["book_id"],data["sort_id"])
+            result = self.cursor.execute(sql_is_book_detail_exist)
+            print("这是图书详情页信息 查询结果 = ", result)
+            if result == 0:
+                # 如果返回结果为0,说明数据库中并没有这个图书的信息，需要用insert去插入
+                print("返回结果为0,说明数据库中并没有这本图书的该张信息的信息")
+                data = dict(item)
+                keys = ', '.join(data.keys())
+                values = ', '.join(['%s'] * len(data))
+                sql = 'insert into %s (%s) values (%s)' % (item.table, keys, values)
+                print("需要执行的sql语句： ", sql)
+                self.cursor.execute(sql, tuple(data.values()))
+                self.db.commit()
+            else:
+                # 如果返回结果不是0, 说明数据库中已经有这个图书的信息了， 什么都不要做，直接pass
+                print("返回结果不是0, 说明数据库中已经有这本图书的该张信息的信息")
+                pass
+        else:
+            print("这是一个错误信息")
+        # todo 如果是book_infos，存在则更新
+        # todo 如果是book_details， 存在就pass
+
         return item
 
 
@@ -189,6 +234,8 @@ class BiqugeImagesPipeline(ImagesPipeline):
     保存在，image_path这个字段中
     """
     def get_media_requests(self, item, info):
+        # todo 图片信息同样需要判断，如果已经存在就pass
+        # todo 不需要判断，因为他会自动去重
         if isinstance(item, BiqugeIndexItem):
             if item['image_urls'] is not None:
                 yield Request(item['image_urls'])

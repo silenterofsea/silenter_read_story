@@ -4,6 +4,8 @@ import Home from "../views/Home.vue";
 import HomeCate from "../views/HomeCate.vue";
 import BookIndex from "../views/BookIndex.vue";
 import BookDetail from "../views/BookDetail.vue";
+import BookSearch from "../views/BookSearch.vue";
+import Blank from "../views/Blank.vue";
 
 Vue.use(VueRouter);
 
@@ -14,6 +16,20 @@ const routes = [
     name: "Home",
     component: Home
   },
+
+  // 图书搜索页面
+  {
+    path: "/search",
+    name: "BookSearch",
+    component: BookSearch
+  },
+
+  {
+    path: "/blank",
+    name: "Blank",
+    component: Blank
+  },
+
   // 网站分类路径
   {
     path: "/:cate",
@@ -33,7 +49,7 @@ const routes = [
     path: "/book/:book_id/:cap_id",
     name: "BookDetail",
     component: BookDetail
-  },
+  }
 
   // {
   //   path: "/about",
@@ -51,5 +67,18 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 });
+
+// router.beforeEach((to, from, next) => {
+
+//   // Change doc title
+
+//   document.title = to.meta.keywords || 'Unknow title';
+//   document.keywords = to.meta.keywords;
+
+//   // document.querySelector('meta[name="keywords"]').setAttribute('content', to.meta.keywords)
+
+//   // document.querySelector('meta[name="description"]').setAttribute('content', to.meta.description)
+
+// })
 
 export default router;

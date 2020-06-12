@@ -18,12 +18,12 @@ LOG_LEVEL = 'WARNING'
 
 MONGO_URI = 'localhost'
 MONGO_DB = 'biquge'
-IMAGES_STORE = '/home/www/BookImages/'
+IMAGES_STORE = '/home/alex/www/BookImages/'
 
-MYSQL_HOST = '43.248.8.11'
+MYSQL_HOST = 'localhost'
 MYSQL_DATABASE = 'books'
 MYSQL_PORT = 3306
-MYSQL_USER = 'alex1943'
+MYSQL_USER = 'root'
 MYSQL_PASSWORD = 'qwe123'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent

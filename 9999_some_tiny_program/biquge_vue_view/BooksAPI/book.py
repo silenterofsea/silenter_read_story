@@ -53,7 +53,7 @@ class Books(object):
         return data
 
     def get_book_caps(self, book_id):
-        sql = "select sort_id from book_details where book_id = '{}' order by sort_id;".format(book_id)
+        sql = "select sort_id,detail_title from book_details where book_id = '{}' order by sort_id;".format(book_id)
         self.cursor.execute(sql)
         data = []
         for temp in self.cursor.fetchall():
@@ -62,10 +62,77 @@ class Books(object):
         return data
 
     def get_book_newest_20_caps(self, book_id):
-        sql = "select sort_id from book_details where book_id = '{}' order by sort_id desc limit 20;".format(book_id)
+        sql = "select sort_id,detail_title from book_details where book_id = '{}' order by sort_id desc limit 20;".format(book_id)
         self.cursor.execute(sql)
         data = []
         for temp in self.cursor.fetchall():
             # print(temp)
             data.append(temp)
         return data
+
+    def get_book_cap_details(self, book_id, book_sort):
+        sql = "select * from book_details where book_id = '{}' and sort_id='{}'  limit 1;".format(book_id, book_sort)
+        rep = self.cursor.execute(sql)
+        if rep == 0:
+            return None
+        else:
+            data = []
+            for temp in self.cursor.fetchall():
+                # print(temp)
+                data.append(temp)
+            return data
+
+    def get_book_name_by_id(self, book_id):
+        sql = "select book_name from book_infos where book_id = '{}'  limit 1;".format(book_id)
+        rep = self.cursor.execute(sql)
+        if rep == 0:
+            # 说明这个传入的参数有问题，数据库中没有这个图书信息
+            return None
+        else:
+            data = []
+            for temp in self.cursor.fetchall():
+                # print(temp)
+                data.append(temp)
+            print(data)
+            return data
+
+    def get_next_id(self, book_id, sort_id):
+        sql = "select sort_id from book_details where book_id = '{}' and sort_id > '{}' order by sort_id limit 1;".format(book_id, sort_id)
+        rep = self.cursor.execute(sql)
+        if rep == 0:
+            # 说明这个传入的参数有问题，数据库中没有这个图书信息
+            return None
+        else:
+            data = []
+            for temp in self.cursor.fetchall():
+                # print(temp)
+                data.append(temp)
+            return data
+
+    def get_before_id(self, book_id, sort_id):
+        sql = "select sort_id from book_details where book_id = '{}' and sort_id < '{}' order by sort_id limit 1;".format(book_id, sort_id)
+        rep = self.cursor.execute(sql)
+        if rep == 0:
+            # 说明这个传入的参数有问题，数据库中没有这个图书信息
+            return None
+        else:
+            data = []
+            for temp in self.cursor.fetchall():
+                # print(temp)
+                data.append(temp)
+            return data
+
+    def get_books_infos_by_key(self, key):
+        sql = "select * from book_infos where book_name = '{}' or book_author='{}';".format(key, key)
+        rep = self.cursor.execute(sql)
+        if rep == 0:
+            # 说明这个传入的参数有问题，数据库中没有这个图书信息
+            return None
+        else:
+            data = []
+            for temp in self.cursor.fetchall():
+                # print(temp)
+                data.append(temp)
+            return data
+
+    

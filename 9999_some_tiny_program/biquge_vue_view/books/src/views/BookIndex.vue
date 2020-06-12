@@ -1,64 +1,129 @@
 <template>
-    <div id="BookIndex">
-        <Header />
+  <div id="BookIndex">
+    <Header />
 
-        <Ads />
+    <Ads />
 
-        <b-container>
-            <b-row>
-                <!-- 图书基本信息 -->
-                <b-col cols="12" md="4">
-                    <a :href="'/book/'+ bookinfos.indexInfos.book_id ">
-                        <b-img thumbnail fluid :src="bookinfos.indexInfos.image_urls" class="p-3" style="width:80%; margin-left:10%;"  :alt="'小说：'+bookinfos.indexInfos.book_name"></b-img>
-                    </a>
-                </b-col>
-                <b-col cols="12" md="8">
-                    <b-jumbotron header-level="0" header-tag="h5" style="padding:3rem 1rem">
-                        <template v-slot:header>{{ bookinfos.indexInfos.book_name }}</template>
+    <b-container>
+      <b-row>
+        <!-- 图书基本信息 -->
+        <b-col cols="12" md="4">
+          <a :href="'/book/' + bookinfos.indexInfos.book_id">
+            <b-img
+              thumbnail
+              fluid
+              :src="bookinfos.indexInfos.image_urls"
+              class="p-3"
+              style="width:80%; margin-left:2%;"
+              :alt="'小说：' + bookinfos.indexInfos.book_name"
+            ></b-img>
+          </a>
+        </b-col>
+        <b-col cols="12" md="8">
+          <b-jumbotron
+            header-level="0"
+            header-tag="h5"
+            style="padding:3rem 1rem"
+          >
+            <template v-slot:header>{{
+              bookinfos.indexInfos.book_name
+            }}</template>
 
-                        
-                        <div class="mb-3">作者：{{ bookinfos.indexInfos.book_author }}</div>
-                        <div class="mb-3"><a :href="'/book/'+bookinfos.indexInfos.book_id+'/'+bookinfos.indexInfos.book_newest_url">最新章节：{{ bookinfos.indexInfos.book_newest_name }}</a></div>
-                        <div class="mb-3">最近更新时间：{{ dateFormat(bookinfos.indexInfos.book_last_update_time) }}</div>
-                        <div class="mb-3">本书状态：{{ bookinfos.indexInfos.book_status }}</div>
+            <div class="mb-3">作者：{{ bookinfos.indexInfos.book_author }}</div>
+            <div class="mb-3">
+              <a
+                :href="
+                  '/book/' +
+                    bookinfos.indexInfos.book_id +
+                    '/' +
+                    bookinfos.indexInfos.book_newest_url
+                "
+                >最新章节：{{ bookinfos.indexInfos.book_newest_name }}</a
+              >
+            </div>
+            <div class="mb-3">
+              最近更新时间：{{
+                dateFormat(bookinfos.indexInfos.book_last_update_time)
+              }}
+            </div>
+            <div class="mb-3">
+              本书状态：{{ bookinfos.indexInfos.book_status }}
+            </div>
 
-                        <hr>
-                        
-                        <p v-html="bookinfos.indexInfos.book_desc">
-                            
-                        </p>
+            <hr />
 
-                        <hr>
+            <p v-html="bookinfos.indexInfos.book_desc"></p>
 
-                       <!-- <template v-slot:lead>
+            <hr />
+
+            <!-- <template v-slot:lead>
                         <b-row>作者：123</b-row>
                         <b-row>最近更新：123</b-row>
                         </template>  -->
 
-                        
+            <b-button
+              pill
+              variant="primary"
+              class="left"
+              style="float: left;margin-left:5px"
+              :href="
+                '/book/' +
+                  bookinfos.indexInfos.book_id +
+                  '/' +
+                  bookinfos.capsInfos[0].sort_id
+              "
+              >开始阅读</b-button
+            >
+            <b-button
+              pill
+              variant="success"
+              class="right"
+              style="float: right;margin-right:5px"
+              href="#"
+              >加入收藏夹</b-button
+            >
+          </b-jumbotron>
+        </b-col>
+      </b-row>
+      <b-row
+        ><b-col><h6>图书最近更新的20章:</h6></b-col></b-row
+      >
+      <b-row>
+        <!-- {{ bookinfos.newest20caps[0].detail_title }} -->
 
-                        <b-button pill variant="primary" class="left" style="float: left;margin-left:5px" href="#">开始阅读</b-button>
-                        <b-button pill variant="success" class="right" style="float: right;margin-right:5px" href="#">加入收藏夹</b-button>
-                    </b-jumbotron>
-                </b-col>
-            </b-row>
+        <!-- {{ bookinfos.newest20caps }} -->
+        <b-col
+          cols="12"
+          md="4"
+          v-for="(item, index) in bookinfos.newest20caps"
+          :key="index"
+          ><a
+            :href="'/book/' + bookinfos.indexInfos.book_id + '/' + item.sort_id"
+            >{{ item.detail_title }}</a
+          ></b-col
+        >
+      </b-row>
+      <b-row
+        ><b-col><h6>图书的所有章节:</h6></b-col></b-row
+      >
+      <b-row>
+        <!-- 图书的所有章节: 
+                {{ bookinfos.capsInfos }} -->
+        <b-col
+          cols="12"
+          md="4"
+          v-for="(item, index) in bookinfos.capsInfos"
+          :key="index"
+          ><a
+            :href="'/book/' + bookinfos.indexInfos.book_id + '/' + item.sort_id"
+            >{{ item.detail_title }}</a
+          ></b-col
+        >
+      </b-row>
+    </b-container>
 
-            <b-row>
-                <!-- 图书最近更新的20章 -->
-                {{ bookinfos.newest20caps }}
-            </b-row>
-
-            <b-row>
-                <!-- 图书的所有章节 -->
-                {{ bookinfos.capsInfos }}
-            </b-row>
-
-
-        </b-container>
-
-
-        <Footer />
-    </div>
+    <Footer />
+  </div>
 </template>
 
 <style lang="scss" scoped>
@@ -77,67 +142,95 @@ import dateFormat from "../utils/date.js";
 // import addFavo from "../utils/addToBrowser.js";
 
 export default {
-    name: "BookIndex",
-    components:{
-        Header,
-        Footer,
-        Ads
-    },
+  name: "BookIndex",
+  components: {
+    Header,
+    Footer,
+    Ads
+  },
 
-    setup(props, context){
-        const now_url = ref(context.root.$route.path);
+  setup(props, context) {
+    const now_url = ref(context.root.$route.path);
 
-        // const indexInfos = ref(null);
-        // const capsInfos = ref(null); 这种写法会报错
+    // const indexInfos = ref(null);
+    // const capsInfos = ref(null); 这种写法会报错
 
-        const bookinfos = reactive({
-            "indexInfos":{},
-            "capsInfos":{},
-            "newest20caps":{}
-        })
+    const bookinfos = reactive({
+      indexInfos: {},
+      capsInfos: {},
+      newest20caps: {}
+    });
 
-        const indexParams = reactive({
-            "url": now_url.value,
-            "key":"bookindex"
-        });
+    const indexParams = reactive({
+      url: now_url.value,
+      key: "bookindex"
+    });
 
-        const capsParams = reactive({
-            "url": now_url.value,
-            "key":"bookcaps"
-        });
+    const capsParams = reactive({
+      url: now_url.value,
+      key: "bookcaps"
+    });
 
-        const newest20capsParams = reactive({
-            "url": now_url.value,
-            "key":"newest20caps"
-        });
+    const newest20capsParams = reactive({
+      url: now_url.value,
+      key: "newest20caps"
+    });
 
-        GetInfoPOST(indexParams).then((response)=>{
-            // indexInfos.value = response.data.data;
-            bookinfos.indexInfos = response.data.data;
-        });
+    GetInfoPOST(indexParams).then(response => {
+      // indexInfos.value = response.data.data;
+      bookinfos.indexInfos = response.data.data;
+    });
 
-        GetInfoPOST(capsParams).then((response)=>{
-            // capsInfos.value = response.data.data;
-            bookinfos.capsInfos = response.data.data;
-        });
+    GetInfoPOST(capsParams).then(response => {
+      // capsInfos.value = response.data.data;
+      bookinfos.capsInfos = response.data.data;
+    });
 
-        GetInfoPOST(newest20capsParams).then((response)=>{
-            // capsInfos.value = response.data.data;
-            bookinfos.newest20caps = response.data.data;
-        });
+    GetInfoPOST(newest20capsParams).then(response => {
+      // capsInfos.value = response.data.data;
+      bookinfos.newest20caps = response.data.data;
+    });
 
-        onMounted(()=>{
-            console.log("BookIndex.vue: now_url = ", now_url.value)
-        });
+    // 设置关键词开始
 
-        return {
-            // data
-            bookinfos,
+    const contentParams = reactive({
+      url: "/content",
+      key: "bookindex"
+    });
 
-            // function
-            // addFavo
-            dateFormat
-        }
-    }
-}
+    GetInfoPOST(contentParams).then(resp => {
+      console.log(resp.data.data);
+      document.title =
+        resp.data.data.title + "_" + bookinfos.indexInfos.book_name;
+      document
+        .querySelector('meta[name="keywords"]')
+        .setAttribute(
+          "content",
+          resp.data.data.keywords + "_" + bookinfos.indexInfos.book_author
+        );
+      document
+        .querySelector('meta[name="description"]')
+        .setAttribute(
+          "content",
+          resp.data.data.description +
+            "_" +
+            bookinfos.indexInfos.book_newest_name
+        );
+    });
+    // 设置关键词结束
+
+    onMounted(() => {
+      console.log("BookIndex.vue: now_url = ", now_url.value);
+    });
+
+    return {
+      // data
+      bookinfos,
+
+      // function
+      // addFavo
+      dateFormat
+    };
+  }
+};
 </script>

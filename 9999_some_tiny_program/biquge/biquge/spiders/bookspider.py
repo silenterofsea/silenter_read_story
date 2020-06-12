@@ -98,8 +98,9 @@ class BookspiderSpider(scrapy.Spider):
 
     def parse(self, response):
         '''从起始页面爬取需要读取的图书信息'''
-        if response.url == 'http://www.biquge.com.cn/quanben/':
-            li_list = response.xpath("//div[#id='main']/div[@class='novelslist2']/ul/li/span['s2']/a")
+        if response.url == 'https://www.biquge.com.cn/quanben/':
+            print("开始处理全本")
+            li_list = response.xpath("//div[@id='main']/div[@class='novelslist2']/ul/li/span[@class='s2']/a")
             book_cate = re.findall("biquge.com.cn/(.*?)/", response.url)[0]
             for li in li_list:
                 book_index_url = 'http://www.biquge.com.cn' + li.xpath("./@href").extract_first()
