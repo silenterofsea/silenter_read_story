@@ -1,11 +1,10 @@
 <template>
   <b-container>
-    <div id="main-top-ads">
+    <!-- <div id="main-top-ads">
       <a target="_blank" href=""
         ><img id="top-img" src="https://i.loli.net/2020/06/11/MLPaI12eFsyRXck.jpg"
        
       />
-       <!-- https://i.loli.net/2020/06/11/MLPaI12eFsyRXck.jpg  -->
       </a>
     </div>
     <div class="couplet_ad" id="main-left-ads">
@@ -20,7 +19,7 @@
         ><img id="right-img" src="https://i.loli.net/2020/06/11/sDlvEWaeSxzpYgb.jpg"
       /></a>
       <a @click="ad_right">关闭</a>
-    </div>
+    </div> -->
   </b-container>
 </template>
 

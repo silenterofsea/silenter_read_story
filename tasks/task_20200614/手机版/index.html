@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="UTF-8">
+        <title>自己写</title>
+        <meta name="description" content="自己写">
+        <meta content="True" name="HandheldFriendly">
+        <meta name="viewport"content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="renderer" content="webkit">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="screen-orientation" content="portrait">
+        <meta name="x5-orientation" content="portrait">
+        <link rel="stylesheet" href="static/css/style.css?ts=4">
+        <link rel="stylesheet" href="static/css/style1.css?ts=4">
+        <script src="static/common/jquery.min.js"></script>
+        <script src="static/common/jquery.lazyload.min.js"></script>
+        <script src="http://lib.sinaapp.com/js/jquery/2.0/jquery.min.js"></script>
+        <script src="static/js/recordRoll.js"></script>
+        </script>
+        <style>
+            .box{
+                width: 18rem;
+                height: 10rem;
+                margin: auto;
+                opacity:1;
+            }
+            .record_title{
+                text-align: center;
+                width: 100%;
+                height: 1rem;
+                margin-top: 0.2rem;
+                z-index: 2;
+                vertical-align: middle;
+            }
+            .record_list{
+                height: 8rem;
+                overflow: hidden;
+                text-align: left;
+                margin-left: 1rem;
+            }
+            #av-img{
+                height: 100%;
+                width: 1.5rem;
+            }
+        </style>
+    </head>
+    <body>
+    <a href="https://www.baidu.com">
+        <div id="qr_code" style="position:absolute;top: 350px;width:92%;height:180px;margin-left:4%;z-index:99999">
+            <div class="box">
+                <div class="record_title">
+                <h3>中奖记录</h3>
+                </div>
+                <div class="record_list">
+                    <p><img id="av-img" src="static/imgs/av/10.png" alt="">恭喜 13800****** 获得 <strong>0元购</strong> 产品</p>
+                    <p><img id="av-img" src="static/imgs/av/1.png" alt="">恭喜 13800****** 获得 <strong>1元购</strong> 产品</p>
+                    <p><img id="av-img" src="static/imgs/av/2.png" alt="">恭喜 13800****** 获得 <strong>2元购</strong> 产品</p>
+                    <p><img id="av-img" src="static/imgs/av/3.png" alt="">恭喜 13800****** 获得 <strong>3元购</strong> 产品</p>
+                    <p><img id="av-img" src="static/imgs/av/4.png" alt="">恭喜 13800****** 获得 <strong>4元购</strong> 产品</p>
+                    <p><img id="av-img" src="static/imgs/av/5.png" alt="">恭喜 13800****** 获得 <strong>5元购</strong> 产品</p>
+                    <p><img id="av-img" src="static/imgs/av/6.png" alt="">恭喜 13800****** 获得 <strong>6元购</strong> 产品</p>
+                    <p><img id="av-img" src="static/imgs/av/7.png" alt="">恭喜 13800****** 获得 <strong>7元购</strong> 产品</p>
+                    <p><img id="av-img" src="static/imgs/av/8.png" alt="">恭喜 13800****** 获得 <strong>8元购</strong> 产品</p>
+                    <p><img id="av-img" src="static/imgs/av/9.png" alt="">恭喜 13800****** 获得 <strong>9元购</strong> 产品</p>
+                </div>
+            </div>
+
+            <script>
+                $(document.body).ready(function(){
+                    $(".record_list").RollTitle({line:1,speed:1000,timespan:1});
+                });
+            </script>
+        </div>
+
+        <div id="qr_code" style="position:absolute;top: 550px;width:80%;height:180px;margin-left:10%;z-index:99999">
+            <img src="static/imgs/xiazai.png" alt="" style="max-width:60%;margin-bottom:3rem">
+            <img src="static/imgs/maibao.png" alt="" style="max-width:25%;margin-left:7%;margin-bottom:2rem">
+        </div>
+        <div id="phone_context" >
+            <div class="image_div">
+                <img class="lazyload img_no_save" src="static/imgs/background.png" data-original="static/imgs/background.png" />
+            </div>
+
+        </div>
+    </a>
+
+    </body>
+</html>
