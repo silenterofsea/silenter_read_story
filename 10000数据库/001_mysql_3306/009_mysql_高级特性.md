@@ -103,6 +103,16 @@ show index from title_index;
 drop index 索引名称 on 表名;
 drop index title_index on test_index;
 ```
+联合索引
+
+```
+
+CREATE INDEX idxtitle ON timefinish (
+	No,
+	Name,
+	FullName
+)
+```
 
 ## 账户管理
 ```bash
@@ -170,6 +180,26 @@ sudo vim /etc/mysql/mysql.conf.d/mysql.cnf
 # 注意： log_bin这行在从服务器上要注释掉
 
 change master to master_host='主服务器IP', master_user='slave', master_password='slave',master_log_file='AAAA',master_log_pos=BBBB;
+
+grant replication slave on *.* to 'slavealexhunter'@'180.97.220.27' identified by 'AlexHunter@0451392aa';
+
+change master to master_host='222.186.173.204', master_user='slavealexhunter', master_password='AlexHunter@0451392aa',master_log_file='mysql-bin.000011',master_log_pos=13804701;
+
+
+gunicorn -w 4 -b 180.97.220.27:41943 -D --access-logfile /home/programs/bookflask/log_gunicorn.log --error-logfile /home/programs/bookflask/error_gunicorn.log --access-logformat '%(h)s %(l)s %(u)s %(t)s "%(r)s" %(s)s %(b)s "%(f)s" "%(a)s" "%({X-Real-IP}i)s"' main:app
+
+ nohup python3 -u details_post.py > log_post.log 2>&1 &
+
+CHANGE MASTER TO
+MASTER_HOST='222.186.173.204',
+MASTER_USER='slavealexhunter',
+MASTER_PASSWORD='AlexHunter@0451392aa',
+MASTER_PORT=3306,
+MASTER_LOG_FILE='mysql-bin.000010',
+MASTER_LOG_POS=154,
+MASTER_CONNECT_RETRY=10;
+
+
 # 关于AAAA和BBBB：
 # 在主服务器上输入：
 # show master status;

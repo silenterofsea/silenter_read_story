@@ -1,0 +1,614 @@
+
+
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title>点赞成金</title>
+        <meta charset="utf-8">
+        <meta name="renderer" content="webkit" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+        <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1, user-scalable=no" name="viewport" />
+        <meta name="apple-touch-fullscreen" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="full-screen" content="yes" />
+        <meta name="x5-fullscreen" content="true" />
+        <meta name="screen-orientation" content="portrait" />
+        <meta name="x5-orientation" content="portrait" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="theme-color" content="#4c516a" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="format-detection" content="email=no" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="HandheldFriendly" content="true" />
+        <meta name="MobileOptimized" content="320" />
+        <meta name="screen-orientation" content="portrait" />
+        <meta name="x5-orientation" content="portrait" />
+        <meta name="full-screen" content="yes" />
+        <meta name="x5-fullscreen" content="true" />
+        <meta name="browsermode" content="application" />
+        <meta name="x5-page-mode" content="app" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <link rel="icon" href="data:image/ico;">
+        <link rel="stylesheet" href="./css/swiper.min.css">
+        <link rel="stylesheet" href="./css/layout.css">
+        <script src="./js/jquery.js"></script>
+        <!-- 换成你自己的 -->
+        <link rel="preconnect" href="//openinstall.io" crossorigin="use-credentials" />
+
+
+        <script type="text/javascript" src="//res.cdn.openinstall.io/openinstall.js"></script>
+        <!-- 换成你自己的 -->
+
+        <script type="text/javascript">
+            function GetQueryString(name) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+                var r = window.location.search.substr(1).match(reg);
+                if (r != null) return unescape(r[2]);
+                return null;
+            }
+
+
+            function isweixins() {
+                var ua = navigator.userAgent.toLowerCase();
+                var isios = /(iphone|ipad|ipod|ios)/i.test(ua);
+                var isandroid = /(android)/i.test(ua);
+                var isWq = /(micromessenger)/i.test(ua);
+                var isqq1 = /(qq)/i.test(ua);
+                var isqq2 = /(NetType)/i.test(ua);
+                if (isandroid) {
+                    $("#androidtips").show();
+                    $("#iostips").hide();
+                }
+                if (isWq || (isqq1 && isqq2)) {
+                    $('#bobyDiv').hide();
+                    $("#alltip").attr("style", "height:" + $(document).height() + "px");
+                    $("#alltip").show();
+                }
+            }
+            //判断访问终端
+            var browser = {
+                versions: function() {
+                    var u = navigator.userAgent,
+                        app = navigator.appVersion;
+                    return {
+                        trident: u.indexOf('Trident') > -1, //IE内核
+                        presto: u.indexOf('Presto') > -1, //opera内核
+                        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+                        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+                        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+                        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+                        android: u.indexOf('Android') > -1 || u.indexOf('Adr') > -1, //android终端
+                        iPhone: u.indexOf('iPhone') > -1, //是否为iPhone或者QQHD浏览器
+                        iPad: u.indexOf('iPad') > -1, //是否iPad
+                        webApp: u.indexOf('Safari') == -1, //是否web应该程序，没有头部与底部
+                        weixin: u.indexOf('MicroMessenger') > -1, //是否微信 （2015-01-22新增）
+                        qq: u.match(/\sQQ/i) == " qq" //是否QQ
+                    };
+                }(),
+                language: (navigator.browserLanguage || navigator.language).toLowerCase()
+            }
+
+
+
+
+            function is_weixin() {
+                var ua = navigator.userAgent.toLowerCase();
+                if (ua.match(/MicroMessenger/i) == "micromessenger") {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+            var isWeixin = is_weixin();
+            var winHeight = typeof window.innerHeight != 'undefined' ? window.innerHeight : document.documentElement.clientHeight;
+            // var weixinTip = $('<div id="weixinTip" style="z-index: 10000;position: absolute;top:0;left:0;background-color: #FFF;height:' + $(window).height() + 'px;filter:alpha(opacity=90);-moz-opacity:0.90; opacity:0.90;"><p><img src="' + ((isPIA() == 1) ? "./images/ios_tips.png" : "./images/android_tips.png") + '" alt=""/></p></div>');
+
+            $(".down-img").click(function() {
+                DownSoft();
+            })
+            //js判断终端是安卓还是苹果
+            function isPIA() {
+                var u = navigator.userAgent,
+                    app = navigator.appVersion;
+                var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
+                var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+                if (isiOS) {
+                    return 1;
+                }
+                if (isAndroid) {
+                    return 2
+                };
+            }
+
+
+
+            function get_down(type) {
+                if (isWeixin) {
+                    return false;
+                }
+
+
+                if (type == 1) {
+                    //安卓下载
+                     window.location.href = "https://urls.men/dianzan"
+                } else {
+                    //IOS下载
+                    window.location.href = "https://urls.men/dianzan";
+                    // window.open("itms-services://?action=download-manifest&url=https://game.lfxxzhaoshang.com/plist/info.plist", "_self");
+                }
+            }
+
+
+
+                var util = {
+                    // 获取默认渠道码
+                    getDefualtCode: function () {
+                        var host = window.location.host;
+                        if (host) {
+                            var code = host.split('.')[1] || '0';
+                            return code;
+                        }
+                        return '0';
+                    },
+                    // 获取设备类型
+                    getBrowser: function () {
+                        var browser = {
+                            versions: function () {
+                                var u = navigator.userAgent;
+                                var app = navigator.appVersion;
+                                return {
+                                    //移动终端浏览器版本信息
+                                    trident: u.indexOf('Trident') > -1, //IE内核
+                                    presto: u.indexOf('Presto') > -1, //opera内核
+                                    webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+                                    gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') === -1, //火狐内核
+                                    mobile: !!u.match(/AppleWebKit.*Mobile.*/) || !!u.match(/AppleWebKit/), //是否为移动终端
+                                    ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+                                    android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+                                    iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者QQHD浏览器
+                                    iPad: u.indexOf('iPad') > -1, //是否iPad
+                                    webApp: u.indexOf('Safari') === -1 //是否web应该程序，没有头部与底部
+                                };
+                            }(),
+
+                            language: (navigator.browserLanguage || navigator.language).toLowerCase()
+                        };
+                        return browser;
+                    },
+                    // 是否是vivo浏览器
+                    isVivoBrowser: function () {
+                        if (navigator.userAgent.indexOf('VivoBrowser') > -1) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    },
+                    // 是否是微信浏览器（qq浏览器）
+                    isWeiXin: function () {
+                        var ua = window.navigator.userAgent.toLowerCase();
+                        if (ua.match(/MicroMessenger/i) !== null || ua.match(/ qq/i) !== null) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    },
+                    // 是否是百度App（仅对iOS生效）
+                    isBaidu: function () {
+                        var browser = this.getBrowser();
+                        if (!(browser.versions.iPhone || browser.versions.iPad || browser.versions.ios)) {
+                            return false;
+                        }
+                        // 判断是否为百度App
+                        if (navigator.userAgent.indexOf('baiduboxapp') > -1) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    },
+                    // 是否为ios下chrome和safari之外的浏览器
+                    isNotSafari: function () {
+                        if (this.getDeviceInfo() === 'ios') {
+                            var ua = window.navigator.userAgent;
+                            var isChrome = ua.indexOf('CriOS') !== -1;
+                            var isSafari = ua.indexOf("Safari") !== -1 && ua.indexOf("Version") !== -1;
+                            if (!(isChrome || isSafari)) {
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        }
+                    },
+                    // ios 下的百度、搜狗弹出复制地址引导
+                    isShowShadow: function() {
+                        if (this.getDeviceInfo() === 'ios') {
+                            var ua = window.navigator.userAgent;
+                            var isBaidu = ua.indexOf('baiduboxapp') !== -1;
+                            var isSougou = ua.indexOf('Sogou') !== -1;
+
+                            return isBaidu || isSougou;
+                        }
+                    },
+                    // 页面重定向
+                    redirectUrl: function (url) {
+                        if (!url || !url.match('//')) return;
+                        window.location.href = url;
+                    },
+                    // 手机号正则验证
+                    phoneCheck: function (num) {
+                        var reg = /^[1][3,4,5,7,8][0-9]{9}$/;
+                        if (!reg.test(num)) {
+                            return false;
+                        } else {
+                            return true;
+                        }
+                    },
+                    // 获取url参数
+                    getUrlParm: function (variable) {
+                        var query = window.location.search.substring(1);
+                        var vars = query.split("&");
+                        for (var i = 0; i < vars.length; i++) {
+                            var pair = vars[i].split("=");
+                            if (pair[0] == variable) {
+                                return pair[1];
+                            }
+                        }
+                        return null;
+                    },
+                    // 获取设备信息
+                    getDeviceInfo: function () {
+                        var browser = this.getBrowser(); // 获取设备类型
+                        var device = 'other';
+                        if (browser.versions.iPhone || browser.versions.iPad || browser.versions.ios) {
+                            device = "ios";
+                        } else if (browser.versions.android) {
+                            device = "android";
+                        }
+                        return device;
+                    },
+                    // 复制剪切板
+                    copyText: function (text) {
+                        var input = document.createElement('input');
+                        document.body.appendChild(input);
+                        input.setAttribute('value', text);
+                        input.select();
+                        var oldContentEditable = input.contentEditable;
+                        var oldReadOnly = input.readOnly;
+                        var range = document.createRange();
+                        input.contentEditable = true;
+                        input.readOnly = false;
+                        range.selectNodeContents(input);
+                        var s = window.getSelection();
+                        s.removeAllRanges();
+                        s.addRange(range);
+                        input.setSelectionRange(0, 999999); // A big number, to cover anything that could be inside the element.
+                        input.contentEditable = oldContentEditable;
+                        input.readOnly = oldReadOnly;
+                        if (document.execCommand('copy')) {
+                            document.execCommand('copy');
+                            console.log('复制成功');
+                        }
+                        document.body.removeChild(input);
+                    }
+                };
+
+
+                // 弹出引导层处理
+                function shadowCheck() {
+                    var shadowType = 0;
+                    // 微信蒙版
+                    if (util.isWeiXin()) {
+                        shadowType = 1;
+                        if (util.getDeviceInfo() === 'ios') {
+                           $('#shadowImg').attr('src', "./images/wx_share_ios.png");
+                        } else {
+                            $('#shadowImg').attr('src', "./images/wx_share_android.png");
+                        }
+                        $('#shadow').removeClass('hide');
+                    } else if (util.isShowShadow() && !config.notJumpIntro) {
+                        shadowType = 2;
+                        $('#shadow2').removeClass('hide');
+                    }
+                    return shadowType;
+                }
+
+                function DownSoft() {
+                    // alert(1);
+                    //  if (util.isWeiXin()) {
+                    //      shadowCheck();
+                    //      return false;
+                    //  }
+
+                    if (isWeixin) {
+                        shadowCheck();
+                        return false;
+                        // $("body").append(weixinTip);
+                    }
+                    if (browser.versions.iPhone || browser.versions.iPad || browser.versions.ios) {
+                        // showXR1();
+                        get_down(2);
+                    } else if (browser.versions.android) {
+                        get_down(1);
+                    } else {
+                        var isok = confirm("是否用电脑下载app？");
+                        if (isok) {
+                            get_down(1);
+                        } else {
+                            return;
+                        }
+                    }
+                }
+        </script>
+    </head>
+    <style>
+        .iconPic{width: 100px;}
+        .swiper-container{bottom: 0.8rem;}
+        /*#picImg2{padding-top: 1rem !important;}*/
+        @media screen and (min-width: 960px){
+            .swiper-container{bottom: 1.5rem !important;}
+            .swiper-container img{width: 32rem !important;height: 15rem !important;}
+            #picIcon2{width: 5.5rem;z-index: 1000;position: fixed;max-width: 640px;left: 26.2%;bottom: 0.5rem;}
+        }
+
+        #bg2Pic{width: 100%;z-index: 2;position: relative; margin-top: 2%;} <!-- padding-bottom: 3.5rem;left:3.5rem; -->
+        #iconPic{position:absolute;top: 1.1rem;}
+        .iconPic{width: 3.8rem;z-index: 2;position: relative;}
+        .iconPic1{top: -0.8rem;}
+        .iconPic2{top: 1rem;left: -0.5rem;}
+        .iconPic3{top: 1.5rem;left: -0.5rem;}
+        .iconPic4{top: 1.5rem;left: -0.5rem;}
+        .iconPic5{top: 1rem;left: -0.5rem;}
+        .iconPic6{left: 84%;top: -5rem;}
+        #picIcon{z-index: 2;position: absolute;top: 35rem;left: 0.41rem;width: 4rem;}
+        #picIcon2{width: 3.5rem;z-index: 1000;position: fixed;bottom: 0px;max-width: 640px;left: 0.4rem;bottom: 0.4rem;}
+        /*iPhone6 Plus 和iPhone8 Plus*/
+        @media only screen and (device-width : 414px) and (device-height : 736px) and (-webkit-device-pixel-ratio : 3) {
+            #bg2Pic{width: 100%;z-index: 2;position: relative; margin-top: 2%;} <!-- padding-bottom: 4rem;left: 4.1rem; -->
+            #iconPic{position:absolute;top: 1.1rem;}
+            .iconPic{width: 4.2rem;z-index: 2;position: relative;}
+            .iconPic1{top: -0.8rem;}
+            .iconPic2{top: 1rem;left: -0.5rem;}
+            .iconPic3{top: 1.5rem;left: -0.5rem;}
+            .iconPic4{top: 1.5rem;left: -0.5rem;}
+            .iconPic5{top: 1rem;left: -0.5rem;}
+            .iconPic6{left: 84%;top: -5rem;}
+            .iconPic6{left: 84%;top: -5rem;}
+            .swiper-container{bottom: 1.15rem !important;}
+            #picIcon{z-index: 2;position: absolute;top: 36.8rem;left: 0.41rem;width: 4rem;}
+            #picIcon2{width: 3.5rem;z-index: 1000;position: fixed;bottom: 0px;max-width: 640px;left: 0.2rem;bottom: 0.2rem;}
+         }
+
+         .shadow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: rgba(0,0,0,0.7);
+            overflow: hidden;
+                z-index: 99999999
+        }
+
+        .hide {
+            display: none!important;
+        }
+        .set {
+            width: 100%;
+            height: 100%;
+            /*position: absolute;*/
+        }
+
+        .shadow img {
+            width: 100%;
+        }
+
+        .shadow img {
+            /*width: 70%;*/
+            position: absolute;
+            top: 6vw;
+        }
+
+    </style>
+    <body style="margin: 0;background: #555555;">
+
+        <div id="shadow" class="set shadow hide">
+            <img id="shadowImg" src="">
+        </div>
+
+
+        <p style="text-align: center;display:none;"> <a id="downloadButton" href="javascript:;" style="visibility:hidden" class="button button-big udid-bt channel-bt">立即使用</a>
+
+        </p>
+        <div class="abodytips" id="alltip" style="display: none;z-index: 9999999;background: #555555;height: 100%;">
+            <div class="tips_center" style="background: #555555;">
+                <img src="./images/source/androidtips.png" id="androidtips" style="display:none;height: 100%;width: 95%;">
+                <img src="./images/source/iostips.png" id="iostips" style="height: 100%;width: 95%;">
+                <img src="./images/source/tip2.png" id="tips3" style="display:none;height: 100%;width: 95%;">
+            </div>
+        </div>
+        <div style="position: relative;max-width: 640px;margin: 0 auto;" id='bobyDiv'>
+            <div>
+                <div style="position: relative;">
+                    <!-- <img src="picture/bg1.png" style="width: 100%;z-index: 2;position: relative;"> -->
+                    <img src="./images/picture/bg2.png" id='bg2Pic' style="">
+                    <!-- <div style='' id='iconPic'>
+                        <img src="picture/icon01.png" class='iconPic iconPic1' style="">
+                        <img src="picture/icon02.png" class='iconPic iconPic2' style="">
+                        <img src="picture/icon03.png" class='iconPic iconPic3' style="">
+                        <img src="picture/icon04.png" class='iconPic iconPic4' style="">
+                        <img src="picture/icon05.png" class='iconPic iconPic5' style="">
+                        <img src="picture/icon06.png" class='iconPic iconPic6' style="">
+                    </div> -->
+                    <img src="./images/picture/bg3.png" style="width: 100%;margin-top: -41%;height: 50%;">
+                </div>
+                <div class="slider" style="position: relative;z-index: 5;margin-top: -166%">
+                    <div id="slider" style="text-align: center;">
+                        <div id="certify">
+                            <div class="swiper-container">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide">
+                                        <img src="./images/picture/slider1.png" style="max-width: 100%;" />
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <img src="./images/picture/slider2.png" style="max-width: 100%;" />
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <img src="./images/picture/slider3.png" style="max-width: 100%;" />
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <img src="./images/picture/slider4.png" style="max-width: 100%;" />
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <img src="./images/picture/slider5.png" style="max-width: 100%;" />
+                                    </div>
+                                                                        <div class="swiper-slide">
+                                        <img src="./images/picture/slider6.png" style="max-width: 100%;" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a href="javascript:DownSoft();" onclick="showXR1();" class="ios-btn" style="position: absolute;width: 100%;text-align: center;margin-top: 3%;">
+                    <img src="./images/picture/downbtn.gif" alt="" style="width: 90%;z-index: 6">
+                </a>
+                <a href="javascript:showXR();" id='picImg2' class="ios-btn ios-tips" style="position: absolute;width: 100%;text-align: center;margin-top: 19%;">
+                    <img src="./images/picture/img2.png" style="width: 30%;margin-left: 35%; display: block;  padding-top: .5rem;z-index: 6" onclick="showXR()" />
+                </a>
+                <img src="./images/picture/bg11.png" style="width: 100%;margin-top: 25%;z-index: 2;position: relative;">
+                <!-- <img src="picture/icon.png" style="" id='picIcon'> -->
+                <div style="width: 100%;text-align: center;position: relative;margin-top: 5%;"></div>
+                <div style="margin-top: 10%;">
+                    <img src="./images/picture/bg7.png" style="width: 96%;z-index: 2;position: absolute;margin-left: 2%;">
+                    <img src="./images/picture/bg8.png" style="width: 50%;z-index: 2;position: absolute;margin-left: 25%;margin-top: -3%;">
+                    <img src="./images/picture/bg9.png" style="width: 45%;z-index: 3;position: absolute;margin-left: 27.5%;margin-top: -1.5%;">
+                    <img src="./images/picture/bg6.png" style="width: 80%;z-index: 2;position: absolute;margin-top: 7%;margin-left: 10%">
+                </div>
+                <div style="margin-top: 65%;">
+                    <img src="./images/picture/bg7.png" style="width: 96%;height:8.5%;z-index: 2;position: absolute;margin-left: 2%;">
+                    <img src="./images/picture/bg8.png" style="width: 50%;z-index: 2;position: absolute;margin-left: 25%; margin-top: -3%;">
+
+                     <img src="./images/picture/bg10.png" style="width: 35%;z-index: 3;position: absolute; margin-left: 32.5%;  margin-top: -1.5%;">
+                    <div id="slider2 slider2-top" style="width: 80%;margin-left: 10%; margin-top: 9%;position: absolute;z-index: 5">
+                        <div id="certify2">
+                            <div class="swiper-container">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide">
+                                        <img src="./images/picture/banr1.png" style="width: 100%;height: 80%" />
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <img src="./images/picture/banr2.png" style="width: 100%;height: 80%" />
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <img src="./images/picture/banr3.png" style="width: 100%;height: 80%" />
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <img src="./images/picture/banr4.png" style="width: 100%;height: 80%" />
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <img src="./images/picture/banr5.png" style="width: 100%;height: 80%" />
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <img src="./images/picture/banr6.png" style="width: 100%;height: 80%" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                <img src="./images/picture/bg5.png" style="width: 100%;margin-top: -85%;position: relative;">
+              <img src="./images/picture/barn10.png" style="width: 100%;margin-top: -5%;z-index: 2;position: relative;">
+
+                   <img src="./images/picture/barn11.png" style="width: 100%;margin-top: -5%;z-index: 2;position: relative;">
+
+            </div>
+             </div>
+            <img src="./images/picture/bg1.png" onclick="javascript:DownSoft();" style="width: 100%;z-index: 999;position: fixed;bottom: 0px;max-width: 640px;">
+            <!-- <div style="position: fixed;bottom: 0;z-index: 99;width: 100%;;text-align: center;max-width: 640px;">
+                <img src="picture/bg1.png" style="width: 100%;z-index: 999;position: fixed;bottom: 0px;">
+            </div> --></div>
+        <!-- 提示 -->
+        <div id="xrBox" style="background:#000000;">
+            <div>
+                <div onclick="hideXrBox()" style="position: fixed;">
+                    <img src="./images/picture/jc_close.png" alt="" style=" border: 0;max-width: 100%;vertical-align: middle;margin: 0;padding: 0;">
+                </div>
+                <img src="./images/picture/jc.png" alt="" style=" border: 0; max-width: 100%; vertical-align: middle; margin: 0; padding: 0;">
+            </div>
+        </div>
+
+    </body>
+    <script src="./js/jquery-confirm.min.js"></script>
+    <script src="./js/swiper.min.js"></script>
+    <script src="./js/script.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            if (browser.versions.android) {
+                $(".ios-tips").hide();
+            }
+            var u = navigator.userAgent,
+                app = navigator.appVersion;
+            var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
+            var ua = navigator.userAgent.toLocaleLowerCase();
+            var pf = navigator.platform.toLocaleLowerCase();
+            var isAndroid = (/android/i).test(ua)||((/iPhone|iPod|iPad/i).test(ua) && (/linux/i).test(pf))
+                || (/ucweb.*linux/i.test(ua));
+            var isIOS =(/iPhone|iPod|iPad/i).test(ua) && !isAndroid;
+            var isWinPhone = (/Windows Phone|ZuneWP7/i).test(ua);
+
+            var mobileType = {
+                pc:!isAndroid && !isIOS && !isWinPhone,
+                ios:isIOS,
+                android:isAndroid,
+                winPhone:isWinPhone
+            };
+
+            if (mobileType.pc) {
+                //$('#bg2Pic').css('left','6.2rem');
+                //$('#bg2Pic').css('padding-bottom','7.5rem');
+                $('#iconPic').css('top','2.8rem');
+                $('.iconPic').eq(0).css('width','6.4rem');
+                $('.iconPic').eq(0).css('top','-1.8rem');
+                $('.iconPic').eq(1).css('left','0');
+                $('.iconPic').eq(1).css('width','6.4rem');
+                $('.iconPic').eq(2).css('left','0.5rem');
+                $('.iconPic').eq(2).css('width','6.4rem');
+                $('.iconPic').eq(3).css('left','0.5rem');
+                $('.iconPic').eq(3).css('width','6.4rem');
+                $('.iconPic').eq(4).css('left','0.5rem');
+                $('.iconPic').eq(4).css('width','6.4rem');
+                $('.iconPic').eq(5).css('left','0.5rem');
+                $('.iconPic').eq(5).css('width','6.4rem');
+                $('.iconPic').eq(5).css('top','-2rem');
+
+                // $('#picIcon').css('top','40.6rem');
+                $('#picIcon').css('top','42.5rem');
+                $('#picIcon').css('left','0.3rem');
+                $('#picIcon').css('width','7rem');
+                $('#picIcon2').css('width','5.5rem');
+                $('#picIcon2').css('left','26.2%');
+                $('#picIcon2').css('bottom','0.5rem');
+                $('#picImg2').hide();
+            };
+            if (isAndroid) {
+                //$('#bg2Pic').css('left','3.6rem');
+                $('.iconPic').eq(1).css('left','-0.7rem');
+                $('.iconPic').eq(2).css('left','-0.8rem');
+                $('.iconPic').eq(3).css('left','-0.8rem');
+                $('.iconPic').eq(4).css('left','-0.8rem');
+                $('.iconPic').eq(5).css('left','19rem');
+                $('#picIcon').css('top','34.5rem');
+                $('#picIcon').css('left','0.3rem');
+            };
+            if(isIOS){
+
+            }
+
+
+
+        })
+    </script>
+
+</html>

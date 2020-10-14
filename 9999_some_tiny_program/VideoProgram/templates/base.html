@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1"/>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <meta name="renderer" content="webkit"/>
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" id="viewport" name="viewport">
+    <title>{{ context.title }}</title>
+
+
+    <script type="text/javascript" src="{{ url_for('static', filename='js/hls.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/DPlayer.min.js') }}"></script>
+    <link type="text/css" href="{{ url_for('static', filename='js/DPlayer.min.css') }}" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+{% block header_css %}
+{% endblock %}
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+
+<!-- 头部 -->
+<div class="container-fluid">
+<div class="row header_info" >
+	<div class="col-5 text-center float-left">
+		  <span class="domain">
+			  <div id="logo">
+				  <a href="http://{{ context.url }}" target="_blank"><font color="#EB261A" size="6">{{ context.url }}</font></a>
+			  </div>
+		  </span>
+	</div>
+	<div class="col-7  m-auto text-right">
+	<h6 ><i>{{ context.title }}</i></h6>
+	</div>
+
+</div>
+</div>
+
+
+
+
+<!-- 广告 -->
+<div class="container self-container">
+	<!-- 联系方式 -->
+	<div class="row">
+		<h5>联系方式：</h5>
+		<ul class="list-group col-12">
+		  <li class="list-group-item">QQ:</li>
+		  <li class="list-group-item">skype：</li>
+		  <li class="list-group-item">飞机：</li>
+		</ul>
+	</div>
+  <!-- Content here -->
+  <div class="row">
+	<a href="http://23.225.74.88:8818/53xoxo.html" target="_blank">
+		<img src="https://www.kanjiantu.com/images/2020/10/02/0TpCAX.gif" title="99?￡??‰???¤99784.com" style="width:100%">
+	</a>
+   </div>
+
+   <div class="row">
+	<a href="http://23.225.74.88:8818/53xoxo.html" target="_blank">
+		<img src="https://www.kanjiantu.com/images/2020/10/02/0TpCAX.gif" title="99?￡??‰???¤99784.com" style="width:100%">
+	</a>
+   </div>
+
+
+
+
+</div>
+
+<!-- 导航栏 -->
+<div class="container self-container">
+  <div class="row">
+	  <div class="cate">
+		  <a href="/">
+		  <div class="cate_container {% if request.path == 'index' %}cate_container_activate{% endif %}">
+			  首页
+		  </div>
+		  </a>
+	  </div>
+			{% for cate in context.cates %}
+				<div class="cate">
+					<a href="{{ url_for('cate', cate_id=cate.type_id) }}">
+					<div class="cate_container {%  if request.path == url_for('cate', cate_id=cate.type_id) %}cate_container_activate{% endif %}">
+						{{ cate.type_name }}
+					</div>
+					</a>
+				</div>
+			{% endfor %}
+  </div>
+</div>
+
+{% block main_body %}
+{% endblock %}
+
+<!-- 广告 -->
+<div class="container self-container">
+	<div class="row">
+     <a href="http://23.225.74.88:8818/53xoxo.html" target="_blank">
+  	   <img src="https://www.kanjiantu.com/images/2020/10/02/0TpCAX.gif" title="99?￡??‰???¤99784.com" style="width:100%">
+     </a>
+    </div>
+
+	<div class="row">
+ 	<a href="http://23.225.74.88:8818/53xoxo.html" target="_blank">
+ 		<img src="https://www.kanjiantu.com/images/2020/10/02/0TpCAX.gif" title="99?￡??‰???¤99784.com" style="width:100%">
+ 	</a>
+    </div>
+
+</div>
+<!-- 底部版权 -->
+<div class="container-fluid">
+	<div class="text-center" style="line-height:50px;background-color:#666">
+		  <div style="line-height:20px">
+		  <br><a href="#" target="_blank"><font color="#FF0000" size="5">合作邮箱:aixoxoxo2@gmail.com</font></a>
+		  <br><a target="_blank" href="/" style="text-decoration: none"><font color="#FFFFFF"><p><b>国内自拍99re久久_中文字幕久荜在线-2019中文字幕视频-国内自拍亚洲精品视频</b></p></font></a>
+		  <br><font color="#FFFFFF" size="2">站点申明：我们立足于美利坚合众国,受北美法律保护,未满18岁或被误导来到这里,请立即离开！
+		  <br>警告：本站所有内容均来自广大网友分享上传站点所提供的公开引用资源站长无关，所有视频及图文版权均归原作者及其网站所有!<script type="text/javascript" src="https://js.users.51.la/20575765.js"></script></font>
+		  <p><font color="#FFFFFF" size="3"> 收藏本站：請使用Ctrl+D進行收藏</font>
+		  </p>　
+		  <font color="#FFFFFF" size="2"><p>Copyright © 2008-2019 all rights reserved</p></font>
+
+		  </div>
+		  </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+
+
+  {% block footer_js %}
+  {% endblock %}
+
+
+</body>
+</html>

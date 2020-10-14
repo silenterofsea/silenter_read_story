@@ -90,12 +90,16 @@ class BookspiderSpider(scrapy.Spider):
             sort_id = re.findall(r"(\d+)\.html", dd.xpath("./@href").extract_first())[0]
             # print(sort_id)
             # print(detail_url)
+            # todo 在这个地方判断一下：   如果数据库中存在这章内容，则跳过
+            # todo：                   如果数据库中不存在这章内容，则继续
             yield scrapy.Request(
                 detail_url,
                 callback = self.parse_book_details,
                 meta={"book_id": deepcopy(book_id), "sort_id": deepcopy(sort_id)}
             )
 
+
+    # 入口函数
     def parse(self, response):
         '''从起始页面爬取需要读取的图书信息'''
         if response.url == 'https://www.biquge.com.cn/quanben/':

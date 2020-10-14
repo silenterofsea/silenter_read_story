@@ -11,7 +11,7 @@ import os
 from scrapy import Request
 from scrapy.exceptions import DropItem
 import pymysql
-
+import time
 """
 图书基本信息： book_infos表中信息
 {
@@ -125,7 +125,8 @@ class BiqugeMysqlPipeline(object):
             print("这是图书详情页信息 查询结果 = ", result)
             if result == 0:
                 # 如果返回结果为0,说明数据库中并没有这个图书的信息，需要用insert去插入
-                print("返回结果为0,说明数据库中并没有这本图书的该张信息的信息")
+                print("返回结果为0,说明数据库中并没有这本图书的该张信息的信息，只有我能出现")
+                time.sleep(2)
                 data = dict(item)
                 keys = ', '.join(data.keys())
                 values = ', '.join(['%s'] * len(data))
@@ -135,7 +136,7 @@ class BiqugeMysqlPipeline(object):
                 self.db.commit()
             else:
                 # 如果返回结果不是0, 说明数据库中已经有这个图书的信息了， 什么都不要做，直接pass
-                print("返回结果不是0, 说明数据库中已经有这本图书的该张信息的信息")
+                print("返回结果不是0, 说明数据库中已经有这本图书的该张信息的信息, 我不应该出现")
                 pass
         else:
             print("这是一个错误信息")

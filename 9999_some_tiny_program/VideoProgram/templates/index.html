@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block header_css %}
+<style type="text/css">
+
+</style>
+{% endblock %}
+
+{% block main_body %}
+<div class="container self-container">
+   <div class="row">
+        <h3>最新更新的视频</h3>
+    </div>
+</div>
+<div class="container self-container">
+        <div class="row">
+            {% for temp in context.videos  %}
+            <div class="col-md-12 col-lg-4">
+                <div class="m-3">
+                    <a href="{{ url_for('detail', detail_id=temp.vod_id) }}" target="_blank">
+                        <img src="{{ temp.vod_pic }}" style="max-width:100%" class="img_v" alt="">
+                    </a>
+                    <div class="">
+                        标题：{{ temp.vod_name }}
+                    </div>
+                    <div class="">
+                        标签：{{ temp.vod_tag }}
+                    </div>
+                    <div class="">
+                        分类：{{ temp.type_name }}
+                    </div>
+                    <div class="">
+                        更新时间：{{ temp.vod_time }}
+                    </div>
+                </div>
+            </div>
+
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

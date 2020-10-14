@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block header_css %}
+<style type="text/css">
+	.dplayer {
+		padding: 0;
+		margin: 0;
+		width: 100%;
+		height: 100%;
+		color: #aaa;
+		background-color: #000;
+	}
+	a{
+		text-decoration: none;
+	}
+	img {
+		border: 0;
+		vertical-align: middle;
+		max-width: 100%
+	}
+	.macplayer {
+		float: left;
+		width: 960px;
+		height: 500px;
+		background: #000;
+	}
+	.player_1{
+		background: #000000;
+		font-size: 14px;
+		color: #F6F6F6;
+		margin: 0px;
+		padding: 0px;
+		position: relative;
+		overflow: hidden;
+		width: 100%;
+		height: 100%;
+		min-height: 100px;
+	}
+	#dplayer {
+		height: 100% ! important;
+		width: 100% ! important;
+	}
+
+</style>
+{% endblock %}
+
+
+{% block main_body %}
+<div class="container self-container">
+	您的位置：<a href="/">首页</a> >> <a href="{{ url_for('cate', cate_id=context.video.type_id) }}">{{ context.video.type_name }}</a> >> {{ context.video.vod_name }}
+</div>
+<div class="container" style="max-width: 960px;">
+  <!-- Content here -->
+<div class="row">
+	<div class="macplayer" id="video-key" value="{{ context.video.vod_play_url }}">
+		<div class="player_1">
+			<div id="dplayer"></div>
+		</div>
+	</div>
+</div>
+
+</div>
+{% endblock %}
+
+
+
+
+{% block footer_js %}
+<script type="text/javascript">
+    var vid = document.getElementById('video-key').getAttribute('value');
+    console.log(vid);
+
+
+    const dp = new DPlayer({
+        container: document.getElementById('dplayer'),
+		autoplay: true,
+		loop: true,
+		video: {
+		  url: vid,
+		  type: 'hls'
+		}
+	});
+  </script>
+{% endblock %}
