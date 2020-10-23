@@ -1,8 +1,0 @@
-#!/home/alex/silenter_read_story/9999_some_tiny_program/VideoProgram/.video_vir/bin/python
-# -*- coding: utf-8 -*-
-import re
-import sys
-from flask.cli import main
-if __name__ == '__main__':
-    sys.argv[0] = re.sub(r'(-script\.pyw|\.exe)?$', '', sys.argv[0])
-    sys.exit(main())

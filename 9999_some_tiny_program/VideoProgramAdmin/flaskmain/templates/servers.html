@@ -1,0 +1,260 @@
+{% extends 'index_base.html' %}
+{% block header_css %}
+<style media="screen">
+            .pop_con{
+                display: none;
+            }
+            .pop{
+                width: 100%;
+                //width: 500px;
+                // height:300px;
+                position: fixed; /* 绝对定位 */
+                //left: 50%;
+                // top:50%;  /* 这两个条件以后，可以让pop的左上角出现在屏幕正中间 */
+                // border: 3px solid #000; /* solid 边框颜色 */
+                // background-color: #fff;
+                // margin-top: -150px;
+                // margin-left: -250px;  /* 这两个值是根据pop的宽高确定的 */
+                z-index: 9999;   /* 覆盖所有 */
+            }
+
+            .mask{
+                position:fixed;
+                width: 100%;
+                height: 100%;
+                background-color: #000;
+                opacity:0.3;    /* 兼容其他浏览器 */
+                filter:alpha(opacity=30); /* 兼容IE */
+                left:0;
+                top:0;
+                z-index: 9990;  /* 覆盖所有，除了pop，这两个值有一定的关系pip.z-index > mask.z-index */
+            }
+            .form-out-div{
+                background-color: #fff;
+                margin-top:-200px
+            }
+        </style>
+{% endblock %}
+{% block main_body %}
+    <div class="row">
+        <div class="col-12">
+          <div class="card">
+              {% if context.servers %}
+            <div class="card-header">
+              <h3 class="card-title">现有的服务器</h3>
+            </div>
+
+            <!-- /.card-header -->
+            <div class="card-body">
+
+              <div class="dataTables_wrapper dt-bootstrap4">
+
+                  <div class="row">
+
+                      <div class="col-sm-12">
+                          <table id="example2" class="table table-bordered table-hover dataTable dtr-inline" role="grid" aria-describedby="example2_info">
+                            <thead>
+                                <tr role="row">
+                                    <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="ascending" >服务器编号</th>
+                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >昵称</th>
+                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >IP</th>
+                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >登录用户名</th>
+                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >端口</th>
+                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >密码</th>
+                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >操作操作(同时删除该服务器上所有网站信息)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for server in context.servers %}
+                            <tr role="row" class="odd">
+                              <td tabindex="0" class="sorting_1">{{ server.id }}</td>
+                              <td>{{ server.nickname }}</td>
+                              <td>{{ server.ip }}</td>
+                              <td>{{ server.username }}</td>
+                              <td>{{ server.port }}</td>
+                              <td>{{ server.password }}</td>
+                              <td><button  onclick="delete_infos('{{ request.path }}',{{ server.id }})" type="button" name="button" class="btn btn-info">删除</button></td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                            <tfoot>
+                                <tr role="row">
+                                    <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="ascending" >服务器编号</th>
+                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >昵称</th>
+                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >IP</th>
+                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >登录用户名</th>
+                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >端口</th>
+                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >密码</th>
+                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >操作(同时删除该服务器上所有网站信息)</th>
+                                </tr>
+                            </tfoot>
+                          </table>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-2 offset-8">
+                        <button id="add_server"  class="btn btn-primary" type="button" name="button">添加{{ context.title }}</button>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+
+            <!-- /.card-body -->
+            {% else %}
+            <div class="card-header">
+              <h3 class="card-title"><big>当前没有{{ context.title }}</big></h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-2 offset-8">
+                        <button id="add_server"  class="btn btn-primary" type="button" name="button">添加{{ context.title }}</button>
+                    </div>
+                </div>
+                </div>
+
+
+            {% endif %}
+          </div>
+
+        </div>
+    </div>
+    <div class="pop_con">
+            <div class="row pop" >
+                <div class="col-6 offset-1 form-out-div p-2">
+                    <h3>添加服务器信息</h3>
+                    <p>tips:<br><big>尽量使用复制粘帖！不要手动输入</big></p>
+                    <form >
+                        <div class="form-group row">
+                          <label for="colFormLabel" class="col-sm-2 col-form-label">昵称</label>
+                          <div class="col-sm-10">
+                            <input id="nickname" type="text" class="form-control" id="colFormLabel" placeholder="col-form-label">
+                          </div>
+                        </div>
+                      <div class="form-group row">
+                        <label for="colFormLabel" class="col-sm-2 col-form-label">IP</label>
+                        <div class="col-sm-10">
+                          <input id="ip" type="text" class="form-control" id="colFormLabel" placeholder="col-form-label">
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="colFormLabel" class="col-sm-2 col-form-label">登录用户名</label>
+                        <div class="col-sm-10">
+                          <input id="username" type="text" class="form-control" id="colFormLabel" placeholder="col-form-label">
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="colFormLabel" class="col-sm-2 col-form-label">端口</label>
+                        <div class="col-sm-10">
+                          <input id="port" type="text" class="form-control" id="colFormLabel" placeholder="col-form-label">
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="colFormLabel" class="col-sm-2 col-form-label">密码</label>
+                        <div class="col-sm-10">
+                          <input id="password" type="text" class="form-control" id="colFormLabel" placeholder="col-form-label">
+                        </div>
+                      </div>
+
+                        <button type="button" onclick="add_infos('{{url_for('views.servers')}}')" name="button" class="btn btn-primary col-2 offset-1">提交</button>
+                        <button type="button" id="btn-cancel" name="button" class="btn btn-danger col-2 offset-6">取消</button>
+
+                    </form>
+                </div>
+            </div>
+            <div class="mask">
+                <!-- 弹窗的背景 -->
+            </div>
+    </div>
+{% endblock %}
+{% block footer_js %}
+<script type="text/javascript">
+    function getCookieCSRFToken(name) {
+            var r = document.cookie.match("\\b" + name + "=([^;]*)\\b");
+            return r ? r[1] : undefined;
+        };
+    function ajaxSendRequest(targetUrl, targetType, tagetJsonData){
+        console.log("targetUrl", targetUrl);
+        console.log("targetType", targetType);
+        console.log("tagetJsonData", tagetJsonData);
+        $.ajax({
+            url:targetUrl,
+            type: targetType,
+            data: tagetJsonData,
+            contentType: "application/json",
+            dataType: "json",
+            headers:{
+                "X-CSRFToken": getCookieCSRFToken("csrf_token"),
+            }, //设置请求头
+            success: function(resp) {
+                if(resp.resCode == '0'){
+                    console.log(resp);
+                    location.href = targetUrl;
+                }else {
+                    // console.log(resp.message);
+                    alert(resp.message)
+                }
+            }
+        });
+    };
+
+    function add_infos(targetUrl){
+        var ip = $('#ip').val();
+        var username = $('#username').val();
+        var password = $('#password').val();
+        var port = $('#port').val();
+        var nickname = $('#nickname').val();
+        if(!ip || !password || !port || !nickname || !username){
+            alert("参数缺失！")
+            return
+        };
+        var data = {
+            'ip':ip,
+            'username':username,
+            'password':password,
+            'port':port,
+            'nickname':nickname
+        };
+        var data_json = JSON.stringify(data);
+        ajaxSendRequest(targetUrl, 'post', data_json);
+    };
+
+    function delete_infos(targetUrl, delete_id){
+        if(!targetUrl || !delete_id){
+            alert("参数缺失！")
+            return
+        };
+        var data = {
+            'id':delete_id
+        };
+        var data_json = JSON.stringify(data);
+        ajaxSendRequest(targetUrl, 'delete', data_json);
+    }
+
+    $(function(){
+                $('#add_server').click(function(){
+                    console.log('clicked');
+                    // $('.pop_con').css({display: 'block'}); // 注意这个写法，第一个参数不需要引号
+                    // $('.pop_con').show();
+                    $('.pop_con').fadeIn();
+                    return false; // 如果不写这句，由于时间冒泡的原理，这边会返回到下面的
+                                  // document绑定的事件，因此，他会把fadeIn()和fadeOut()一起执行，导致表单无法正常显示
+                })
+
+                $(document).click(function(){
+                    $('.pop_con').fadeOut();
+                })
+
+                $('.pop').click(function(){
+                    return false;  // 如果没有这样，如果点击表单，由于事件冒泡的原理，整个表单会消失
+                })
+
+                $('#btn-cancel').unbind().click(function(){
+                    $('.pop_con').fadeOut();
+                })
+
+    });
+</script>
+{% endblock %}

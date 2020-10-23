@@ -21,16 +21,24 @@
                         <img src="{{ temp.vod_pic }}" style="max-width:100%" class="img_v" alt="">
                     </a>
                     <div class="">
-                        标题：{{ temp.vod_name }}
+                        标题：<a class="font-weight-bold" href="{{ url_for('detail', detail_id=temp.vod_id) }}" target="_blank">
+                            {{ temp.vod_name }}
+                            </a>
                     </div>
                     <div class="">
-                        标签：{{ temp.vod_tag }}
+                        标签：<a class="font-weight-bold" href="{{ url_for('detail', detail_id=temp.vod_id) }}" target="_blank">
+                            {{ temp.vod_tag }}
+                            </a>
                     </div>
                     <div class="">
-                        分类：{{ temp.type_name }}
+                        分类：<a class="font-weight-bold" href="{{ url_for('detail', detail_id=temp.vod_id) }}" target="_blank">
+                            {{ temp.type_name }}
+                            </a>
                     </div>
                     <div class="">
-                        更新时间：{{ temp.vod_time }}
+                        更新时间：<a class="font-weight-bold" href="{{ url_for('detail', detail_id=temp.vod_id) }}" target="_blank">
+                            {{ temp.vod_time }}
+                            </a>
                     </div>
                 </div>
             </div>

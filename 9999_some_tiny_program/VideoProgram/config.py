@@ -1,10 +1,10 @@
 DIALECT = 'mysql'
 DRIVER = 'pymysql'
 USERNAME = 'root'
-PASSWORD = 'qwe123'
+PASSWORD = 'Mysql0451392aa!!'
 HOST = '127.0.0.1'
 PORT = '3306'
-DATABASE = 'videoDB'
+DATABASE = 'webvideoDB'
 
 SQLALCHEMY_DATABASE_URI = "{}+{}://{}:{}@{}:{}/{}?charset=utf8".format(DIALECT, DRIVER, USERNAME, PASSWORD, HOST, PORT, DATABASE)
 

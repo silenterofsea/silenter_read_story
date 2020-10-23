@@ -1,0 +1,316 @@
+{% extends 'index_base.html' %}
+{% block header_css %}
+<style media="screen">
+            .pop_con{
+                display: none;
+            }
+            .pop{
+                width: 100%;
+                //width: 500px;
+                // height:300px;
+                position: fixed; /* 绝对定位 */
+                //left: 50%;
+                // top:50%;  /* 这两个条件以后，可以让pop的左上角出现在屏幕正中间 */
+                // border: 3px solid #000; /* solid 边框颜色 */
+                // background-color: #fff;
+                // margin-top: -150px;
+                // margin-left: -250px;  /* 这两个值是根据pop的宽高确定的 */
+                z-index: 9999;   /* 覆盖所有 */
+            }
+
+            .mask{
+                position:fixed;
+                width: 100%;
+                height: 100%;
+                background-color: #000;
+                opacity:0.3;    /* 兼容其他浏览器 */
+                filter:alpha(opacity=30); /* 兼容IE */
+                left:0;
+                top:0;
+                z-index: 9990;  /* 覆盖所有，除了pop，这两个值有一定的关系pip.z-index > mask.z-index */
+            }
+            .form-out-div{
+                background-color: #fff;
+                margin-top:-200px
+            }
+            .div_for_movie_is_show{
+                display:none;
+            }
+
+        </style>
+{% endblock %}
+{% block main_body %}
+    <div class="row">
+        <div class="col-12">
+          <div class="card">
+              {% if context.webs %}
+            <div class="card-header">
+              <h3 class="card-title">现有的服务器</h3>
+            </div>
+
+            <!-- /.card-header -->
+            <div class="card-body">
+
+              <div class="dataTables_wrapper dt-bootstrap4">
+
+                  <div class="row">
+
+                      <div class="col-sm-12">
+                          <table id="example2" class="table table-bordered table-hover dataTable dtr-inline" role="grid" aria-describedby="example2_info">
+                            <thead>
+                                <tr role="row">
+                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >网址</th>
+                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >标题</th>
+                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >关键词</th>
+                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >描述</th>
+                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >百度统计代码</th>
+                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >百度API参数</th>
+                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for web in context.webs %}
+                            <tr role="row" class="odd">
+                              <td tabindex="0" class="sorting_1">{{ web.url}}</td>
+                              <td>{{ web.title }}</td>
+                              <td>{{ web.keywords }}</td>
+                              <td>{{ web.description }}</td>
+                              <td>{{ web.baidu_code }}</td>
+                              <td>{{ web.baidu_post_code }}</td>
+                              <td><button  onclick="delete_infos('{{ request.path }}',{{ web.id }})" type="button" name="button" class="btn btn-info">删除</button></td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                            <tfoot>
+                                <tr role="row">
+                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >网址</th>
+                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >标题</th>
+                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >关键词</th>
+                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >描述</th>
+                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >百度统计代码</th>
+                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >百度API参数</th>
+                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >操作</th>
+                                </tr>
+                            </tfoot>
+                          </table>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-2 offset-8">
+                        <button id="add_server"  class="btn btn-primary" type="button" name="button">添加{{ context.title }}</button>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+
+            <!-- /.card-body -->
+            {% else %}
+            <div class="card-header">
+              <h3 class="card-title"><big>当前没有{{ context.title }}</big></h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-2 offset-8">
+                        <button id="add_server"  class="btn btn-primary" type="button" name="button">添加{{ context.title }}</button>
+                    </div>
+                </div>
+                </div>
+
+
+            {% endif %}
+          </div>
+
+        </div>
+    </div>
+    <div class="pop_con">
+            <div class="row pop" >
+                <div class="col-6 offset-1 form-out-div p-2">
+                    <h3>添加{{ context.title }}</h3>
+                    <p>tips:<br><big>尽量使用复制粘帖！不要手动输入</big></p>
+                    <form >
+                        <div class="form-group row">
+                          <label for="colFormLabel" class="col-sm-2 col-form-label">网址</label>
+                          <div class="col-sm-10">
+                            <input id="url" type="text" class="form-control" id="colFormLabel" placeholder="解析了什么就填写什么，不要错！">
+                          </div>
+                        </div>
+                      <div class="form-group row">
+                        <label for="colFormLabel" class="col-sm-2 col-form-label">标题</label>
+                        <div class="col-sm-10">
+                          <input id="title" type="text" class="form-control" id="colFormLabel" placeholder="网站标题">
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="colFormLabel" class="col-sm-2 col-form-label">关键词</label>
+                        <div class="col-sm-10">
+                          <input id="keywords" type="text" class="form-control" id="colFormLabel" placeholder="网站关键词">
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="colFormLabel" class="col-sm-2 col-form-label">描述</label>
+                        <div class="col-sm-10">
+                          <input id="description" type="text" class="form-control" id="colFormLabel" placeholder="网站的描述">
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="colFormLabel" class="col-sm-2 col-form-label">百度统计代码</label>
+                        <div class="col-sm-10">
+                          <input id="baidu_code" type="text" class="form-control" id="colFormLabel" placeholder="只要https://开头的部分就可以了">
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="colFormLabel" class="col-sm-2 col-form-label">百度API参数</label>
+                        <div class="col-sm-10">
+                          <input id="baidu_post_code" type="text" class="form-control" id="colFormLabel" placeholder="格式：（IP：端口），比如：192.168.1.1：1943">
+                        </div>
+                      </div>
+
+                        <button type="button" onclick="add_infos('{{ request.path }}')" name="button" class="btn btn-primary col-2 offset-1">提交</button>
+                        <button type="button" id="btn-cancel" name="button" class="btn btn-danger col-2 offset-6">取消</button>
+
+                    </form>
+                </div>
+            </div>
+            <div class="mask">
+                <!-- 弹窗的背景 -->
+            </div>
+    </div>
+    <div class="div_for_movie_is_show">
+        <div class="pop">
+            <div class="col-8  form-out-div p-2">
+                <div class="row">
+                    <h1>正在形成文件，提交服务器，请勿进行操作/刷新，大概需要20S</h1>
+                </div>
+                    <div class="progress">
+                      <div id="jindutiao" class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+
+            </div>
+
+        </div>
+        <div class="mask">
+            <!-- 弹窗的背景 -->
+        </div>
+    </div>
+
+{% endblock %}
+{% block footer_js %}
+<script type="text/javascript">
+    var i =0;
+    var showTime=function(){
+
+        if (i < 100) {
+            i = i + 10;
+            $('#jindutiao').attr({
+                "style":"width: "+i+"%",
+                "aria-valuenow": i
+            });
+        }else{
+            i = 0;
+            $('#jindutiao').attr({
+                "style":"width: "+i+"%",
+                "aria-valuenow": i
+            });
+        }
+
+    };
+    var showTimeInterval=setInterval(showTime,40000);
+    clearInterval(showTimeInterval);
+    function getCookieCSRFToken(name) {
+            var r = document.cookie.match("\\b" + name + "=([^;]*)\\b");
+            return r ? r[1] : undefined;
+        };
+    function ajaxSendRequest(targetUrl, targetType, tagetJsonData){
+        console.log("targetUrl", targetUrl);
+        console.log("targetType", targetType);
+        console.log("tagetJsonData", tagetJsonData);
+        $('.pop_con').fadeOut();
+        $('.div_for_movie_is_show').fadeIn();
+        setInterval(showTime,1000);
+        $.ajax({
+            url:targetUrl,
+            type: targetType,
+            data: tagetJsonData,
+            contentType: "application/json",
+            dataType: "json",
+            headers:{
+                "X-CSRFToken": getCookieCSRFToken("csrf_token"),
+            }, //设置请求头
+            success: function(resp) {
+                $('.div_for_movie_is_show').fadeOut();
+                clearInterval(showTimeInterval);
+                if(resp.resCode == '0'){
+                    console.log(resp);
+                    location.href = targetUrl;
+                }else {
+                    // console.log(resp.message);
+                    alert(resp.message)
+                }
+            }
+        });
+    };
+
+    function add_infos(targetUrl){
+        var url = $('#url').val();
+        var title = $('#title').val();
+        var keywords = $('#keywords').val();
+        var description = $('#description').val();
+        var baidu_code = $('#baidu_code').val();
+        var baidu_post_code = $('#baidu_post_code').val();
+        if(!url || !title || !keywords || !description || !baidu_code || !baidu_post_code){
+            alert("参数缺失！")
+            return
+        };
+        var data = {
+            'url':url,
+            'title':title,
+            'keywords':keywords,
+            'description':description,
+            'baidu_code':baidu_code,
+            'baidu_post_code': baidu_post_code
+        };
+        var data_json = JSON.stringify(data);
+
+        ajaxSendRequest(targetUrl, 'post', data_json);
+    };
+
+    function delete_infos(targetUrl, delete_id){
+        if(!targetUrl || !delete_id){
+            alert("参数缺失！")
+            return
+        };
+        var data = {
+            'id':delete_id
+        };
+        var data_json = JSON.stringify(data);
+        ajaxSendRequest(targetUrl, 'delete', data_json);
+    }
+
+    $(function(){
+                $('#add_server').click(function(){
+                    console.log('clicked');
+                    // $('.pop_con').css({display: 'block'}); // 注意这个写法，第一个参数不需要引号
+                    // $('.pop_con').show();
+                    $('.pop_con').fadeIn();
+                    return false; // 如果不写这句，由于时间冒泡的原理，这边会返回到下面的
+                                  // document绑定的事件，因此，他会把fadeIn()和fadeOut()一起执行，导致表单无法正常显示
+                })
+
+                $(document).click(function(){
+                    $('.pop_con').fadeOut();
+                })
+
+                $('.pop').click(function(){
+                    return false;  // 如果没有这样，如果点击表单，由于事件冒泡的原理，整个表单会消失
+                })
+
+                $('#btn-cancel').unbind().click(function(){
+                    $('.pop_con').fadeOut();
+                })
+
+    });
+</script>
+{% endblock %}

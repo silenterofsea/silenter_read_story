@@ -1,5 +1,18 @@
 {% extends 'base.html' %}
 
+{% block header_css %}
+<style media="screen">
+    .pagination li{
+        min-width:7.6%;
+        margin: auto!important;
+    }
+    .pagination_95{
+        width:98%;
+        margin-left: 1%;
+    }
+</style>
+{% endblock %}
+
 {% block main_body %}
 
 <div class="container self-container">
@@ -9,79 +22,84 @@
 </div>
 <div class="container self-container">
     <div class="row ">
-    <div class="m-auto">
-        <nav aria-label="">
+        <nav aria-label="" style="width:100%;text-align: center;">
+                <div class="page-item col-6 offset-3">
+                  <a class="page-link" href="#" tabindex="-1" aria-disabled="true">总计：{{ context.pageinfo.page_total }}页</a>
 
-          <ul class="pagination">
-              <li class="page-item">
-                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">总计：{{ context.pageinfo.page_total }}页</a>
-              </li>
+              </div>
+
+              <div class="">
+                  <ul class="pagination pagination_95">
 
 
-            {% if context.pageinfo.page_activate > 4 %}
-                <li class="page-item ">
-                  <a class="page-link " href="{{ url_for('cate', cate_id=context.videos[0].type_id, page=context.pageinfo.page_activate-1) }}" tabindex="-1" aria-disabled="true">上一页</a>
-                </li>
-                <li class="page-item"><a class="page-link" href="{{ url_for('cate', cate_id=context.videos[0].type_id, page=1) }}">1</a></li>
-                {% if context.pageinfo.page_activate != 5 %}
-                    <li class="page-item"><a class="page-link" href="#">...</a></li>
-                {% endif %}
 
-                {% for i in [3,2,1] %}
-                        <li class="page-item"><a class="page-link" href="{{ url_for('cate', cate_id=context.videos[0].type_id, page=context.pageinfo.page_activate -i) }}">{{ context.pageinfo.page_activate -i }}</a></li>
+                    {% if context.pageinfo.page_activate > 4 %}
+                        <li class="page-item ">
+                          <a class="page-link " href="{{ url_for('cate', cate_id=context.videos[0].type_id, page=context.pageinfo.page_activate-1) }}" tabindex="-1" aria-disabled="true">上一页</a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="{{ url_for('cate', cate_id=context.videos[0].type_id, page=1) }}">1</a></li>
+                        {% if context.pageinfo.page_activate != 5 %}
+                            <li class="page-item"><a class="page-link" href="#">...</a></li>
+                        {% endif %}
 
-                {% endfor %}
-            {% else %}
-                <li class="page-item disabled">
-                  <a class="page-link" href="#" tabindex="-1" aria-disabled="true">上一页</a>
-                </li>
-                {% for i in [3,2,1] %}
-                    {% if context.pageinfo.page_activate -i > 0 %}
-                        <li class="page-item"><a class="page-link" href="{{ url_for('cate', cate_id=context.videos[0].type_id, page=context.pageinfo.page_activate -i) }}">{{ context.pageinfo.page_activate -i }}</a></li>
+                        {% for i in [3,2,1] %}
+                                <li class="page-item"><a class="page-link" href="{{ url_for('cate', cate_id=context.videos[0].type_id, page=context.pageinfo.page_activate -i) }}">{{ context.pageinfo.page_activate -i }}</a></li>
+
+                        {% endfor %}
+                    {% else %}
+                        <li class="page-item disabled">
+                          <a class="page-link" href="#" tabindex="-1" aria-disabled="true">上一页</a>
+                        </li>
+                        {% for i in [3,2,1] %}
+                            {% if context.pageinfo.page_activate -i > 0 %}
+                                <li class="page-item"><a class="page-link" href="{{ url_for('cate', cate_id=context.videos[0].type_id, page=context.pageinfo.page_activate -i) }}">{{ context.pageinfo.page_activate -i }}</a></li>
+                            {% endif %}
+                        {% endfor %}
                     {% endif %}
-                {% endfor %}
-            {% endif %}
-            <!-- <li class="page-item"><a class="page-link" href="#">{{ context.pageinfo.page_activate -3 }}</a></li>
-            <li class="page-item"><a class="page-link" href="#">{{ context.pageinfo.page_activate -2 }}</a></li>
-            <li class="page-item"><a class="page-link" href="#">{{ context.pageinfo.page_activate -1 }}</a></li> -->
+                    <!-- <li class="page-item"><a class="page-link" href="#">{{ context.pageinfo.page_activate -3 }}</a></li>
+                    <li class="page-item"><a class="page-link" href="#">{{ context.pageinfo.page_activate -2 }}</a></li>
+                    <li class="page-item"><a class="page-link" href="#">{{ context.pageinfo.page_activate -1 }}</a></li> -->
 
-            <li class="page-item active" aria-current="page">
-              <a class="page-link" href="#">{{ context.pageinfo.page_activate }}</a>
-            </li>
-            {% if context.pageinfo.page_total - context.pageinfo.page_activate > 3 %}
-                {% for i in [1,2,3] %}
-                        <li class="page-item"><a class="page-link" href="{{ url_for('cate', cate_id=context.videos[0].type_id, page=context.pageinfo.page_activate + i) }}">{{ context.pageinfo.page_activate + i }}</a></li>
-                {% endfor %}
+                    <li class="page-item active" aria-current="page">
+                      <a class="page-link" href="#">{{ context.pageinfo.page_activate }}</a>
+                    </li>
+                    {% if context.pageinfo.page_total - context.pageinfo.page_activate > 3 %}
+                        {% for i in [1,2,3] %}
+                                <li class="page-item"><a class="page-link" href="{{ url_for('cate', cate_id=context.videos[0].type_id, page=context.pageinfo.page_activate + i) }}">{{ context.pageinfo.page_activate + i }}</a></li>
+                        {% endfor %}
 
-                <!-- <li class="page-item"><a class="page-link" href="#">{{ context.pageinfo.page_activate +1 }}</a></li>
-                <li class="page-item"><a class="page-link" href="#">{{ context.pageinfo.page_activate +2 }}</a></li>
-                <li class="page-item"><a class="page-link" href="#">{{ context.pageinfo.page_activate +3 }}</a></li> -->
-                {% if context.pageinfo.page_total - context.pageinfo.page_activate != 4 %}
-                    <li class="page-item"><a class="page-link" href="#">...</a></li>
-                {% endif %}
-                <li class="page-item"><a class="page-link" href="{{ url_for('cate', cate_id=context.videos[0].type_id, page=context.pageinfo.page_total) }}">{{ context.pageinfo.page_total }}</a></li>
-                <li class="page-item">
-                  <a class="page-link" href="{{ url_for('cate', cate_id=context.videos[0].type_id,page=context.pageinfo.page_activate+1) }}">下一页</a>
-                </li>
-            {% else %}
-                {% for i in [1,2,3] %}
-                    {% if context.pageinfo.page_activate + i <= context.pageinfo.page_total %}
-                        <li class="page-item"><a class="page-link" href="{{ url_for('cate', cate_id=context.videos[0].type_id,page=context.pageinfo.page_activate + i) }}">{{ context.pageinfo.page_activate + i }}</a></li>
+                        <!-- <li class="page-item"><a class="page-link" href="#">{{ context.pageinfo.page_activate +1 }}</a></li>
+                        <li class="page-item"><a class="page-link" href="#">{{ context.pageinfo.page_activate +2 }}</a></li>
+                        <li class="page-item"><a class="page-link" href="#">{{ context.pageinfo.page_activate +3 }}</a></li> -->
+                        {% if context.pageinfo.page_total - context.pageinfo.page_activate != 4 %}
+                            <li class="page-item"><a class="page-link" href="#">...</a></li>
+                        {% endif %}
+                        <li class="page-item"><a class="page-link" href="{{ url_for('cate', cate_id=context.videos[0].type_id, page=context.pageinfo.page_total) }}">{{ context.pageinfo.page_total }}</a></li>
+                        <li class="page-item">
+                          <a class="page-link" href="{{ url_for('cate', cate_id=context.videos[0].type_id,page=context.pageinfo.page_activate+1) }}">下一页</a>
+                        </li>
+                    {% else %}
+                        {% for i in [1,2,3] %}
+                            {% if context.pageinfo.page_activate + i <= context.pageinfo.page_total %}
+                                <li class="page-item"><a class="page-link" href="{{ url_for('cate', cate_id=context.videos[0].type_id,page=context.pageinfo.page_activate + i) }}">{{ context.pageinfo.page_activate + i }}</a></li>
+                            {% endif %}
+
+                        {% endfor %}
+                        <li class="page-item disabled">
+                          <a class="page-link" href="#">下一页</a>
+                        </li>
                     {% endif %}
 
-                {% endfor %}
-                <li class="page-item disabled">
-                  <a class="page-link" href="#">下一页</a>
-                </li>
-            {% endif %}
 
 
 
 
+                  </ul>
+              </div>
 
-          </ul>
+
         </nav>
-    </div>
+
 
 
 </div>
@@ -91,20 +109,28 @@
             {% for temp in context.videos  %}
             <div class="col-md-12 col-lg-4">
                 <div class="m-3">
-                    <a href="{{ url_for('detail', detail_id=temp.vod_id) }}" target="_blank">
+                    <a  href="{{ url_for('detail', detail_id=temp.vod_id) }}" target="_blank">
                         <img src="{{ temp.vod_pic }}" style="max-width:100%" class="img_v" alt="">
                     </a>
                     <div class="">
-                        标题：{{ temp.vod_name }}
+                        标题：<a class="font-weight-bold" href="{{ url_for('detail', detail_id=temp.vod_id) }}" target="_blank">
+                            {{ temp.vod_name }}
+                            </a>
                     </div>
                     <div class="">
-                        标签：{{ temp.vod_tag }}
+                        标签：<a class="font-weight-bold" href="{{ url_for('detail', detail_id=temp.vod_id) }}" target="_blank">
+                            {{ temp.vod_tag }}
+                            </a>
                     </div>
                     <div class="">
-                        分类：{{ temp.type_name }}
+                        分类：<a class="font-weight-bold" href="{{ url_for('detail', detail_id=temp.vod_id) }}" target="_blank">
+                            {{ temp.type_name }}
+                            </a>
                     </div>
                     <div class="">
-                        更新时间：{{ temp.vod_time }}
+                        更新时间：<a class="font-weight-bold" href="{{ url_for('detail', detail_id=temp.vod_id) }}" target="_blank">
+                            {{ temp.vod_time }}
+                            </a>
                     </div>
                 </div>
             </div>
@@ -114,79 +140,84 @@
     </div>
 <div class="container self-container">
     <div class="row ">
-    <div class="m-auto">
-        <nav aria-label="">
 
-          <ul class="pagination">
-              <li class="page-item">
-                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">总计：{{ context.pageinfo.page_total }}页</a>
-              </li>
+        <nav aria-label="" style="width:100%;text-align: center;">
+                <div class="page-item col-6 offset-3">
+                  <a class="page-link" href="#" tabindex="-1" aria-disabled="true">总计：{{ context.pageinfo.page_total }}页</a>
+
+              </div>
+              <div class="">
+                  <ul class="pagination pagination_95">
 
 
-            {% if context.pageinfo.page_activate > 4 %}
-                <li class="page-item ">
-                  <a class="page-link " href="{{ url_for('cate', cate_id=context.videos[0].type_id, page=context.pageinfo.page_activate-1) }}" tabindex="-1" aria-disabled="true">上一页</a>
-                </li>
-                <li class="page-item"><a class="page-link" href="{{ url_for('cate', cate_id=context.videos[0].type_id, page=1) }}">1</a></li>
-                {% if context.pageinfo.page_activate != 5 %}
-                    <li class="page-item"><a class="page-link" href="#">...</a></li>
-                {% endif %}
 
-                {% for i in [3,2,1] %}
-                        <li class="page-item"><a class="page-link" href="{{ url_for('cate', cate_id=context.videos[0].type_id, page=context.pageinfo.page_activate -i) }}">{{ context.pageinfo.page_activate -i }}</a></li>
+                    {% if context.pageinfo.page_activate > 4 %}
+                        <li class="page-item ">
+                          <a class="page-link " href="{{ url_for('cate', cate_id=context.videos[0].type_id, page=context.pageinfo.page_activate-1) }}" tabindex="-1" aria-disabled="true">上一页</a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="{{ url_for('cate', cate_id=context.videos[0].type_id, page=1) }}">1</a></li>
+                        {% if context.pageinfo.page_activate != 5 %}
+                            <li class="page-item"><a class="page-link" href="#">...</a></li>
+                        {% endif %}
 
-                {% endfor %}
-            {% else %}
-                <li class="page-item disabled">
-                  <a class="page-link" href="#" tabindex="-1" aria-disabled="true">上一页</a>
-                </li>
-                {% for i in [3,2,1] %}
-                    {% if context.pageinfo.page_activate -i > 0 %}
-                        <li class="page-item"><a class="page-link" href="{{ url_for('cate', cate_id=context.videos[0].type_id, page=context.pageinfo.page_activate -i) }}">{{ context.pageinfo.page_activate -i }}</a></li>
+                        {% for i in [3,2,1] %}
+                                <li class="page-item"><a class="page-link" href="{{ url_for('cate', cate_id=context.videos[0].type_id, page=context.pageinfo.page_activate -i) }}">{{ context.pageinfo.page_activate -i }}</a></li>
+
+                        {% endfor %}
+                    {% else %}
+                        <li class="page-item disabled">
+                          <a class="page-link" href="#" tabindex="-1" aria-disabled="true">上一页</a>
+                        </li>
+                        {% for i in [3,2,1] %}
+                            {% if context.pageinfo.page_activate -i > 0 %}
+                                <li class="page-item"><a class="page-link" href="{{ url_for('cate', cate_id=context.videos[0].type_id, page=context.pageinfo.page_activate -i) }}">{{ context.pageinfo.page_activate -i }}</a></li>
+                            {% endif %}
+                        {% endfor %}
                     {% endif %}
-                {% endfor %}
-            {% endif %}
-            <!-- <li class="page-item"><a class="page-link" href="#">{{ context.pageinfo.page_activate -3 }}</a></li>
-            <li class="page-item"><a class="page-link" href="#">{{ context.pageinfo.page_activate -2 }}</a></li>
-            <li class="page-item"><a class="page-link" href="#">{{ context.pageinfo.page_activate -1 }}</a></li> -->
+                    <!-- <li class="page-item"><a class="page-link" href="#">{{ context.pageinfo.page_activate -3 }}</a></li>
+                    <li class="page-item"><a class="page-link" href="#">{{ context.pageinfo.page_activate -2 }}</a></li>
+                    <li class="page-item"><a class="page-link" href="#">{{ context.pageinfo.page_activate -1 }}</a></li> -->
 
-            <li class="page-item active" aria-current="page">
-              <a class="page-link" href="#">{{ context.pageinfo.page_activate }}</a>
-            </li>
-            {% if context.pageinfo.page_total - context.pageinfo.page_activate > 3 %}
-                {% for i in [1,2,3] %}
-                        <li class="page-item"><a class="page-link" href="{{ url_for('cate', cate_id=context.videos[0].type_id, page=context.pageinfo.page_activate + i) }}">{{ context.pageinfo.page_activate + i }}</a></li>
-                {% endfor %}
+                    <li class="page-item active" aria-current="page">
+                      <a class="page-link" href="#">{{ context.pageinfo.page_activate }}</a>
+                    </li>
+                    {% if context.pageinfo.page_total - context.pageinfo.page_activate > 3 %}
+                        {% for i in [1,2,3] %}
+                                <li class="page-item"><a class="page-link" href="{{ url_for('cate', cate_id=context.videos[0].type_id, page=context.pageinfo.page_activate + i) }}">{{ context.pageinfo.page_activate + i }}</a></li>
+                        {% endfor %}
 
-                <!-- <li class="page-item"><a class="page-link" href="#">{{ context.pageinfo.page_activate +1 }}</a></li>
-                <li class="page-item"><a class="page-link" href="#">{{ context.pageinfo.page_activate +2 }}</a></li>
-                <li class="page-item"><a class="page-link" href="#">{{ context.pageinfo.page_activate +3 }}</a></li> -->
-                {% if context.pageinfo.page_total - context.pageinfo.page_activate != 4 %}
-                    <li class="page-item"><a class="page-link" href="#">...</a></li>
-                {% endif %}
-                <li class="page-item"><a class="page-link" href="{{ url_for('cate', cate_id=context.videos[0].type_id, page=context.pageinfo.page_total) }}">{{ context.pageinfo.page_total }}</a></li>
-                <li class="page-item">
-                  <a class="page-link" href="{{ url_for('cate', cate_id=context.videos[0].type_id,page=context.pageinfo.page_activate+1) }}">下一页</a>
-                </li>
-            {% else %}
-                {% for i in [1,2,3] %}
-                    {% if context.pageinfo.page_activate + i <= context.pageinfo.page_total %}
-                        <li class="page-item"><a class="page-link" href="{{ url_for('cate', cate_id=context.videos[0].type_id,page=context.pageinfo.page_activate + i) }}">{{ context.pageinfo.page_activate + i }}</a></li>
+                        <!-- <li class="page-item"><a class="page-link" href="#">{{ context.pageinfo.page_activate +1 }}</a></li>
+                        <li class="page-item"><a class="page-link" href="#">{{ context.pageinfo.page_activate +2 }}</a></li>
+                        <li class="page-item"><a class="page-link" href="#">{{ context.pageinfo.page_activate +3 }}</a></li> -->
+                        {% if context.pageinfo.page_total - context.pageinfo.page_activate != 4 %}
+                            <li class="page-item"><a class="page-link" href="#">...</a></li>
+                        {% endif %}
+                        <li class="page-item"><a class="page-link" href="{{ url_for('cate', cate_id=context.videos[0].type_id, page=context.pageinfo.page_total) }}">{{ context.pageinfo.page_total }}</a></li>
+                        <li class="page-item">
+                          <a class="page-link" href="{{ url_for('cate', cate_id=context.videos[0].type_id,page=context.pageinfo.page_activate+1) }}">下一页</a>
+                        </li>
+                    {% else %}
+                        {% for i in [1,2,3] %}
+                            {% if context.pageinfo.page_activate + i <= context.pageinfo.page_total %}
+                                <li class="page-item"><a class="page-link" href="{{ url_for('cate', cate_id=context.videos[0].type_id,page=context.pageinfo.page_activate + i) }}">{{ context.pageinfo.page_activate + i }}</a></li>
+                            {% endif %}
+
+                        {% endfor %}
+                        <li class="page-item disabled">
+                          <a class="page-link" href="#">下一页</a>
+                        </li>
                     {% endif %}
 
-                {% endfor %}
-                <li class="page-item disabled">
-                  <a class="page-link" href="#">下一页</a>
-                </li>
-            {% endif %}
 
 
 
 
+                  </ul>
+              </div>
 
-          </ul>
+
         </nav>
-    </div>
+
 
 
 </div>

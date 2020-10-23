@@ -1,0 +1,229 @@
+{% extends 'index_base.html' %}
+{% block header_css %}
+<style media="screen">
+            .pop_con{
+                display: none;
+            }
+            .pop{
+                width: 100%;
+                position: fixed; /* 绝对定位 */
+                z-index: 9999;   /* 覆盖所有 */
+            }
+
+            .mask{
+                position:fixed;
+                width: 100%;
+                height: 100%;
+                background-color: #000;
+                opacity:0.3;    /* 兼容其他浏览器 */
+                filter:alpha(opacity=30); /* 兼容IE */
+                left:0;
+                top:0;
+                z-index: 9990;  /* 覆盖所有，除了pop，这两个值有一定的关系pip.z-index > mask.z-index */
+            }
+            .form-out-div{
+                background-color: #fff;
+                margin-top:-200px
+            }
+        </style>
+{% endblock %}
+{% block main_body %}
+    <div class="row">
+        <div class="col-12">
+          <div class="card">
+               {% if context.ads %}
+            <div class="card-header">
+              <h3 class="card-title"><big>现有的{{ context.title }}</big>>>>>tips:写错了，直接删除重新添加即可</h3>
+
+            </div>
+
+            <!-- /.card-header -->
+            <div class="card-body">
+
+              <div class="dataTables_wrapper dt-bootstrap4">
+
+                  <div class="row">
+                      <div class="col-sm-12">
+                          <table id="example2" class="table table-bordered table-hover dataTable dtr-inline" role="grid" aria-describedby="example2_info">
+                            <thead>
+                                <tr role="row">
+
+                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >跳转地址</th>
+                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >图片地址</th>
+                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for temp in context.ads %}
+                                <tr role="row" class="odd">
+                                  <td>{{ temp.target_url }}</td>
+                                  <td>{{ temp.img_url }}</td>
+                                  <td><button  onclick="delete_infos('{{ request.path }}',{{ temp.id }})" type="button" name="button" class="btn btn-info">删除</button></td>
+                                </tr>
+                                {% endfor %}
+
+                            </tbody>
+                            <tfoot>
+                                <tr role="row">
+
+                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >跳转地址</th>
+                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >图片地址</th>
+                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >操作</th>
+                                </tr>
+                            </tfoot>
+                          </table>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <button id="add_server" class="btn btn-primary col-2 offset-8" type="button" name="button">添加{{ context.title }}</button>
+                </div>
+
+
+            </div>
+
+            </div>
+            {% else %}
+            <div class="card-header">
+              <h3 class="card-title"><big>当前没有{{ context.title }}</big></h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-2 offset-8">
+                        <button id="add_server"  class="btn btn-primary" type="button" name="button">添加{{ context.title }}</button>
+                    </div>
+                </div>
+                </div>
+            {% endif %}
+          </div>
+
+        </div>
+    </div>
+    <div class="pop_con">
+            <div class="pop row" >
+                <div class="col-4 offset-2 p-3 form-out-div">
+                    <h3>添加{{ context.title }}</h3>
+                    <p>务必保证两个地址都可以在浏览器中打开:
+                        图片大小：<br>
+
+                        上方:960X60<br>
+                        下方：960X60<br>
+                        左右：210X1080<br>
+                        上下：640X200
+                    </p>
+                    <form >
+
+                        <div class="form-group row">
+                          <label for="colFormLabel" class="col-sm-2 col-form-label">跳转地址</label>
+                          <div class="col-sm-10">
+                              {{ form.target_url(class="form-control", id="target_url") }}
+                          </div>
+                        </div>
+                      <div class="form-group row">
+                        <label for="colFormLabel" class="col-sm-2 col-form-label">图片地址</label>
+                        <div class="col-sm-10">
+                            {{ form.img_url(class="form-control", id="img_url") }}
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <!-- {{ form.submit(class="btn btn-primary col-2 offset-1", id="go-submit") }} -->
+                        <button type="button" onclick="add_infos('{{ request.path }}')" name="button" class="btn btn-primary col-2 offset-1">提交</button>
+                        <button type="button" id="btn-cancel" name="button" class="btn btn-danger col-2 offset-6">取消</button>
+                        </div>
+
+
+
+                    </form>
+                </div>
+            </div>
+            <div class="mask">
+                <!-- 弹窗的背景 -->
+            </div>
+    </div>
+{% endblock %}
+{% block footer_js %}
+<script type="text/javascript">
+    function getCookieCSRFToken(name) {
+            var r = document.cookie.match("\\b" + name + "=([^;]*)\\b");
+            return r ? r[1] : undefined;
+        };
+    function ajaxSendRequest(targetUrl, targetType, tagetJsonData){
+        console.log("targetUrl", targetUrl);
+        console.log("targetType", targetType);
+        console.log("tagetJsonData", tagetJsonData);
+        $.ajax({
+            url:targetUrl,
+            type: targetType,
+            data: tagetJsonData,
+            contentType: "application/json",
+            dataType: "json",
+            headers:{
+                "X-CSRFToken": getCookieCSRFToken("csrf_token"),
+            }, //设置请求头
+            success: function(resp) {
+                if(resp.resCode == '0'){
+                    console.log(resp);
+                    location.href = targetUrl;
+                }else {
+                    // console.log(resp.message);
+                    alert(resp.message);
+                }
+            }
+        });
+    };
+
+    function delete_infos(delte_url, delete_id){
+        var data = {
+            'id':delete_id
+        };
+        var data_json = JSON.stringify(data);
+
+        ajaxSendRequest(delte_url, 'delete', data_json);
+    };
+
+    function add_infos(post_url){
+        var target_url = $('#target_url').val();
+        var img_url = $('#img_url').val();
+        if(!target_url ){
+            console.log("参数缺失")
+            return
+        }
+        if(!img_url ){
+            console.log("参数缺失")
+            return
+        }
+        var post_data = {
+            'target_url': target_url,
+            'img_url': img_url
+        };
+        var post_json_data = JSON.stringify(post_data);
+        ajaxSendRequest(post_url, 'post', post_json_data);
+    };
+
+    $(function(){
+                $('#add_server').click(function(){
+                    console.log('clicked');
+                    // $('.pop_con').css({display: 'block'}); // 注意这个写法，第一个参数不需要引号
+                    // $('.pop_con').show();
+                    $('.pop_con').fadeIn();
+                    return false; // 如果不写这句，由于时间冒泡的原理，这边会返回到下面的
+                                  // document绑定的事件，因此，他会把fadeIn()和fadeOut()一起执行，导致表单无法正常显示
+                });
+
+                $(document).click(function(){
+                    $('.pop_con').fadeOut();
+                });
+
+                $('.pop').click(function(){
+                    return false;  // 如果没有这样，如果点击表单，由于事件冒泡的原理，整个表单会消失
+                    // 也是这个原因，导致了如果用自带的submit提交，他会提交失败，因为在这里拦截了
+                });
+
+                $('#btn-cancel').unbind().click(function(){
+                    $('.pop_con').fadeOut();
+                });
+
+
+    });
+</script>
+{% endblock %}

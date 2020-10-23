@@ -8,6 +8,8 @@ from flask_session import Session
 from flask_wtf import CSRFProtect
 import logging
 from logging.handlers import  RotatingFileHandler  # 设置保存文件位置等信息
+from .utils.commons import ReConverter
+import redis
 
 
 # 设置日志的记录等级
@@ -23,6 +25,8 @@ logging.getLogger().addHandler(file_log_handler)
 
 
 db = SQLAlchemy()
+# 初始化图片redis数据库
+redis_store_for_image_code = None
 
 
 def create_app(config_name):
@@ -37,11 +41,21 @@ def create_app(config_name):
     app.config.from_object(config_class)
     db.init_app(app) # 第三放扩展
 
+    # 正式初始化redis,保存图片验证码的值
+    global redis_store_for_image_code
+    redis_store_for_image_code = redis.StrictRedis(
+        host=config_class.REDIS_STATIC_HOST,
+        port=config_class.REDIS_STATIC_PORT,
+        db=config_class.REDIS_STATIC_DB
+    )
+
     # 利用flask-session，将session数据保存到redis中
     Session(app)
     # 利用flask-wtf， 为flask提供scrf_token保护
     CSRFProtect(app)
     from flaskmain import views
+    # 先把re注册到flask，在注册蓝图，顺序不要错
+    app.url_map.converters["re"] = ReConverter  # 将自定义的转换器注册到flask中
     # 注册蓝图
     app.register_blueprint(views.flask_views, url_prefix="")
     pymysql.install_as_MySQLdb()

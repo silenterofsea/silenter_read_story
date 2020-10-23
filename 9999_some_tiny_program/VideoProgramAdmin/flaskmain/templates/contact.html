@@ -1,0 +1,286 @@
+{% extends 'index_base.html' %}
+{% block header_css %}
+<style media="screen">
+            .pop_con{
+                display: none;
+            }
+            .pop{
+                width: 100%;
+                //width: 500px;
+                // height:300px;
+                position: fixed; /* 绝对定位 */
+                //left: 50%;
+                // top:50%;  /* 这两个条件以后，可以让pop的左上角出现在屏幕正中间 */
+                // border: 3px solid #000; /* solid 边框颜色 */
+                // background-color: #fff;
+                // margin-top: -300px;
+                // margin-left: -250px;  /* 这两个值是根据pop的宽高确定的 */
+                z-index: 9999;   /* 覆盖所有 */
+            }
+
+            .mask{
+                position:fixed;
+                width: 100%;
+                height: 100%;
+                background-color: #000;
+                opacity:0.3;    /* 兼容其他浏览器 */
+                filter:alpha(opacity=30); /* 兼容IE */
+                left:0;
+                top:0;
+                z-index: 9990;  /* 覆盖所有，除了pop，这两个值有一定的关系pip.z-index > mask.z-index */
+            }
+            .form-out-div{
+                background-color: #fff;
+                margin-top:-200px
+            }
+        </style>
+{% endblock %}
+{% block main_body %}
+    <div class="row">
+        <div class="col-12">
+          <div class="card">
+              {% if context.contacts %}
+            <div class="card-header">
+              <h3 class="card-title"><big>现有的{{ context.title }}</big>>>>>tips:写错了，直接删除重新添加即可</h3>
+            </div>
+
+            <!-- /.card-header -->
+            <div class="card-body">
+
+              <div class="dataTables_wrapper dt-bootstrap4">
+                  <div class="row">
+                      <div class="col-sm-12">
+                          <table id="example2" class="table table-bordered table-hover dataTable dtr-inline" role="grid" aria-describedby="example2_info">
+                            <thead>
+                                <tr role="row">
+                                    <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="ascending" >编号</th>
+                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >联系工具</th>
+                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >联系方式</th>
+                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for temp in context.contacts %}
+                                <tr role="row" class="odd">
+                                  <td tabindex="0" class="sorting_1">{{ temp.id }}</td>
+                                  <td>{{ temp.tool }}</td>
+                                  <td>{{ temp.info }}</td>
+                                  <td><button  onclick="delete_contact({{ temp.id }})" type="button" name="button" class="btn btn-info">删除</button></td>
+                                </tr>
+                                {% endfor %}
+
+                            </tbody>
+                            <tfoot>
+                                <tr role="row">
+                                    <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="ascending" >编号</th>
+                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >联系工具</th>
+                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >联系方式</th>
+                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >操作</th>
+                                </tr>
+                            </tfoot>
+                          </table>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <button id="add_server" class="btn btn-primary col-2 offset-8" type="button" name="button">添加{{ context.title }}</button>
+                </div>
+
+
+            </div>
+
+            </div>
+            <!-- /.card-body -->
+            {% else %}
+            <div class="card-header">
+              <h3 class="card-title"><big>当前没有{{ context.title }}</big></h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-2 offset-8">
+                        <button id="add_server" class="btn btn-primary " type="button" name="button">添加{{ context.title }}</button>
+                    </div>
+                </div>
+                </div>
+            {% endif %}
+          </div>
+
+        </div>
+    </div>
+    <div class="pop_con">
+            <div class="pop row" >
+                <div class="col-4 offset-2 p-3 form-out-div">
+                    <h3>添加{{ context.title }}</h3>
+                    <form action="/test_contact" method="post">
+                        {{ form.csrf_token }}
+                        <div class="form-group row">
+                          <label for="colFormLabel" class="col-sm-2 col-form-label">联系工具</label>
+                          <div class="col-sm-10">
+                              {{ form.tool(class="form-control", id="post-tool") }}
+                          </div>
+                        </div>
+                      <div class="form-group row">
+                        <label for="colFormLabel" class="col-sm-2 col-form-label">联系方式</label>
+                        <div class="col-sm-10">
+                            {{ form.info(class="form-control", id="post-info") }}
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        {{ form.submit(class="btn btn-primary col-2 offset-1", id="go-submit") }}
+                        <button type="button" id="btn-cancel" name="button" class="btn btn-danger col-2 offset-6">取消</button>
+                        </div>
+
+
+
+                    </form>
+                </div>
+            </div>
+            <div class="mask">
+                <!-- 弹窗的背景 -->
+            </div>
+    </div>
+{% endblock %}
+{% block footer_js %}
+<script type="text/javascript">
+    function getCookieCSRFToken(name) {
+            var r = document.cookie.match("\\b" + name + "=([^;]*)\\b");
+            return r ? r[1] : undefined;
+        };
+    function ajaxSendRequest(targetUrl, targetType, tagetJsonData){
+        $.ajax({
+            url:targetUrl,
+            type: targetType,
+            data: tagetJsonData,
+            contentType: "application/json",
+            dataType: "json",
+            headers:{
+                "X-CSRFToken": getCookieCSRFToken("csrf_token"),
+            }, //设置请求头
+            success: function(resp) {
+                if(resp.resCode == '0'){
+                    alert(resp.message);
+                    location.href = targetUrl;
+                }else {
+                    alert(resp.message);
+                }
+            }
+        });
+    };
+
+    $(function(){
+                $('#add_server').click(function(){
+                    console.log('clicked');
+                    // $('.pop_con').css({display: 'block'}); // 注意这个写法，第一个参数不需要引号
+                    // $('.pop_con').show();
+                    $('.pop_con').fadeIn();
+                    return false; // 如果不写这句，由于时间冒泡的原理，这边会返回到下面的
+                                  // document绑定的事件，因此，他会把fadeIn()和fadeOut()一起执行，导致表单无法正常显示
+                });
+
+                $(document).click(function(){
+                    $('.pop_con').fadeOut();
+                });
+
+                $('.pop').click(function(){
+                    return false;  // 如果没有这样，如果点击表单，由于事件冒泡的原理，整个表单会消失
+                    // 也是这个原因，导致了如果用自带的submit提交，他会提交失败，因为在这里拦截了
+                });
+
+                $('#btn-cancel').unbind().click(function(){
+                    $('.pop_con').fadeOut();
+                });
+
+                function registPost(){
+                    var tool = $('#post-tool').val();
+                    var info = $('#post-info').val();
+                    if(!tool ){
+                        console.log("参数缺失")
+                        return
+                    }
+                    if(!info ){
+                        console.log("参数缺失")
+                        return
+                    }
+                    var post_data = {
+                        'tool': tool,
+                        'info': info
+                    };
+                    var post_json_data = JSON.stringify(post_data);
+                    console.log(post_json_data);
+                    // 发起ajax请求
+                    ajaxSendRequest('{{ url_for('views.contact') }}','post',post_json_data);
+                    // $.ajax({
+                    //     url: '{{ url_for('views.contact') }}',
+                    //     type: 'post',
+                    //     data: post_json_data,
+                    //     contentType: "application/json",
+                    //     dataType: "json",
+                    //     headers:{
+                    //         "X-CSRFToken": getCookieCSRFToken("csrf_token")
+                    //     }, //设置请求头
+                    //     success: function(resp){
+                    //         console.log(resp);
+                    //         if(resp.resCode == "0"){
+                    //             // 成功的情况
+                    //             location.href = "{{url_for('views.contact')}}";
+                    //         }else{
+                    //             // 失败的情况
+                    //             alert(resp.message);
+                    //         }
+                    //     }
+                    // });
+                };
+
+                // 因为上面的原因，我们只能自己写提交的方法
+                $('#go-submit').unbind().click(function(){
+                    registPost()
+                    // event.preventDefault() //阻止form表单默认提交,如果是在login里面，需要写，这里可以不写
+                });
+
+    });
+
+function delete_contact(id){
+
+    if(!id){
+        alert("参数不完整");
+        return
+    }
+    if(isNaN(id)){　　　　
+　　//对于空数组和只有一个数值成员的数组或全是数字组成的字符串，isNaN返回false，例如：'123'、[]、[2]、['123'],isNaN返回false,
+   //所以如果不需要val包含这些特殊情况，则这个判断改写为if(!isNaN(val) && typeof val === 'number' )
+        alert("参数错误");
+　　　   return;
+　　}
+    var data = {
+        'id': id
+    }
+    var data_json = JSON.stringify(data);
+    // 发起ajax请求
+    // console.log(data_json)
+    ajaxSendRequest('{{ url_for('views.contact') }}','delete',data_json);
+    // $.ajax({
+    //     url: '{{ url_for('views.contact') }}',
+    //     type: 'delete',
+    //     data: data_json,
+    //     contentType: "application/json",
+    //     dataType: "json",
+    //     headers:{
+    //         "X-CSRFToken": getCookieCSRFToken("csrf_token"),
+    //
+    //     }, //设置请求头
+    //     success: function(resp){
+    //         // console.log("resp.message =", resp.message);
+    //         // console.log("resp.resCode = ", resp.resCode);
+    //         if(resp.resCode == '0'){
+    //             // 删除成功
+    //             alert("删除成功:"+resp.message)
+    //             location.href = '{{ url_for('views.contact') }}'
+    //         }else{
+    //             // 删除失败
+    //             alert("删除失败:"+resp.message)
+    //         }
+    //     }
+    // })
+}
+</script>
+{% endblock %}

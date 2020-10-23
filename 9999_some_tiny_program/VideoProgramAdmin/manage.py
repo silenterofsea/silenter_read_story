@@ -7,6 +7,13 @@ from flaskmain import create_app, db
 # 创建flask应用对象
 app = create_app('develop')
 
+
+# @app.errorhandler(404)
+# def page_not_found(e):
+#     return 'Ooooops Page is not found'
+
+
+
 manager = Manager(app)
 Migrate(app, db)
 manager.add_command("db", MigrateCommand)

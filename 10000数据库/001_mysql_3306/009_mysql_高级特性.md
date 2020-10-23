@@ -188,6 +188,9 @@ change master to master_host='222.186.173.204', master_user='slavealexhunter', m
 
 gunicorn -w 4 -b 180.97.220.27:41943 -D --access-logfile /home/programs/bookflask/log_gunicorn.log --error-logfile /home/programs/bookflask/error_gunicorn.log --access-logformat '%(h)s %(l)s %(u)s %(t)s "%(r)s" %(s)s %(b)s "%(f)s" "%(a)s" "%({X-Real-IP}i)s"' main:app
 
+
+gunicorn -w 4 -b 180.97.220.27:8989 -D --access-logfile /home/programs/bookflask/log_gunicorn.log --error-logfile /home/programs/bookflask/error_gunicorn.log --access-logformat '%(h)s %(l)s %(u)s %(t)s "%(r)s" %(s)s %(b)s "%(f)s" "%(a)s" "%({X-Real-IP}i)s"' main:app
+
  nohup python3 -u details_post.py > log_post.log 2>&1 &
 
 CHANGE MASTER TO

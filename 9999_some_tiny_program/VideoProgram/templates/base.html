@@ -6,7 +6,8 @@
     <meta name="renderer" content="webkit"/>
     <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" id="viewport" name="viewport">
     <title>{{ context.title }}</title>
-
+    <meta name="keywords" content="{{ context.keywords }}">
+    <meta name="description" content="{{ context.description }}">
 
     <script type="text/javascript" src="{{ url_for('static', filename='js/hls.min.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/DPlayer.min.js') }}"></script>
@@ -16,8 +17,12 @@
 {% block header_css %}
 {% endblock %}
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon" />
 </head>
 <body>
+
+<div  id="control_magin" class="">
+
 
 <!-- 头部 -->
 <div class="container-fluid">
@@ -45,23 +50,19 @@
 	<div class="row">
 		<h5>联系方式：</h5>
 		<ul class="list-group col-12">
-		  <li class="list-group-item">QQ:</li>
-		  <li class="list-group-item">skype：</li>
-		  <li class="list-group-item">飞机：</li>
+            {% for temp in context.contact_infos %}
+		  <li class="list-group-item">{{ temp.tool }}:{{ temp.info }}</li>
+            {% endfor %}
 		</ul>
 	</div>
   <!-- Content here -->
+  {% for temp in context.ads.top %}
   <div class="row">
-	<a href="http://23.225.74.88:8818/53xoxo.html" target="_blank">
-		<img src="https://www.kanjiantu.com/images/2020/10/02/0TpCAX.gif" title="99?￡??‰???¤99784.com" style="width:100%">
-	</a>
-   </div>
-
-   <div class="row">
-	<a href="http://23.225.74.88:8818/53xoxo.html" target="_blank">
-		<img src="https://www.kanjiantu.com/images/2020/10/02/0TpCAX.gif" title="99?￡??‰???¤99784.com" style="width:100%">
-	</a>
-   </div>
+   <a href="{{ temp.target_url }}" target="_blank">
+     <img src="{{ temp.img_url }}" title="{{ temp.target_url }}" style="width:100%">
+   </a>
+  </div>
+  {% endfor %}
 
 
 
@@ -95,45 +96,83 @@
 
 <!-- 广告 -->
 <div class="container self-container">
-	<div class="row">
-     <a href="http://23.225.74.88:8818/53xoxo.html" target="_blank">
-  	   <img src="https://www.kanjiantu.com/images/2020/10/02/0TpCAX.gif" title="99?￡??‰???¤99784.com" style="width:100%">
+    {% for temp in context.ads.bottom  %}
+    <div class="row">
+     <a href="{{ temp.target_url }}" target="_blank">
+  	   <img src="{{ temp.img_url }}" title="{{ temp.target_url }}" style="width:100%">
      </a>
     </div>
+    {% endfor %}
 
-	<div class="row">
- 	<a href="http://23.225.74.88:8818/53xoxo.html" target="_blank">
- 		<img src="https://www.kanjiantu.com/images/2020/10/02/0TpCAX.gif" title="99?￡??‰???¤99784.com" style="width:100%">
- 	</a>
-    </div>
+
+
 
 </div>
 <!-- 底部版权 -->
 <div class="container-fluid">
 	<div class="text-center" style="line-height:50px;background-color:#666">
 		  <div style="line-height:20px">
-		  <br><a href="#" target="_blank"><font color="#FF0000" size="5">合作邮箱:aixoxoxo2@gmail.com</font></a>
-		  <br><a target="_blank" href="/" style="text-decoration: none"><font color="#FFFFFF"><p><b>国内自拍99re久久_中文字幕久荜在线-2019中文字幕视频-国内自拍亚洲精品视频</b></p></font></a>
+		  <br><a target="_blank" href="/" style="text-decoration: none"><font color="#FFFFFF"><p><b>{{ context.title }}</b></p></font></a>
 		  <br><font color="#FFFFFF" size="2">站点申明：我们立足于美利坚合众国,受北美法律保护,未满18岁或被误导来到这里,请立即离开！
-		  <br>警告：本站所有内容均来自广大网友分享上传站点所提供的公开引用资源站长无关，所有视频及图文版权均归原作者及其网站所有!<script type="text/javascript" src="https://js.users.51.la/20575765.js"></script></font>
+		  <br>警告：本站所有内容均来自广大网友分享上传站点所提供的公开引用资源站长无关，所有视频及图文版权均归原作者及其网站所有!</font>
 		  <p><font color="#FFFFFF" size="3"> 收藏本站：請使用Ctrl+D進行收藏</font>
 		  </p>　
-		  <font color="#FFFFFF" size="2"><p>Copyright © 2008-2019 all rights reserved</p></font>
+		  <font color="#FFFFFF" size="2"><p>Copyright © 2008-2022 all rights reserved</p></font>
 
 		  </div>
 		  </div>
 </div>
 
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 
 
+<!-- https://cbu01.alicdn.com/img/ibank/2020/808/984/22037489808_1545027917.jpg -->
+
 
   {% block footer_js %}
   {% endblock %}
 
 
+
+  <div id="hide_or_show" >
+
+  </div>
+
+
+
+
+  <script type="text/javascript">
+
+      // append/prepend 是在选择元素内部嵌入。
+      // after/before 是在元素外面追加。
+
+  $(function(){
+      if($('body').width()>500){
+          //电脑屏幕
+          var left_ad='<div class="left_ad"><a href="{{ context.ads.left_right.target_url }}"><img class="left_ad_img" src="{{ context.ads.left_right.img_url }}" alt=""></a></div>';
+          var right_ad='<div class="right_ad"><a href="{{ context.ads.left_right.target_url }}"><img class="right_ad_img" src="{{ context.ads.left_right.img_url }}" alt=""></a></div>';
+          $("#hide_or_show").append(left_ad, right_ad);
+          // $("body").append();
+      }else{
+          // 手机屏幕
+          //先让上下空出需要显示图片的空间
+          $('#control_magin').css({
+              'padding-top':'120px',
+              'padding-bottom':'120px'
+          });
+          var top = '<div class="top"><a href="{{ context.ads.top_bottom.target_url }}"><img class="top_img" src="{{ context.ads.top_bottom.img_url }}" alt=""></a></div>';
+          var bottom = '<div class="bottom"><a href="{{ context.ads.top_bottom.target_url }}"><img class="bottom_img" src="{{ context.ads.top_bottom.img_url }}" alt=""></a></div>';
+          $("#hide_or_show").append(top, bottom);
+      }
+  });
+
+
+  </script>
+
+<script type="text/javascript" src="{{ context.baidu_code }}"></script>
 </body>
 </html>

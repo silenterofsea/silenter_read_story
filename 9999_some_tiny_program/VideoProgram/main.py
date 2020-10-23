@@ -4,12 +4,15 @@ from flask_sqlalchemy import SQLAlchemy
 import pymysql
 import requests
 import json
-from flask_cors import *
+from datetime import datetime
+import re
+from random import randint
+# from flask_cors import *
 
 
 
 app = Flask(__name__)
-CORS(app, supports_credentials=True)  # 设置跨域
+# CORS(app, supports_credentials=True)  # 设置跨域
 app.config['JSON_AS_ASCII'] = False
 # app.config.from_object(config)
 app.config['SQLALCHEMY_DATABASE_URI'] = SQLALCHEMY_DATABASE_URI
@@ -17,9 +20,18 @@ db = SQLAlchemy(app)
 pymysql.install_as_MySQLdb()
 
 
-class WebSites(db.Model):
-    __tablename__ = 'websites'
+class BaseModel(object):
+    """模型类的基类，为每个模型补充创建时间和更新时间"""
+    # 记录创建的时间
+    create_time = db.Column(db.DateTime, default=datetime.now)
+    # 记录更新的时间
+    update_time = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
+
+# 网站信息表
+class WebsiteInfos(BaseModel, db.Model):
+    __tablename__ = 'video_website_infos'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    ip_id = db.Column(db.Integer, db.ForeignKey('video_server_ips.id'))
     url = db.Column(db.String(128), nullable=False)
     is_activate = db.Column(db.Boolean, default=True, nullable=False)
     title = db.Column(db.String(128))
@@ -28,23 +40,56 @@ class WebSites(db.Model):
     baidu_code = db.Column(db.String(256))  # 百度统计代码
 
 
+# 联系方式
+class ContactInfos(BaseModel, db.Model):
+    __tablename__ = 'video_contact_infos'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    tool = db.Column(db.String(32), nullable=False)
+    info = db.Column(db.String(128), nullable=False)
+
+
+# 广告信息表： 只需要保存两个信息，target_url和img_url
+class AdsInfos(BaseModel, db.Model):
+    __tablename__ = 'video_ads_infos'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    target_url = db.Column(db.String(256), nullable=False)
+    img_url = db.Column(db.String(256), nullable=False)
+    ads_kind = db.Column(db.Integer, db.ForeignKey('video_ads_kinds.id'))  # 一类的表明.id
+
 # 首页
 @app.route('/',methods=['GET'])
 def index():
     print('url_root = ', request.url_root)
     print('url = ', request.url)
+    infos = get_infos_from_database_by_url(request.url_root)
+    if len(infos['ads_left_right_infos']) > 0:
+        left_right = infos['ads_left_right_infos'][randint(0, len(infos['ads_left_right_infos'])-1)]
+    else:
+        left_right = ''
+
+    if len(infos['ads_top_bottom_infos']) > 0:
+        top_bottom = infos['ads_top_bottom_infos'][randint(0, len(infos['ads_top_bottom_infos'])-1)]
+    else:
+        top_bottom = ''
     context = {
-        'url':'baidu.com',
-        'title':'国内自拍99re久久_中文字幕久荜在线-2019中文字幕视频-国内自拍亚洲精品视频',
-        'keywords':'',
-        'description':'',
-        'baidu_code':'',
+        'url':infos['web_infos'].url,
+        'title':infos['web_infos'].title,
+        'keywords': infos['web_infos'].keywords,
+        'description': infos['web_infos'].description,
+        'baidu_code': infos['web_infos'].baidu_code,
+        'contact_infos':infos['contact_infos'],
+        'ads':{
+            'top': infos['ads_top_infos'],
+            'bottom': infos['ads_bottom_infos'],
+            'left_right': left_right,
+            'top_bottom' top_bottom:
+        },
         'cates': [],  # 其中元素：{‘id’:***, 'text':***,'class_details_20':[{***},{***}]}
         'videos':[]
     }
 
     resp_cates = requests.get('http://shayuapi.com/api.php/provide/vod/at/json')
-    print("resp_cates.text = ", resp_cates.text)
+    # print("resp_cates.text = ", json.loads(resp_cates.text, encoding='utf-8'))
     if resp_cates.status_code == 200:
         resp_cates_json = json.loads(resp_cates.text, encoding='utf-8')
         for cate in resp_cates_json.get('class'):
@@ -52,6 +97,7 @@ def index():
     resp_latest = requests.get('http://shayuapi.com/api.php/provide/vod/at/json/?ac=detail&h=24')
     if resp_latest.status_code == 200:
         resp_latest_json = json.loads(resp_latest.text, encoding='utf-8')
+        # print("resp_latest_json = ", resp_latest_json)
         for temp in resp_latest_json.get('list'):
             video = {
                 'type_id': temp.get('type_id'),
@@ -65,7 +111,7 @@ def index():
             }
             context['videos'].append(video)
     # return jsonify(context)
-    print("context = ", context)
+    # print("context = ", context)
     return render_template('/index.html', context=context)
 
 def isDigit(x):
@@ -79,21 +125,38 @@ def isDigit(x):
 # 分类页面, 注意分页 /cate/1?page=2
 @app.route('/cate/<int:cate_id>', methods=['GET'])
 def cate(cate_id):
-    print('url_root = ', request.url_root)
-    print('url = ', request.url)
+    # print('url_root = ', request.url_root)
+    # print('url = ', request.url)
     if request.args.get('page') == None:
         page = 1
     elif isDigit(request.args.get('page')) == False:
         return 'page type error'
     else:
         page = int(request.args.get('page'))
-    print("page = ", page)
+    # print("page = ", page)
+    infos = get_infos_from_database_by_url(request.url_root)
+    if len(infos['ads_left_right_infos']) > 0:
+        left_right = infos['ads_left_right_infos'][randint(0, len(infos['ads_left_right_infos'])-1)]
+    else:
+        left_right = ''
+
+    if len(infos['ads_top_bottom_infos']) > 0:
+        top_bottom = infos['ads_top_bottom_infos'][randint(0, len(infos['ads_top_bottom_infos'])-1)]
+    else:
+        top_bottom = ''
     context = {
-        'url':'baidu.com',
-        'title':'国内自拍99re久久_中文字幕久荜在线-2019中文字幕视频-国内自拍亚洲精品视频',
-        'keywords':'',
-        'description':'',
-        'baidu_code':'',
+        'url':infos['web_infos'].url,
+        'title':infos['web_infos'].title,
+        'keywords': infos['web_infos'].keywords,
+        'description': infos['web_infos'].description,
+        'baidu_code': infos['web_infos'].baidu_code,
+        'contact_infos':infos['contact_infos'],
+        'ads':{
+            'top': infos['ads_top_infos'],
+            'bottom': infos['ads_bottom_infos'],
+            'left_right': left_right,
+            'top_bottom': top_bottom
+        },
         'cates': [],  # 其中元素：{‘id’:***, 'text':***,'class_details_20':[{***},{***}]}
         'videos':[],
         'pageinfo':{
@@ -112,11 +175,11 @@ def cate(cate_id):
             cates_ids.append(cate.get('type_id'))
     if cate_id not in  cates_ids:
         return 'error id!'
-    print('pagecount= ', pagecount)
+    # print('pagecount= ', pagecount)
     if page > pagecount:
         return 'page is biger than pagecount'
     context['pageinfo']['page_total'] = pagecount
-    print('detail url = ', 'https://shayuapi.com/api.php/provide/vod/at/json/?ac=detail&pg='+str(pagecount-page)+'&t='+str(cate_id)+'')
+    # print('detail url = ', 'https://shayuapi.com/api.php/provide/vod/at/json/?ac=detail&pg='+str(pagecount-page)+'&t='+str(cate_id)+'')
     resp_latest = requests.get('https://shayuapi.com/api.php/provide/vod/at/json/?ac=detail&pg='+str(pagecount-page)+'&t='+str(cate_id)+'')
     if resp_latest.status_code == 200:
         resp_latest_json = json.loads(resp_latest.text, encoding='utf-8')
@@ -133,21 +196,38 @@ def cate(cate_id):
             }
             context['videos'].append(video)
     # return jsonify(context)
-    print("context = ", context)
+    # print("context = ", context)
     return render_template('/cate.html', context=context)
 
 
 # 详情页
 @app.route('/detail/<int:detail_id>', methods=['GET'])
 def detail(detail_id):
-    print('url_root = ', request.url_root)
-    print('url = ', request.url)
+    # print('url_root = ', request.url_root)
+    # print('url = ', request.url)
+    infos = get_infos_from_database_by_url(request.url_root)
+    if len(infos['ads_left_right_infos']) > 0:
+        left_right = infos['ads_left_right_infos'][randint(0, len(infos['ads_left_right_infos'])-1)]
+    else:
+        left_right = ''
+
+    if len(infos['ads_top_bottom_infos']) > 0:
+        top_bottom = infos['ads_top_bottom_infos'][randint(0, len(infos['ads_top_bottom_infos'])-1)]
+    else:
+        top_bottom = ''
     context = {
-        'url':'baidu.com',
-        'title':'国内自拍99re久久_中文字幕久荜在线-2019中文字幕视频-国内自拍亚洲精品视频',
-        'keywords':'',
-        'description':'',
-        'baidu_code':'',
+        'url':infos['web_infos'].url,
+        'title':infos['web_infos'].title,
+        'keywords': infos['web_infos'].keywords,
+        'description': infos['web_infos'].description,
+        'baidu_code': infos['web_infos'].baidu_code,
+        'contact_infos':infos['contact_infos'],
+        'ads':{
+            'top': infos['ads_top_infos'],
+            'bottom': infos['ads_bottom_infos'],
+            'left_right': left_right,
+            'top_bottom': top_bottom
+        },
         'cates': [],  # 其中元素：{‘id’:***, 'text':***,'class_details_20':[{***},{***}]}
         'video':''
     }
@@ -172,7 +252,10 @@ def detail(detail_id):
             'vod_play_url': resp_latest_json.get('list')[0].get('vod_play_url').split('$')[1]
         }
         context['video'] = video
-    print("context = ", context)
+    context['title'] = context['video']['vod_name']+"_"+context['title']
+    context['keywords'] = context['video']['vod_name']+"_"+context['keywords']
+    context['description'] = context['video']['vod_name']+","+context['description']
+    # print("context = ", context)
     return render_template('/detail.html', context=context)
 
 # 速度过慢可能抛弃
@@ -226,5 +309,38 @@ def test():
 
 
 
+def get_infos_from_database_by_url(url):
+    print(url)
+    regular = '[^http: |^https:][//](.*?)[/]$'
+    res = re.findall(regular, url)
+    res1 = '180.97.220.27:9393'
+    if res:
+        res1 = res[0]
+    else:
+        res1 = '180.97.220.27:9393'
+    web_infos = WebsiteInfos.query.filter_by(url=res1).first()
+    print("in function: web_infos = ", web_infos)
+    contact_infos = ContactInfos.query.all()
+    print("in function: contact_infos = ", contact_infos)
+    ads_top_infos = AdsInfos.query.filter_by(ads_kind=1).all()
+    print("in function: ads_top_infos = ", ads_top_infos)
+    ads_bottom_infos = AdsInfos.query.filter_by(ads_kind=2).all()
+    print("in function: ads_bottom_infos = ", ads_bottom_infos)
+    ads_left_right_infos = AdsInfos.query.filter_by(ads_kind=3).all()
+    print("in function: ads_left_right_infos = ", ads_left_right_infos)
+    ads_top_bottom_infos = AdsInfos.query.filter_by(ads_kind=4).all()
+    print("in function: ads_top_bottom_infos = ", ads_top_bottom_infos)
+    infos = {
+        'web_infos':web_infos,
+        'contact_infos':contact_infos,
+        'ads_top_infos':ads_top_infos,
+        'ads_bottom_infos':ads_bottom_infos,
+        'ads_left_right_infos':ads_left_right_infos,
+        'ads_top_bottom_infos':ads_top_bottom_infos
+    }
+    return infos
+
+
+
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=1943, debug=True)
+    app.run(host='0.0.0.0', port=9393, debug=True)

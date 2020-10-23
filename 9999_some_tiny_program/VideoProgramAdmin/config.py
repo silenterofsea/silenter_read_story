@@ -5,8 +5,7 @@ import redis
 class Config(object):
     JSON_AS_ASCII = False
     """配置信息"""
-    SECRET_KEY = 'Github12345!@#$'
-    SAVE_PATH = '/home/text/'
+    SECRET_KEY = 'eqwrt98765#$%^&sdfghbvcxcVBNGFGD'
 
     # mysql数据库
     # 数据类型://登录账号:登录密码@数据库主机IP:数据库访问端口/数据库名称
@@ -15,6 +14,11 @@ class Config(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     # 打印每次模型操作对应的SQL语句
     # SQLALCHEMY_ECHO = True
+
+    # redis数据库 用于静态页面和图片验证码的数字
+    REDIS_STATIC_HOST = "127.0.0.1"
+    REDIS_STATIC_PORT = 6379
+    REDIS_STATIC_DB = 0
 
     # redis数据库 用于session
     REDIS_SESSION_HOST = "127.0.0.1"
@@ -31,7 +35,7 @@ class Config(object):
     # 是否对发送到浏览器上session的cookie值进行加密
     SESSION_USE_SIGNER = True
     # 保存到redis的session数的名称前缀
-    SESSION_KEY_PREFIX = "session_from_shop_admin:"
+    SESSION_KEY_PREFIX = "session_from_flask_main_"
     # session保存数据到redis时启用的链接对象
     SESSION_REDIS = redis.StrictRedis(host=REDIS_SESSION_HOST, port=REDIS_SESSION_PORT,
                                       db=REDIS_SESSION_DB)  # 用于连接redis的配置
@@ -41,6 +45,7 @@ class Config(object):
 class DevelopmentConfig(Config):
     """开发模式的配置信息"""
     DEBUG = True
+    SAVE_PATH = '/etc/nginx/conf.d/'
 
 
 class ProductionConfig(Config):
